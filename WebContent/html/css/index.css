@@ -1,0 +1,73 @@
+    body{
+        box-sizing: border-box;
+        margin: 0%;
+    }
+    header{
+        width:100%;
+        display:block;
+        height: 100px;
+        background-color: #696969;;
+        color: azure;
+        box-sizing: border-box;
+    }
+    #img1{
+        top: 30px;
+        position: relative;
+        display: inline-block;
+    }
+    #img2{
+        top: 30px;
+        position: relative;
+        display: inline-block;
+    }
+    header p{
+        display: inline-block;
+    }
+    nav{
+        width: 50%;
+        float: left;
+        height: 100%;
+        
+    }
+    .nav{
+	    position: relative;
+		top: 20px
+	}
+    .nav li{
+        display: inline-block;
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+    .nav a{
+        font: 1em sans-serif;
+        color: azure;
+    }
+    .menu{
+        width: 100%;
+        display: inline-block;
+    }
+    .menufig{
+        width: 200px;
+        float: left;
+        height: 100px;
+    }
+    .menuimg{
+        width: 10%;
+        float: left;
+        height: 100%;
+        text-align: center;
+    }
+    .footer{
+        height: 50px;
+        width: 100%;
+        background-color: #696969;
+        color: azure;
+        bottom: 0;
+        position: fixed;
+    }
+    section{
+	    position: relative;
+	    top: 100px;
+		left: 25px;
+		width: 90%;
+    }
