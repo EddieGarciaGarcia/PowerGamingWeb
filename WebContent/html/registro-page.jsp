@@ -12,8 +12,8 @@
 				}
 			%>
 	<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.REGISTRO%>"/>
-		<label>Nombre: </label><input type="text" name="<%=ParameterNames.NOMBRE%>"/><br>
-		<label>Apellido 1: </label><input type="text" name="<%=ParameterNames.APELLIDO1%>"/><br>
+		<label>Nombre: </label><input type="text" name="<%=ParameterNames.NOMBRE%>"/>
+		<label>Apellido 1: </label><input type="text" name="<%=ParameterNames.APELLIDO1%>"/>
 		<label>Apellido 2: </label><input type="text" name="<%=ParameterNames.APELLIDO2%>"/><br>
 		<label>Email: </label><input type="email" name="<%=ParameterNames.EMAIL%>" 
 				placeholder="usuario@ejemplo.com"

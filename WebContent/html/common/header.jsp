@@ -20,7 +20,7 @@
                 </div>
                 <nav>
                     <ul class="nav">
-                    	<li><a href="<%=request.getContextPath()%>/html/home-page.jsp">Inicio</a></li>
+                    	<li><a href="<%=request.getContextPath()%><%=ViewPaths.HOME%>">Inicio</a></li>
                     	<%@include file="/html/common/user-menu.jsp"%>
                     </ul>
                 </nav>

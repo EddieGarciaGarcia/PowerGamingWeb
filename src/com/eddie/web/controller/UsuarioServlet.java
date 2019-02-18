@@ -140,8 +140,7 @@ public class UsuarioServlet extends HttpServlet {
 				request.setAttribute(AttributeNames.PAISES, paises);
 				target = ViewPaths.REGISTRO;
 			}else if(Actions.REGISTRO.equalsIgnoreCase(action)) {
-				
-				
+
 			}else {
 			
 				// Mmm...
