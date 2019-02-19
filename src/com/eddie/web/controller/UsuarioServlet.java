@@ -32,6 +32,7 @@ import com.eddie.web.util.ErrorCodes;
 import com.eddie.web.util.ParameterNames;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
+import com.eddie.web.util.Validacion;
 import com.eddie.web.util.ViewPaths;
 
 /**
@@ -71,20 +72,17 @@ public class UsuarioServlet extends HttpServlet {
 				String email = request.getParameter(ParameterNames.EMAIL);
 				String password = request.getParameter(ParameterNames.PASSWORD);
 				
-				// Limpieza
-				// ... 
-	 
+				String emailValid = Validacion.validEmail(email);
+				String passwordValid = Validacion.validPassword(password);
 				
-				// Validacion 
-				// ...			
-				if (StringUtils.isEmpty(email)) {
+				if (StringUtils.isEmpty(emailValid)) {
 					errors.add(ParameterNames.EMAIL,ErrorCodes.MANDATORY_PARAMETER);
 				}
 				
 				Usuario usuario = null;
 				if (!errors.hasErrors()) {
 					
-						usuario = userv.login(email, password);
+						usuario = userv.login(emailValid, passwordValid);
 					
 				}
 				if(usuario == null) {
@@ -94,8 +92,7 @@ public class UsuarioServlet extends HttpServlet {
 				if (errors.hasErrors()) {	
 					if (logger.isDebugEnabled()) {
 						logger.debug("Autenticacion fallida: {}", errors);
-					}
-					errors.add(ParameterNames.ACTION,ErrorCodes.AUTHENTICATION_ERROR);				
+					}				
 					request.setAttribute(AttributeNames.ERRORS, errors);				
 					target = ViewPaths.LOGIN;				
 				} else {				
@@ -104,7 +101,7 @@ public class UsuarioServlet extends HttpServlet {
 				}
 			} else if (Actions.LOGOUT.equalsIgnoreCase(action)) {
 				SessionManager.set(request, SessionAttributeNames.USER, null);
-				target = ViewPaths.HOME;
+				target = request.getContextPath()+ViewPaths.HOME;
 				redirect=true;
 			} else if(Actions.PREREGISTRO.equalsIgnoreCase(action)){
 				List<Pais> paises = pserv.findAll();
@@ -122,27 +119,29 @@ public class UsuarioServlet extends HttpServlet {
 				
 				Usuario u= new Usuario();
 				
-				SimpleDateFormat sdf=(SimpleDateFormat) DateUtils.SHORT_FORMAT_DATE;
+				SimpleDateFormat sdf=(SimpleDateFormat) DateUtils.FORMATODATA;
 				Date fechaformat=sdf.parse(fecha);
 				
-				u.setNombre(nombre);
-				u.setApellido1(apellido1);
-				u.setApellido2(apellido2);
-				u.setEmail(email);
+				u.setNombre(Validacion.validNombre(nombre));
+				u.setApellido1(Validacion.validApellido1(apellido1));
+				u.setApellido2(Validacion.validApellido2(apellido2));
+				u.setEmail(Validacion.validEmail(email));
 				u.setTelefono(telefono);
-				u.setPassword(password);
+				u.setPassword(Validacion.validPassword(password));
 				u.setFechaNacimiento(fechaformat);
 				u.setGenero(genero);
+				u.setNombreUser(nombre+apellido1.charAt(0)+apellido2.charAt(0));
 				
 				userv.create(u);
-				target = ViewPaths.LOGIN;
+				target = request.getContextPath()+ViewPaths.LOGIN;
+				redirect=true;
 			}else {
 			
 				// Mmm...
 				logger.error("Action desconocida");
 				// target ?
 			}
-			if(redirect) {
+			if(redirect==true) {
 				logger.info("Redirect to "+target);
 				response.sendRedirect(target);
 			}else {

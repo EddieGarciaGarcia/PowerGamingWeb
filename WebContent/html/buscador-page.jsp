@@ -4,17 +4,22 @@
 
 <%		
 		List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.RESULTADOS);	
+		
 		if (resultados!=null && !resultados.isEmpty()) {
 			%>
 			<p>Resultados:</p>
 			<ul><%
 			for (Juego resultado: resultados) {
 				%>
-					<li><img src="<%=request.getContextPath()%>/imgs/<%=(Integer)resultado.getIdJuego()%>.jpg"></img><%=resultado.getNombre()%></li>
+					<li>
+					<img src="<%=request.getContextPath()%>/imgs/<%=(Integer)resultado.getIdJuego()%>.jpg"></img>
+					<%=resultado.getNombre()%>
+					</li>
 				<%
+					}
 			}
 			%></ul><%
-		}
+		
 %>
 	
 <%@include file="/html/common/footer.jsp"%>

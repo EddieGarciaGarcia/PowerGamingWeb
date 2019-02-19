@@ -21,7 +21,9 @@ import com.eddie.ecommerce.model.Idioma;
 import com.eddie.ecommerce.model.Juego;
 import com.eddie.ecommerce.model.JuegoCriteria;
 import com.eddie.ecommerce.model.Plataforma;
+import com.eddie.ecommerce.service.CategoriaService;
 import com.eddie.ecommerce.service.JuegoService;
+import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.Actions;
@@ -39,10 +41,12 @@ public class ProductoServlet extends HttpServlet {
 	private static Logger logger = LogManager.getLogger(ProductoServlet.class);
 
 	private JuegoService jservice = null;
-
+	private CategoriaService cservice=null;
+	
 	public ProductoServlet() {
 		super();
 		jservice = new JuegoServiceImpl();
+		cservice= new CategoriaServiceImpl();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -97,7 +101,7 @@ public class ProductoServlet extends HttpServlet {
 				jc.setNombre(nombre);
 				List<Juego> resultados;
 				
-					resultados = jservice.findByJuegoCriteria(jc,"ES");
+				resultados = jservice.findByJuegoCriteria(jc,"ES");
 				
 			
 				request.setAttribute(AttributeNames.RESULTADOS, resultados);

@@ -15,6 +15,8 @@ public interface ParameterNames {
 	public static final String FECHANACIMIENTO = "fecha_nacimiento";
 	public static final String GENERO = "genero";
 	
+	public static final String PAIS = "pais";
+	
 	public static final String PAGIDIOMA="ES";
 	
 	public static final String CATEGORIA="categoria";

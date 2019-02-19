@@ -1,4 +1,5 @@
 <%@ page import="java.util.List" %>
+<%@ page import="com.eddie.ecommerce.model.*" %>
 <%@include file="/html/common/header.jsp"%>
 
 <section>
@@ -27,9 +28,24 @@
 		<label>Telefono: </label><input type="text" name="<%=ParameterNames.TELEFONO%>"/><br>
 		<label>Password: </label><input type="password" name="<%=ParameterNames.PASSWORD%>"/><br>
 		<label>Fecha Nacimiento: </label><input type="date" name="<%=ParameterNames.FECHANACIMIENTO%>"/><br>
-		<label>Genero: </label><input type="text" name="<%=ParameterNames.GENERO%>"/><br>
+		<label>Genero: </label><select type="text" name="<%=ParameterNames.GENERO%>">
+			<option value="H">Hombre</option>
+			<option value="M">Mujer</option>
+			<option value="O">Otro</option>
+		</select><br>
+		
+		<label>Pais:</label><select name="<%=ParameterNames.PAIS%>">
+				<%
+					List<Pais> paises= (List<Pais>) request.getAttribute(AttributeNames.PAISES);
+					for(Pais pais: paises){
+						%>
+						<option value="<%pais.getIdPais();%>"><%pais.getNombre();%></option>
+						<%
+					}
+				%>
+		</select><br>
+		
 		<input type="submit" value="Registrar"/>	
-			
 	</form>
 </section>
 

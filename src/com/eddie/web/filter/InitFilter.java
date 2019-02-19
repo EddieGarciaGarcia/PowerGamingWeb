@@ -42,7 +42,7 @@ public class InitFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-	
+	/*
 		HttpServletRequest httpRequest= (HttpServletRequest) request;
 		HttpServletResponse httpResponse= (HttpServletResponse) response;
 		String action=httpRequest.getParameter(ParameterNames.ACTION);
@@ -53,9 +53,9 @@ public class InitFilter implements Filter {
 			logger.info("Filtro de autentificacion");
 			httpResponse.sendRedirect(httpRequest.getContextPath()+ViewPaths.LOGIN);
 		}else {
-			
+			*/
 			chain.doFilter(request, response);
-		}
+//		}
 		
 	}
 
