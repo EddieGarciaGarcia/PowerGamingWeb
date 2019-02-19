@@ -63,37 +63,7 @@ public class UsuarioServlet extends HttpServlet {
 			 
 			Errors errors = new Errors(); 
 			String target = null;
-			
-			
-			
-			if(Actions.REGISTRO.equalsIgnoreCase(action)) {
-				String nombre=request.getParameter(ParameterNames.NOMBRE);
-				String apellido1=request.getParameter(ParameterNames.APELLIDO1);
-				String apellido2=request.getParameter(ParameterNames.APELLIDO2);
-				String email=request.getParameter(ParameterNames.EMAIL);
-				String telefono=request.getParameter(ParameterNames.TELEFONO);
-				String password=request.getParameter(ParameterNames.PASSWORD);
-				String fecha=request.getParameter(ParameterNames.FECHANACIMIENTO);
-				String genero=request.getParameter(ParameterNames.GENERO);
-				
-				Usuario u= new Usuario();
-				
-				SimpleDateFormat sdf=(SimpleDateFormat) DateUtils.SHORT_FORMAT_DATE;
-				Date fechaformat=sdf.parse(fecha);
-				
-				u.setNombre(nombre);
-				u.setApellido1(apellido1);
-				u.setApellido2(apellido2);
-				u.setEmail(email);
-				u.setTelefono(telefono);
-				u.setPassword(password);
-				u.setFechaNacimiento(fechaformat);
-				u.setGenero(genero);
-				
-				userv.create(u);
-				target = ViewPaths.LOGIN;
-			}
-			
+			boolean redirect=false;
 			
 			if (Actions.LOGIN.equalsIgnoreCase(action)) {
 				
@@ -134,20 +104,51 @@ public class UsuarioServlet extends HttpServlet {
 				}
 			} else if (Actions.LOGOUT.equalsIgnoreCase(action)) {
 				SessionManager.set(request, SessionAttributeNames.USER, null);
-				target = ViewPaths.HOME;			
+				target = ViewPaths.HOME;
+				redirect=true;
 			} else if(Actions.PREREGISTRO.equalsIgnoreCase(action)){
 				List<Pais> paises = pserv.findAll();
 				request.setAttribute(AttributeNames.PAISES, paises);
 				target = ViewPaths.REGISTRO;
 			}else if(Actions.REGISTRO.equalsIgnoreCase(action)) {
-
+				String nombre=request.getParameter(ParameterNames.NOMBRE);
+				String apellido1=request.getParameter(ParameterNames.APELLIDO1);
+				String apellido2=request.getParameter(ParameterNames.APELLIDO2);
+				String email=request.getParameter(ParameterNames.EMAIL);
+				String telefono=request.getParameter(ParameterNames.TELEFONO);
+				String password=request.getParameter(ParameterNames.PASSWORD);
+				String fecha=request.getParameter(ParameterNames.FECHANACIMIENTO);
+				String genero=request.getParameter(ParameterNames.GENERO);
+				
+				Usuario u= new Usuario();
+				
+				SimpleDateFormat sdf=(SimpleDateFormat) DateUtils.SHORT_FORMAT_DATE;
+				Date fechaformat=sdf.parse(fecha);
+				
+				u.setNombre(nombre);
+				u.setApellido1(apellido1);
+				u.setApellido2(apellido2);
+				u.setEmail(email);
+				u.setTelefono(telefono);
+				u.setPassword(password);
+				u.setFechaNacimiento(fechaformat);
+				u.setGenero(genero);
+				
+				userv.create(u);
+				target = ViewPaths.LOGIN;
 			}else {
 			
 				// Mmm...
 				logger.error("Action desconocida");
 				// target ?
 			}
-			request.getRequestDispatcher(target).forward(request, response);
+			if(redirect) {
+				logger.info("Redirect to "+target);
+				response.sendRedirect(target);
+			}else {
+				logger.info("forwarding to "+target);
+				request.getRequestDispatcher(target).forward(request, response);
+			}
 			} catch (SQLException e) {	
 				e.printStackTrace();
 			} catch (DataException e) {

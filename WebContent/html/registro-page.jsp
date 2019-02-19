@@ -26,7 +26,7 @@
 				%>
 		<label>Telefono: </label><input type="text" name="<%=ParameterNames.TELEFONO%>"/><br>
 		<label>Password: </label><input type="password" name="<%=ParameterNames.PASSWORD%>"/><br>
-		<label>Fecha Nacimiento: </label><input type="text" name="<%=ParameterNames.FECHANACIMIENTO%>"/><br>
+		<label>Fecha Nacimiento: </label><input type="date" name="<%=ParameterNames.FECHANACIMIENTO%>"/><br>
 		<label>Genero: </label><input type="text" name="<%=ParameterNames.GENERO%>"/><br>
 		<input type="submit" value="Registrar"/>	
 			

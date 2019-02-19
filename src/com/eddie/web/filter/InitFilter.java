@@ -1,7 +1,7 @@
-package com.eddie.web.controller;
+package com.eddie.web.filter;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -47,21 +47,14 @@ public class InitFilter implements Filter {
 		HttpServletResponse httpResponse= (HttpServletResponse) response;
 		String action=httpRequest.getParameter(ParameterNames.ACTION);
 		if(!Actions.REGISTRO.equals(action) 
-			&& Actions.PREREGISTRO.equals(action) 
-			&& Actions.LOGIN.equals(action) 
+			&& !Actions.PREREGISTRO.equals(action) 
+			&& !Actions.LOGIN.equals(action) 
 			&& (SessionManager.get((HttpServletRequest)request, SessionAttributeNames.USER))==null) {
 			logger.info("Filtro de autentificacion");
 			httpResponse.sendRedirect(httpRequest.getContextPath()+ViewPaths.LOGIN);
 		}else {
-			PrintWriter pw= httpResponse.getWriter();
 			
-			String ip=httpRequest.getRemoteAddr().toString();
-			httpResponse.sendRedirect(ViewPaths.HOME);
-			logger.info("Direccion ip"+ip);
-			
-			pw.println("<p>Obtener IP del cliente. Obtener la IP del cliente </p>");
-			pw.println("<p>La ip del cliente es " + ip + "</p>");
-			chain.doFilter(httpRequest, httpResponse);
+			chain.doFilter(request, response);
 		}
 		
 	}
