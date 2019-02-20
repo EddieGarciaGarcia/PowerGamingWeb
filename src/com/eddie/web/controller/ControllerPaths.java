@@ -1,4 +1,4 @@
-package com.eddie.web.util;
+package com.eddie.web.controller;
 
 public interface ControllerPaths {
 	public static final String USUARIO = "/PowerGamingWeb/usuario";

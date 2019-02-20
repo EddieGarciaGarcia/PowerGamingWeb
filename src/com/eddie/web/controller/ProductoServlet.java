@@ -61,18 +61,6 @@ public class ProductoServlet extends HttpServlet {
 			Errors errors = new Errors(); 
 			String target = null;
 			
-			if(Actions.ALLJUEGO.equalsIgnoreCase(action)) {
-				List<Juego> juegos=jservice.findAllByDate();
-				request.setAttribute(AttributeNames.RESULTADOS_TODOS, juegos);
-				target= ViewPaths.HOME;
-			}
-			
-			if(Actions.ALLJUEGOVALOR.equalsIgnoreCase(action)) {
-				List<Juego> juegos=jservice.findAllByValoración();
-				request.setAttribute(AttributeNames.RESULTADOS_TODOS_VALOR, juegos);
-				target= ViewPaths.HOME;
-			}
-			
 			if (Actions.BUSCAR.equalsIgnoreCase(action)) {
 
 				// Recuperar parametros
@@ -100,11 +88,9 @@ public class ProductoServlet extends HttpServlet {
 				jc.setPlataforma(plataforma);
 				jc.setNombre(nombre);
 				List<Juego> resultados;
-				
 				resultados = jservice.findByJuegoCriteria(jc,"ES");
 				
-			
-				request.setAttribute(AttributeNames.RESULTADOS, resultados);
+				request.setAttribute(AttributeNames.PRESULTADOS, resultados);
 				
 				target = ViewPaths.BUSCADOR;
 				

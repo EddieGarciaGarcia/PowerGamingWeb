@@ -99,7 +99,8 @@ public class UsuarioServlet extends HttpServlet {
 					SessionManager.set(request, SessionAttributeNames.USER, usuario);		
 					target = ViewPaths.HOME;				
 				}
-			} else if (Actions.LOGOUT.equalsIgnoreCase(action)) {
+				
+			}else if (Actions.LOGOUT.equalsIgnoreCase(action)) {
 				SessionManager.set(request, SessionAttributeNames.USER, null);
 				target = request.getContextPath()+ViewPaths.HOME;
 				redirect=true;
@@ -136,7 +137,6 @@ public class UsuarioServlet extends HttpServlet {
 				target = request.getContextPath()+ViewPaths.LOGIN;
 				redirect=true;
 			}else {
-			
 				// Mmm...
 				logger.error("Action desconocida");
 				// target ?

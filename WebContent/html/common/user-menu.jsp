@@ -9,7 +9,35 @@
 		} else {
 			%>	
 			<!-- usuario autenticado -->
-			<li><%=u.getNombre()%></li>
+			<li> 
+				<script>
+				function desplegarMenu() {
+					  document.getElementById("meumenudes").classList.toggle("show");
+					}
+
+					window.onclick = function(event) {
+						  if (!event.target.matches('.dropbtn')) {
+
+						    var menudess = document.getElementsByClassName("menudes-contido");
+						    var i;
+						    for (i = 0; i < menudess.length; i++) {
+						      var openmenudes = menudess[i];
+						      if (openmenudes.classList.contains('show')) {
+						        openmenudes.classList.remove('show');
+						      }
+						    }
+						  }
+						}
+				</script>
+				<a onclick="desplegarMenu()" class="dropbtn"><%=u.getNombre()%></a>
+				<div id="meumenudes" class="menudes-contido"> 
+	                  <a href="<%=request.getContextPath()%>/User?action=<%=Actions.PRECONFIGURACION%>">Mi Cuenta</a>
+	                  <a href="<%=request.getContextPath()%><%=ViewPaths.BIBLIOTECA%>">Biblioteca</a>
+	                  <a href="<%=request.getContextPath()%><%=ViewPaths.HISTORIALPEDIDO%>">Historial de Pedidos</a>
+	             </div>
+
+			</li>
+	
 			<li><a href="<%=request.getContextPath()%>/usuario?action=logout">Salir</a></li>
 				
 			<%

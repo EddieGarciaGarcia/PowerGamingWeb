@@ -3,8 +3,8 @@
 <%@include file="/html/common/header.jsp"%>
 
 <%		
-		List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.RESULTADOS);	
-		
+		List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.PRESULTADOS);	
+
 		if (resultados!=null && !resultados.isEmpty()) {
 			%>
 			<p>Resultados:</p>

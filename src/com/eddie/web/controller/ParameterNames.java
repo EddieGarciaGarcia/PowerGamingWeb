@@ -1,4 +1,4 @@
-package com.eddie.web.util;
+package com.eddie.web.controller;
 
 public interface ParameterNames {
 
@@ -14,6 +14,8 @@ public interface ParameterNames {
 	public static final String TELEFONO = "telefono";
 	public static final String FECHANACIMIENTO = "fecha_nacimiento";
 	public static final String GENERO = "genero";
+	public static final String NOMBREUSER = "nombreuser";
+	
 	
 	public static final String PAIS = "pais";
 	
