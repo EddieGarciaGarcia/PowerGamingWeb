@@ -1,14 +1,19 @@
     body{
         box-sizing: border-box;
         margin: 0%;
+        background-color:#1c05fe;
+        color:white;
+    }
+    a{
+    text-decoration:none;
+    color:white;
     }
     header{
         width:100%;
-        display:block;
+        display:inline-block;
         height: 100px;
-        background-color: #696969;;
+        background-color: #696969;
         color: azure;
-        box-sizing: border-box;
     }
     #img1{
         top: 30px;
@@ -63,13 +68,14 @@
         background-color: #696969;
         color: azure;
         bottom: 0;
-        position: fixed;
+		display: inline-block;
     }
     section{
 	    position: relative;
-	    top: 100px;
-		left: 25px;
+		left: 100px;
 		width: 90%;
+		height: 90%;
+		display: inline-block;
     }
     
    .dropbtn {
@@ -109,3 +115,29 @@
 .show {
     display: block;
  }
+ 
+.sectionjuegos{
+	position: relative;
+	left: 100px;
+	width: 90%;
+
+	display: inline-block;
+}
+.sectionjuegos a{
+	height: 214px;
+	width: 150px;
+	display:inline-block;
+}
+.sectionjuegos div{
+	height: 214px;
+	width: 150px;
+	margin: 20px;
+	display:inline-block;
+}
+.sectionjuegos p{
+	position: relative;
+	top: -45px;
+	text-align: center;
+	font-size:12px;
+	background-color: #696969;
+}

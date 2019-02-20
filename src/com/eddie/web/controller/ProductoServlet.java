@@ -94,7 +94,17 @@ public class ProductoServlet extends HttpServlet {
 				
 				target = ViewPaths.BUSCADOR;
 				
-			} else {
+			}else if(Actions.JUEGO.equalsIgnoreCase(action)) {
+				String variable=request.getParameter("variable");
+				Integer idJuego= Integer.parseInt(variable);
+				
+				Juego j = jservice.findById(idJuego, "ES");
+				
+				request.setAttribute(AttributeNames.PRESULTADOS, j);
+				logger.error("juego"+idJuego+"id"+j.getIdJuego());
+				target =ViewPaths.JUEGO;
+			}else {
+			
 				// Mmm...
 				logger.error("Action desconocida");
 				// target ?
