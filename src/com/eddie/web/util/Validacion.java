@@ -94,5 +94,71 @@ public class Validacion {
 		}
 	}
 	
+	public static String validTelefono(String telefono) {
+		pattern = Pattern.compile("^[0-9]{9,30}$");
+		if(!StringUtils.isEmptyOrWhitespaceOnly(telefono)) {
+			telefono=telefono.trim();
+			matcher=pattern.matcher(telefono);
+			if(matcher.matches()) {
+				return telefono;
+			}else {
+				System.out.println("troll");
+				return null;
+			}
+		}else {
+			System.out.println(("Campo password obligatorio"));
+			return null;
+		}
+	}
 	
+	public static String validNombreJuego(String nombreJuego) {
+		pattern = Pattern.compile("^[a-zA-ZÒ—·ÈÌÛ˙¡…Õ”⁄0-9]{0,45}$");
+		if(!StringUtils.isEmptyOrWhitespaceOnly(nombreJuego)) {
+			nombreJuego=nombreJuego.trim();
+			matcher=pattern.matcher(nombreJuego);
+			if(matcher.matches()) {
+				return nombreJuego;
+			}else {
+				System.out.println("troll");
+				return null;
+			}
+		}else {
+			System.out.println(("Campo nombre obligatorio"));
+			return null;
+		}
+	}
+	
+	public static String validNombreUser(String nombreuser) {
+		pattern = Pattern.compile("^[A-Za-zÒ—·ÈÌÛ˙¡…Õ”⁄0-9.@_-~#]{5,45}$");
+		if(!StringUtils.isEmptyOrWhitespaceOnly(nombreuser)) {
+			nombreuser=nombreuser.trim();
+			matcher=pattern.matcher(nombreuser);
+			if(matcher.matches()) {
+				return nombreuser;
+			}else {
+				System.out.println("troll");
+				return null;
+			}
+		}else {
+			System.out.println(("Campo password obligatorio"));
+			return null;
+		}
+	}
+	
+	public static String validGenero(String genero) {
+		pattern = Pattern.compile("^[HMO]{1}$");
+		if(!StringUtils.isEmptyOrWhitespaceOnly(genero)) {
+			genero=genero.trim();
+			matcher=pattern.matcher(genero);
+			if(matcher.matches()) {
+				return genero;
+			}else {
+				System.out.println("troll");
+				return null;
+			}
+		}else {
+			System.out.println(("Campo password obligatorio"));
+			return null;
+		}
+	}
 }

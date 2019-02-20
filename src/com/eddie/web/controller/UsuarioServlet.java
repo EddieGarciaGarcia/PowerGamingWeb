@@ -128,10 +128,10 @@ public class UsuarioServlet extends HttpServlet {
 				u.setApellido1(Validacion.validApellido1(apellido1));
 				u.setApellido2(Validacion.validApellido2(apellido2));
 				u.setEmail(Validacion.validEmail(email));
-				u.setTelefono(telefono);
+				u.setTelefono(Validacion.validTelefono(telefono));
 				u.setPassword(Validacion.validPassword(password));
 				u.setFechaNacimiento(fechaformat);
-				u.setGenero(genero);
+				u.setGenero(Validacion.validGenero(genero));
 				u.setNombreUser(nombre+apellido1.charAt(0)+apellido2.charAt(0));
 				
 				userv.create(u);

@@ -26,6 +26,7 @@ import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.web.model.Errors;
+import com.eddie.web.util.Validacion;
 import com.eddie.web.controller.Actions;
 import com.eddie.web.controller.AttributeNames;
 import com.eddie.web.controller.ParameterNames;
@@ -65,7 +66,8 @@ public class ProductoServlet extends HttpServlet {
 
 				// Recuperar parametros
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
-
+				
+				String nombreValid= Validacion.validNombreJuego(nombre);
 				// Limpiar
 				// ...
 
@@ -86,7 +88,7 @@ public class ProductoServlet extends HttpServlet {
 				jc.setCategoria(cat);
 				jc.setIdioma(idiomas);
 				jc.setPlataforma(plataforma);
-				jc.setNombre(nombre);
+				jc.setNombre(nombreValid);
 				List<Juego> resultados;
 				resultados = jservice.findByJuegoCriteria(jc,"ES");
 				
