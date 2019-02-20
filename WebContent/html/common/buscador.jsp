@@ -1,4 +1,4 @@
-<%@ page import="com.eddie.web.util.*" %>
+<%@ page import="com.eddie.web.util.*, com.eddie.web.controller.*" %>
 <%@ page import="java.util.*" %>       
 
 <div id="buscador-form">

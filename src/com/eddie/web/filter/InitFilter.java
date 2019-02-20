@@ -16,16 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.eddie.web.util.Actions;
-import com.eddie.web.util.ParameterNames;
+import com.eddie.web.controller.Actions;
+import com.eddie.web.controller.ParameterNames;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
-import com.eddie.web.util.ViewPaths;
+import com.eddie.web.controller.ViewPaths;
 
 /**
  * Servlet Filter implementation class InitFilter
  */
-@WebFilter("/*")
+@WebFilter("/usuario/*")
 public class InitFilter implements Filter {
 
 	
@@ -42,7 +42,7 @@ public class InitFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-	/*
+	
 		HttpServletRequest httpRequest= (HttpServletRequest) request;
 		HttpServletResponse httpResponse= (HttpServletResponse) response;
 		String action=httpRequest.getParameter(ParameterNames.ACTION);
@@ -53,9 +53,9 @@ public class InitFilter implements Filter {
 			logger.info("Filtro de autentificacion");
 			httpResponse.sendRedirect(httpRequest.getContextPath()+ViewPaths.LOGIN);
 		}else {
-			*/
+			
 			chain.doFilter(request, response);
-//		}
+		}
 		
 	}
 

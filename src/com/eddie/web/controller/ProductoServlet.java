@@ -26,10 +26,10 @@ import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.web.model.Errors;
-import com.eddie.web.util.Actions;
-import com.eddie.web.util.AttributeNames;
-import com.eddie.web.util.ParameterNames;
-import com.eddie.web.util.ViewPaths;
+import com.eddie.web.controller.Actions;
+import com.eddie.web.controller.AttributeNames;
+import com.eddie.web.controller.ParameterNames;
+import com.eddie.web.controller.ViewPaths;
 
 /**
  * Servlet implementation class ProductoServlet

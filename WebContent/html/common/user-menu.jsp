@@ -1,4 +1,4 @@
-<%@ page import="com.eddie.ecommerce.service.*, com.eddie.web.util.*, com.eddie.ecommerce.model.Usuario" %>
+<%@ page import="com.eddie.ecommerce.service.*, com.eddie.web.controller.*,com.eddie.web.util.*, com.eddie.ecommerce.model.Usuario" %>
 
 	<%
 		Usuario u = (Usuario) request.getSession().getAttribute(SessionAttributeNames.USER);

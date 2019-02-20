@@ -25,15 +25,15 @@ import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.PaisServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
-import com.eddie.web.util.Actions;
-import com.eddie.web.util.AttributeNames;
+import com.eddie.web.controller.Actions;
+import com.eddie.web.controller.AttributeNames;
 import com.eddie.web.util.DateUtils;
 import com.eddie.web.util.ErrorCodes;
-import com.eddie.web.util.ParameterNames;
+import com.eddie.web.controller.ParameterNames;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
 import com.eddie.web.util.Validacion;
-import com.eddie.web.util.ViewPaths;
+import com.eddie.web.controller.ViewPaths;
 
 /**
  * Servlet implementation class UsuarioServlet
@@ -97,7 +97,8 @@ public class UsuarioServlet extends HttpServlet {
 					target = ViewPaths.LOGIN;				
 				} else {				
 					SessionManager.set(request, SessionAttributeNames.USER, usuario);		
-					target = ViewPaths.HOME;				
+					target = request.getContextPath()+ViewPaths.HOME;
+					redirect=true;
 				}
 				
 			}else if (Actions.LOGOUT.equalsIgnoreCase(action)) {

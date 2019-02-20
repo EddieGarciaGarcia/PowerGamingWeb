@@ -14,13 +14,9 @@ import org.apache.logging.log4j.Logger;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
-import com.eddie.web.util.Actions;
-import com.eddie.web.util.AttributeNames;
-import com.eddie.web.util.ParameterNames;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
 import com.eddie.web.util.Validacion;
-import com.eddie.web.util.ViewPaths;
 
 /**
  * Servlet implementation class UserServlet

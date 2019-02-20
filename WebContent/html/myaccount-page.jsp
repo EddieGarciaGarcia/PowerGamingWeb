@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.eddie.ecommerce.model.*" %>
+<%@ page import="com.eddie.ecommerce.model.*, com.eddie.web.controller.*" %>
 <%@include file="/html/common/header.jsp"%>
 <section>
 <%@include file="/html/common/action-error.jsp"%>
