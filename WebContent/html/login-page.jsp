@@ -28,7 +28,8 @@
 			<input type="submit" value="Entrar" />
 		</form>
 		<h3>¿No tienes cuenta?</h3>
-		<a href="<%=request.getContextPath()%>/usuario?action=<%=Actions.PREREGISTRO%>">Regístrate</a>
+		<a href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=
+				<%=Actions.PREREGISTRO%>">Regístrate</a>
 </div>
 
 <%@include file="/html/common/footer.jsp"%>

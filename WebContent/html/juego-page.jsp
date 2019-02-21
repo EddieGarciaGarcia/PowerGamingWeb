@@ -5,7 +5,7 @@
 
 	<section class="sjuego">
 		<% 
-			Juego j =(Juego) request.getAttribute(AttributeNames.PRESULTADOS);
+			Juego j =(Juego) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);
 		
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=j.getIdJuego()%>.jpg"></img>

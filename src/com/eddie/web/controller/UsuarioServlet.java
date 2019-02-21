@@ -24,15 +24,15 @@ import com.eddie.ecommerce.service.PaisService;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.PaisServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
+import com.eddie.web.model.ErrorCodes;
 import com.eddie.web.model.Errors;
 import com.eddie.web.controller.Actions;
 import com.eddie.web.controller.AttributeNames;
 import com.eddie.web.util.DateUtils;
-import com.eddie.web.util.ErrorCodes;
 import com.eddie.web.controller.ParameterNames;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
-import com.eddie.web.util.Validacion;
+import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.controller.ViewPaths;
 
 /**
@@ -72,8 +72,8 @@ public class UsuarioServlet extends HttpServlet {
 				String email = request.getParameter(ParameterNames.EMAIL);
 				String password = request.getParameter(ParameterNames.PASSWORD);
 				
-				String emailValid = Validacion.validEmail(email);
-				String passwordValid = Validacion.validPassword(password);
+				String emailValid = LimpiezaValidacion.validEmail(email);
+				String passwordValid = LimpiezaValidacion.validPassword(password);
 				
 				if (StringUtils.isEmpty(emailValid)) {
 					errors.add(ParameterNames.EMAIL,ErrorCodes.MANDATORY_PARAMETER);
@@ -124,14 +124,14 @@ public class UsuarioServlet extends HttpServlet {
 				SimpleDateFormat sdf=(SimpleDateFormat) DateUtils.FORMATODATA;
 				Date fechaformat=sdf.parse(fecha);
 				
-				u.setNombre(Validacion.validNombre(nombre));
-				u.setApellido1(Validacion.validApellido1(apellido1));
-				u.setApellido2(Validacion.validApellido2(apellido2));
-				u.setEmail(Validacion.validEmail(email));
-				u.setTelefono(Validacion.validTelefono(telefono));
-				u.setPassword(Validacion.validPassword(password));
+				u.setNombre(LimpiezaValidacion.validNombre(nombre));
+				u.setApellido1(LimpiezaValidacion.validApellido1(apellido1));
+				u.setApellido2(LimpiezaValidacion.validApellido2(apellido2));
+				u.setEmail(LimpiezaValidacion.validEmail(email));
+				u.setTelefono(LimpiezaValidacion.validTelefono(telefono));
+				u.setPassword(LimpiezaValidacion.validPassword(password));
 				u.setFechaNacimiento(fechaformat);
-				u.setGenero(Validacion.validGenero(genero));
+				u.setGenero(LimpiezaValidacion.validGenero(genero));
 				u.setNombreUser(nombre+apellido1.charAt(0)+apellido2.charAt(0));
 				
 				userv.create(u);

@@ -39,7 +39,7 @@
 					List<Pais> paises= (List<Pais>) request.getAttribute(AttributeNames.PAISES);
 					for(Pais pais: paises){
 						%>
-						<option value="<%pais.getIdPais();%>"><%pais.getNombre();%></option>
+						<option value="<%=pais.getIdPais()%>"><%=pais.getNombre()%></option>
 						<%
 					}
 				%>

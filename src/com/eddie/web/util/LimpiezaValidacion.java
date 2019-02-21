@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import com.mysql.cj.util.StringUtils;
 
-public class Validacion {
+public class LimpiezaValidacion {
 	private static Pattern pattern = null;
 	private static Matcher matcher = null;
 	

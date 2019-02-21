@@ -4,7 +4,7 @@
 <%@include file="/html/common/buscador.jsp"%>
 <section class="sectionjuegos">
 <%		
-		List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.PRESULTADOS);	
+		List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);	
 
 		if (resultados!=null && !resultados.isEmpty()) {
 			%>
@@ -13,7 +13,9 @@
 			for (Juego resultado: resultados) {
 				%>
 					<div>
-					<a href="<%=request.getContextPath()%>/producto?action=<%=Actions.JUEGO%>&variable=<%=resultado.getIdJuego()%>">
+					<a href="<%=ControllerPaths.PRODUCTO%>?
+							<%=ParameterNames.ACTION%>=<%=Actions.JUEGO%>&amp;<%=ParameterNames.ID%>=
+							<%=resultado.getIdJuego()%>">
 						<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=(Integer)resultado.getIdJuego()%>.jpg"></img><p><%=resultado.getNombre()%></p>
 					</a>
 					</div>

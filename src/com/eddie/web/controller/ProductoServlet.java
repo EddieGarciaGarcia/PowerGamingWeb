@@ -26,7 +26,7 @@ import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.web.model.Errors;
-import com.eddie.web.util.Validacion;
+import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.controller.Actions;
 import com.eddie.web.controller.AttributeNames;
 import com.eddie.web.controller.ParameterNames;
@@ -67,7 +67,7 @@ public class ProductoServlet extends HttpServlet {
 				// Recuperar parametros
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
 				
-				String nombreValid= Validacion.validNombreJuego(nombre);
+				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
 				// Limpiar
 				// ...
 
@@ -92,18 +92,18 @@ public class ProductoServlet extends HttpServlet {
 				List<Juego> resultados;
 				resultados = jservice.findByJuegoCriteria(jc,"ES");
 				
-				request.setAttribute(AttributeNames.PRESULTADOS, resultados);
+				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados);
 				
 				target = ViewPaths.BUSCADOR;
 				
 			}else if(Actions.JUEGO.equalsIgnoreCase(action)) {
-				String variable=request.getParameter("variable");
-				Integer idJuego= Integer.parseInt(variable);
+				String id=request.getParameter(ParameterNames.ID);
+				Integer idJuego= Integer.valueOf(id);
 				
 				Juego j = jservice.findById(idJuego, "ES");
 				
-				request.setAttribute(AttributeNames.PRESULTADOS, j);
-				logger.error("juego"+idJuego+"id"+j.getIdJuego());
+				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, j);
+				
 				target =ViewPaths.JUEGO;
 			}else {
 			

@@ -21,6 +21,7 @@ public interface ParameterNames {
 	
 	public static final String PAGIDIOMA="ES";
 	
+	public static final String ID="id";
 	public static final String CATEGORIA="categoria";
 	public static final String CREADOR="creador";
 	public static final String PLATAFORMA="plataforma";

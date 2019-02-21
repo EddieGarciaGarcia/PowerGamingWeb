@@ -11,17 +11,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
+import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
-import com.eddie.web.util.Validacion;
 
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet("/UserServlet")
+@WebServlet("/user")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UsuarioService userv=null; 
@@ -66,24 +67,24 @@ public class UserServlet extends HttpServlet {
 			Usuario userupdate= new Usuario();
 			
 			if(nombre!=null) {
-				userupdate.setNombre(Validacion.validNombre(nombre));
+				userupdate.setNombre(LimpiezaValidacion.validNombre(nombre));
 			}else if(apellido1!=null) {
-				userupdate.setApellido1(Validacion.validApellido1(apellido1));
+				userupdate.setApellido1(LimpiezaValidacion.validApellido1(apellido1));
 			}else if(apellido2!=null) {
-				userupdate.setApellido2(Validacion.validApellido2(apellido2));
+				userupdate.setApellido2(LimpiezaValidacion.validApellido2(apellido2));
 			}else if(telefono!=null) {
 				userupdate.setTelefono(telefono);
 			}else if(passwordconfig!=null) {
-				userupdate.setPassword(Validacion.validPassword(passwordconfig));
+				userupdate.setPassword(LimpiezaValidacion.validPassword(passwordconfig));
 			}else if(nombreUser!=null) {
 				userupdate.setNombreUser(nombreUser);
 			}
 
-			userv.update(userupdate);
+			
 			
 			target = request.getContextPath()+ViewPaths.MYACCOUNT;
 			redirect=true;
-			else {
+			}else {
 				// Mmm...
 				logger.error("Action desconocida");
 				// target ?
@@ -96,7 +97,10 @@ public class UserServlet extends HttpServlet {
 				request.getRequestDispatcher(target).forward(request, response);
 			}
 		
+		
+	
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
