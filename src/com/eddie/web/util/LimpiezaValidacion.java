@@ -17,11 +17,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return email;
 			}else {
-				System.out.println("troll");
+				
 				return null;
 			}
 		}else {
-			System.out.println("Campo email obligatorio");
+			
 			return null;
 		}
 	}
@@ -34,11 +34,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return nombre;
 			}else {
-				System.out.println("troll");
+				
 				return null;
 			}
 		}else {
-			System.out.println(("Campo nombre obligatorio"));
+			
 			return null;
 		}
 	}
@@ -51,11 +51,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return apellido1;
 			}else {
-				System.out.println("troll");
+				
 				return null;
 			}
 		}else {
-			System.out.println(("Campo nombre obligatorio"));
+			
 			return null;
 		}
 	}
@@ -68,11 +68,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return apellido2;
 			}else {
-				System.out.println("troll");
+			
 				return null;
 			}
 		}else {
-			System.out.println(("Campo nombre obligatorio"));
+			
 			return null;
 		}
 	}
@@ -85,11 +85,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return password;
 			}else {
-				System.out.println("troll");
+				
 				return null;
 			}
 		}else {
-			System.out.println(("Campo password obligatorio"));
+			
 			return null;
 		}
 	}
@@ -102,11 +102,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return telefono;
 			}else {
-				System.out.println("troll");
+				
 				return null;
 			}
 		}else {
-			System.out.println(("Campo password obligatorio"));
+			
 			return null;
 		}
 	}
@@ -119,11 +119,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return nombreJuego;
 			}else {
-				System.out.println("troll");
+				
 				return null;
 			}
 		}else {
-			System.out.println(("Campo nombre obligatorio"));
+			
 			return null;
 		}
 	}
@@ -136,11 +136,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return nombreuser;
 			}else {
-				System.out.println("troll");
+				
 				return null;
 			}
 		}else {
-			System.out.println(("Campo password obligatorio"));
+			
 			return null;
 		}
 	}
@@ -153,11 +153,11 @@ public class LimpiezaValidacion {
 			if(matcher.matches()) {
 				return genero;
 			}else {
-				System.out.println("troll");
+				
 				return null;
 			}
 		}else {
-			System.out.println(("Campo password obligatorio"));
+			
 			return null;
 		}
 	}

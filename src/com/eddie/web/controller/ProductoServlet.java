@@ -113,9 +113,9 @@ public class ProductoServlet extends HttpServlet {
 			}
 			request.getRequestDispatcher(target).forward(request, response);	
 			} catch (DataException e) {
-				e.printStackTrace();
+				logger.info(e.getMessage(),e);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.info(e.getMessage(),e);
 			}	
 	}
 

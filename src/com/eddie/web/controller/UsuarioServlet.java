@@ -137,7 +137,42 @@ public class UsuarioServlet extends HttpServlet {
 				userv.create(u);
 				target = request.getContextPath()+ViewPaths.LOGIN;
 				redirect=true;
+			}else if(Actions.PRECONFIGURACION.equalsIgnoreCase(action)) {
+				List<Pais> paises = pserv.findAll();
+				request.setAttribute(AttributeNames.PAISES, paises);
+				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
+				request.setAttribute(AttributeNames.USER, user);
+
+				target = ViewPaths.MYACCOUNT;
+			
+			}else if(Actions.CONFIGURACION.equalsIgnoreCase(action)) {
+				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
+				String nombre=request.getParameter(ParameterNames.NOMBRE);
+				String apellido1=request.getParameter(ParameterNames.APELLIDO1);
+				String apellido2=request.getParameter(ParameterNames.APELLIDO2);
+				String telefono=request.getParameter(ParameterNames.TELEFONO);
+				String passwordconfig=request.getParameter(ParameterNames.PASSWORD);
+				String nombreUser=request.getParameter(ParameterNames.NOMBREUSER);
+				
+				Usuario userupdate=new Usuario();
+				
+				
+				userupdate.setNombre(LimpiezaValidacion.validNombre(nombre));
+				userupdate.setApellido1(LimpiezaValidacion.validApellido1(apellido1));
+				userupdate.setApellido2(LimpiezaValidacion.validApellido2(apellido2));
+				userupdate.setTelefono(LimpiezaValidacion.validTelefono(telefono));
+				userupdate.setPassword(LimpiezaValidacion.validPassword(passwordconfig));
+				userupdate.setNombreUser(LimpiezaValidacion.validNombreUser(nombreUser));
+				userupdate.setEmail(user.getEmail());
+				
+				if(userupdate.getNombre()!=null || userupdate.getApellido1()!=null || userupdate.getApellido2()!=null 
+						|| userupdate.getTelefono()!=null || userupdate.getPassword()!=null || userupdate.getNombreUser()!=null) {
+					userv.update(userupdate);
+				}
+				target = ControllerPaths.USUARIO+"?"+ParameterNames.ACTION+"="+Actions.PRECONFIGURACION;
+				redirect=true;
 			}else {
+					
 				// Mmm...
 				logger.error("Action desconocida");
 				// target ?
@@ -150,11 +185,11 @@ public class UsuarioServlet extends HttpServlet {
 				request.getRequestDispatcher(target).forward(request, response);
 			}
 			} catch (SQLException e) {	
-				e.printStackTrace();
+				logger.info(e.getMessage(),e);
 			} catch (DataException e) {
-				e.printStackTrace();
+				logger.info(e.getMessage(),e);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.info(e.getMessage(),e);
 			}
 	}
 

@@ -10,6 +10,10 @@ public interface Actions {
 	public static final String PRECONFIGURACION="preconfiguracion";
 	public static final String CONFIGURACION="configuracion";
 	
+	public static final String BIBLIOTECA = "biblioteca";
+	public static final String DELETEJUEGO = "borrar_juego";
+	public static final String ADDJUEGO = "anhadir_juego";
+	
 	public static final String JUEGO="juego";
 	public static final String ALLJUEGO="alljuego";
 	public static final String ALLJUEGOVALOR="alljuegovalor";

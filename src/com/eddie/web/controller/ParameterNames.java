@@ -17,6 +17,7 @@ public interface ParameterNames {
 	public static final String NOMBREUSER = "nombreuser";
 	
 	
+	
 	public static final String PAIS = "pais";
 	
 	public static final String PAGIDIOMA="ES";
