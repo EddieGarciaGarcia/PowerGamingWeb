@@ -80,33 +80,38 @@ public class BibliotecaServlet extends HttpServlet {
 				
 				userv.borrarJuegoBiblioteca(user.getEmail(), id);
 				
-				target= ControllerPaths.BIBLIOTECA+"?"+ParameterNames.ACTION+"="+Actions.BIBLIOTECA;
+				target= ControllerPaths.BIBLIOTECA+"?"+ParameterNames.ACTION+"="+Actions.BIBLIOTECA+"&"+ParameterNames.EMAIL+"="+user.getEmail();
 				redirect=true;
 			}else if(Actions.ADDJUEGO.equalsIgnoreCase(action)) {
 				String idJuego = request.getParameter(ParameterNames.ID);
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				Integer id=Integer.valueOf(idJuego);
 				
+				Boolean anhadir=false;
 			
 				ItemBiblioteca it= new ItemBiblioteca();
 				it.setEmail(user.getEmail().toString());
 				it.setIdJuego(id);
 				
 				List<ItemBiblioteca> results=userv.findByUsuario(user.getEmail());
+
 				if(results.size()<1) {
 					userv.addJuegoBiblioteca(it);
-					target=ViewPaths.BIBLIOTECA;
+					target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
 				}else if(results.size()>=1){
-				List<Integer> ids=new ArrayList<Integer>();
-				for(ItemBiblioteca item: results) {
-					if(item.getIdJuego()!=id) {
-						userv.addJuegoBiblioteca(it);
-						
-						target=ViewPaths.BIBLIOTECA;
+					for(ItemBiblioteca item: results) {
+						if(item.getIdJuego()==id) {
+							anhadir=true;
+						}
+					}			
+					if(anhadir==false) {
+						userv.addJuegoBiblioteca(it);	
+						target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
+					}else if(anhadir==true){
+						target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
 					}
 				}
-				}
-				
+				redirect=true;
 			}
 			else {
 				

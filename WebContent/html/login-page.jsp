@@ -15,6 +15,7 @@
 			%>
 		
 			<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.LOGIN%>"/>
+			<label>Escriba su email:</label>
 			<input type="email" name="<%=ParameterNames.EMAIL%>" 
 				placeholder="usuario@ejemplo.com"
 				value="<%=ParamsUtils.getParameter(request, ParameterNames.EMAIL)%>" />
@@ -23,7 +24,8 @@
 					for (String error: parameterErrors) {
 						%><li><%=error%></li><%
 					}
-				%>			
+				%>	
+			<label>Escriba su password:</label>		
 			<input type="password" name="<%=ParameterNames.PASSWORD%>"/>
 			<input type="submit" value="Entrar" />
 		</form>

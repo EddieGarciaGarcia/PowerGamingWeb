@@ -3,7 +3,9 @@ package com.eddie.web.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,15 +20,21 @@ import org.apache.logging.log4j.Logger;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Categoria;
 import com.eddie.ecommerce.model.Idioma;
+import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
 import com.eddie.ecommerce.model.JuegoCriteria;
 import com.eddie.ecommerce.model.Plataforma;
+import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.CategoriaService;
 import com.eddie.ecommerce.service.JuegoService;
+import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
+import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.LimpiezaValidacion;
+import com.eddie.web.util.SessionAttributeNames;
+import com.eddie.web.util.SessionManager;
 import com.eddie.web.controller.Actions;
 import com.eddie.web.controller.AttributeNames;
 import com.eddie.web.controller.ParameterNames;
@@ -43,11 +51,13 @@ public class ProductoServlet extends HttpServlet {
 
 	private JuegoService jservice = null;
 	private CategoriaService cservice=null;
+	private UsuarioService userv=null;
 	
 	public ProductoServlet() {
 		super();
 		jservice = new JuegoServiceImpl();
 		cservice= new CategoriaServiceImpl();
+		userv=new UsuarioServiceImpl();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,7 +73,7 @@ public class ProductoServlet extends HttpServlet {
 			String target = null;
 			
 			if (Actions.BUSCAR.equalsIgnoreCase(action)) {
-
+				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				// Recuperar parametros
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
 				
@@ -92,17 +102,51 @@ public class ProductoServlet extends HttpServlet {
 				List<Juego> resultados;
 				resultados = jservice.findByJuegoCriteria(jc,"ES");
 				
+				// Buscar juegos que tiene incluidos en la biblioteca
+				if(user!=null) {
+					List<ItemBiblioteca> results=userv.findByUsuario(user.getEmail());
+					List<Juego> j=new ArrayList<Juego>();
+					for (ItemBiblioteca it: results) {
+						Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
+						j.add(addjuego);
+					}
+					request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, j);
+				}
+		
 				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados);
 				
 				target = ViewPaths.BUSCADOR;
 				
 			}else if(Actions.JUEGO.equalsIgnoreCase(action)) {
+				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				String id=request.getParameter(ParameterNames.ID);
 				Integer idJuego= Integer.valueOf(id);
 				
-				Juego j = jservice.findById(idJuego, "ES");
+				Juego juego = jservice.findById(idJuego, "ES");
+				//Listado de comentarios
+				List<ItemBiblioteca> comentarios=jservice.findByJuego(juego.getIdJuego());
 				
-				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, j);
+				// Buscar juegos que tiene incluidos en la biblioteca para mostrar o no el boton de añadir
+				if(user!=null) {
+					List<ItemBiblioteca> results=userv.findByUsuario(user.getEmail());
+					List<Juego> j=new ArrayList<Juego>();
+					for (ItemBiblioteca it: results) {
+						Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
+						j.add(addjuego);
+					}
+
+					request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, j);
+				}
+				if(comentarios.size()<1) {
+					Map<Usuario, ItemBiblioteca> comentario= new HashMap<Usuario, ItemBiblioteca>();
+					for(ItemBiblioteca i:comentarios){
+						Usuario u=userv.findById(i.getEmail());
+						comentario.put(u, i);
+					}		
+					request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
+				}	
+				
+				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, juego);
 				
 				target =ViewPaths.JUEGO;
 			}else {

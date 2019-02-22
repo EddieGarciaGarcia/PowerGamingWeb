@@ -134,7 +134,7 @@
 	margin: 20px;
 	display:inline-block;
 }
-.sectionjuegos p{
+.pjuego{
 	position: relative;
 	top: -45px;
 	text-align: center;
@@ -145,4 +145,6 @@
 	width:142px;
 	height:22px;
 	text-decoration:none;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }

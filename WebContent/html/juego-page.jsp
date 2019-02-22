@@ -1,4 +1,4 @@
-<%@ page import="com.eddie.ecommerce.service.*, com.eddie.web.controller.*, java.util.List, com.eddie.ecommerce.model.*" %>
+<%@ page import="com.eddie.ecommerce.service.*, com.eddie.web.controller.*, java.util.List, com.eddie.ecommerce.model.*,java.util.Map" %>
 
 <%@include file="/html/common/header.jsp"%>
 
@@ -6,20 +6,40 @@
 	<section class="sjuego">
 		<% 
 			
-			Juego j =(Juego) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);
-		
+			Juego resultados =(Juego) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);
+			Map<Usuario, ItemBiblioteca> comentarios= (Map<Usuario, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
+			List<Juego> resultadosBiblioteca = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);
+			
 		%>
-		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=j.getIdJuego()%>.jpg"></img>
-		<h1><%=j.getNombre()%></h1>
-		<p><%=j.getFechaLanzamiento() %></p>
+		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
+		<h1><%=resultados.getNombre()%></h1>
+		<p><%=resultados.getFechaLanzamiento() %></p>
 		
 		<% if(u!=null){
+						Boolean mostrar=false;
+						for(Juego j:resultadosBiblioteca){
+							if(resultados.getIdJuego()==j.getIdJuego()){
+								mostrar=true;
+							}
+						}
+						if(mostrar==true){
+							%>
+								<p class="a">Ya esta Añadido</p>
+							<% 
+						}else if(mostrar==false){
+							%>
+								<a class="a" href="<%=ControllerPaths.BIBLIOTECA%>?
+									<%=ParameterNames.ACTION%>=<%=Actions.ADDJUEGO%>&amp;<%=ParameterNames.ID%>=
+									<%=resultados.getIdJuego()%>"><button>Añadir a la Biblioteca</button></a>
+							<% 
+								
+						}
 						%>
-		<a class="a" href="<%=ControllerPaths.BIBLIOTECA%>?
-							<%=ParameterNames.ACTION%>=<%=Actions.ADDJUEGO%>&amp;<%=ParameterNames.ID%>=
-							<%=j.getIdJuego()%>">Añadir a la Biblioteca</a>
-		<%}%>
+						
+		<%}
 		
+		%>
+				
 	</section>
 	
 <%@include file="/html/common/footer.jsp"%>
