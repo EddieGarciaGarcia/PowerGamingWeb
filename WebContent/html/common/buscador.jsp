@@ -27,7 +27,7 @@
 			</select>
 			<input type="text"
 					name="<%=ParameterNames.NOMBRE%>" 
-					value="<%=ParamsUtils.getParameter(request, ParameterNames.NOMBRE) %>"/>
+					value="<%=ParamsUtils.getParameter(request, ParameterNames.NOMBRE) %>" minlength="0" maxlength="45"/>
 					
 			<input type="submit" name="buscar" value="Buscar"/>
 		</form>

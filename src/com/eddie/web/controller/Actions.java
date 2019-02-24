@@ -9,6 +9,7 @@ public interface Actions {
 	public static final String REGISTRO="registro";
 	public static final String PRECONFIGURACION="preconfiguracion";
 	public static final String CONFIGURACION="configuracion";
+	public static final String MENSAGE="mensage";
 	
 	public static final String BIBLIOTECA = "biblioteca";
 	public static final String DELETEJUEGO = "borrar_juego";

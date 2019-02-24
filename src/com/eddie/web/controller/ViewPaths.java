@@ -10,4 +10,5 @@ public interface ViewPaths {
 	public static final String BIBLIOTECA = "/html/biblioteca-page.jsp";
 	public static final String HISTORIALPEDIDO = "/html/historialpedido-page.jsp";
 	public static final String JUEGO = "/html/juego-page.jsp";
+	public static final String CONTACTO="/html/contacto-page.jsp";
 }

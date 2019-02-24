@@ -18,7 +18,8 @@
 			<label>Escriba su email:</label>
 			<input type="email" name="<%=ParameterNames.EMAIL%>" 
 				placeholder="usuario@ejemplo.com"
-				value="<%=ParamsUtils.getParameter(request, ParameterNames.EMAIL)%>" />
+				value="<%=ParamsUtils.getParameter(request, ParameterNames.EMAIL)%>" required 
+				minlength="8" maxlength="75"/>
 				<%
 					parameterErrors = errors.getErrors(ParameterNames.EMAIL);
 					for (String error: parameterErrors) {
@@ -26,7 +27,7 @@
 					}
 				%>	
 			<label>Escriba su password:</label>		
-			<input type="password" name="<%=ParameterNames.PASSWORD%>"/>
+			<input type="password" name="<%=ParameterNames.PASSWORD%>" required minlength="8" maxlength="30"/>
 			<input type="submit" value="Entrar" />
 		</form>
 		<h3>¿No tienes cuenta?</h3>

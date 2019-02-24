@@ -114,10 +114,8 @@ public class BibliotecaServlet extends HttpServlet {
 				redirect=true;
 			}
 			else {
-				
-				// Mmm...
 				logger.error("Action desconocida");
-				// target ?
+				target= ViewPaths.HOME;
 			}
 			if(redirect==true) {
 				logger.info("Redirect to "+target);

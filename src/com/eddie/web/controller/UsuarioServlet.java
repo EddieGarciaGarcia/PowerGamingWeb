@@ -171,11 +171,11 @@ public class UsuarioServlet extends HttpServlet {
 				}
 				target = ControllerPaths.USUARIO+"?"+ParameterNames.ACTION+"="+Actions.PRECONFIGURACION;
 				redirect=true;
+			}else if(Actions.MENSAGE.equalsIgnoreCase(action)) {
+				
 			}else {
-					
-				// Mmm...
 				logger.error("Action desconocida");
-				// target ?
+				target= ViewPaths.HOME;
 			}
 			if(redirect==true) {
 				logger.info("Redirect to "+target);

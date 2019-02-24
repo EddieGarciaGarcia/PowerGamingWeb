@@ -71,6 +71,7 @@ public class ProductoServlet extends HttpServlet {
 
 			Errors errors = new Errors(); 
 			String target = null;
+			boolean redirect=false;
 			
 			if (Actions.BUSCAR.equalsIgnoreCase(action)) {
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
@@ -150,10 +151,16 @@ public class ProductoServlet extends HttpServlet {
 				
 				target =ViewPaths.JUEGO;
 			}else {
-			
-				// Mmm...
 				logger.error("Action desconocida");
-				// target ?
+				target= ViewPaths.HOME;
+				
+			}
+			if(redirect==true) {
+				logger.info("Redirect to "+target);
+				response.sendRedirect(target);
+			}else {
+				logger.info("forwarding to "+target);
+				request.getRequestDispatcher(target).forward(request, response);
 			}
 			request.getRequestDispatcher(target).forward(request, response);	
 			} catch (DataException e) {
