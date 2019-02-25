@@ -175,7 +175,7 @@ public class UsuarioServlet extends HttpServlet {
 				
 			}else {
 				logger.error("Action desconocida");
-				target= ViewPaths.HOME;
+				target= request.getContextPath()+ViewPaths.ERROR404;
 			}
 			if(redirect==true) {
 				logger.info("Redirect to "+target);

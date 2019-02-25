@@ -10,6 +10,9 @@
 			Map<Usuario, ItemBiblioteca> comentarios= (Map<Usuario, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
 			List<Juego> resultadosBiblioteca = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);
 			
+			resultadosBiblioteca.forEach(j -> System.out.println(j.getNombre()));
+			
+			
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
 		<h1><%=resultados.getNombre()%></h1>
@@ -37,6 +40,8 @@
 						%>
 						
 		<%}
+	   
+	     
 		
 		%>
 				

@@ -161,8 +161,7 @@ public class ProductoServlet extends HttpServlet {
 			}else {
 				logger.info("forwarding to "+target);
 				request.getRequestDispatcher(target).forward(request, response);
-			}
-			request.getRequestDispatcher(target).forward(request, response);	
+			}	
 			} catch (DataException e) {
 				logger.info(e.getMessage(),e);
 			} catch (SQLException e) {
@@ -172,7 +171,6 @@ public class ProductoServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -97,7 +97,7 @@ public class BibliotecaServlet extends HttpServlet {
 
 				if(results.size()<1) {
 					userv.addJuegoBiblioteca(it);
-					target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
+					target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.BUSCAR+"&"+ParameterNames.ID+"="+id;
 				}else if(results.size()>=1){
 					for(ItemBiblioteca item: results) {
 						if(item.getIdJuego()==id) {
