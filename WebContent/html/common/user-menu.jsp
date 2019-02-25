@@ -34,7 +34,7 @@
 	                <a href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.PRECONFIGURACION%>">Mi Cuenta</a>
 	               	<a href="<%=ControllerPaths.BIBLIOTECA%>?<%=ParameterNames.ACTION%>=<%=Actions.BIBLIOTECA%>&amp;<%=ParameterNames.EMAIL%>=<%=u.getEmail()%>">Biblioteca</a>
 	                <a href="<%=request.getContextPath()%><%=ViewPaths.HISTORIALPEDIDO%>">Historial de Pedidos</a>
-	            	<a href="<%=request.getContextPath()%><%=ViewPaths.CONTACTO%>">Contacto Rápido</a>
+
 	             </div>
 
 			</li>

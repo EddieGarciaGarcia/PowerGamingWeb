@@ -15,7 +15,7 @@ public interface ParameterNames {
 	public static final String FECHANACIMIENTO = "fecha_nacimiento";
 	public static final String GENERO = "genero";
 	public static final String NOMBREUSER = "nombreuser";
-	
+	public static final String MENSAGE="mensage";
 	
 	public static final String CONTROLLER = "controlador";
 	public static final String PAIS = "pais";

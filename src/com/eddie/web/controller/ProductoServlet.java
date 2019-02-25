@@ -138,7 +138,7 @@ public class ProductoServlet extends HttpServlet {
 
 					request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, j);
 				}
-				if(comentarios.size()<1) {
+				if(comentarios.size()>0) {
 					Map<Usuario, ItemBiblioteca> comentario= new HashMap<Usuario, ItemBiblioteca>();
 					for(ItemBiblioteca i:comentarios){
 						Usuario u=userv.findById(i.getEmail());

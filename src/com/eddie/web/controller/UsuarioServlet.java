@@ -20,8 +20,10 @@ import org.apache.logging.log4j.Logger;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Pais;
 import com.eddie.ecommerce.model.Usuario;
+import com.eddie.ecommerce.service.MailService;
 import com.eddie.ecommerce.service.PaisService;
 import com.eddie.ecommerce.service.UsuarioService;
+import com.eddie.ecommerce.service.impl.MailServiceImpl;
 import com.eddie.ecommerce.service.impl.PaisServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.ErrorCodes;
@@ -46,11 +48,13 @@ public class UsuarioServlet extends HttpServlet {
 	
 	private UsuarioService userv=null;
 	private PaisService pserv=null; 
+	private MailService mservice=null;
 	
     public UsuarioServlet() {
         super();
         userv=new UsuarioServiceImpl();
         pserv=new PaisServiceImpl();
+        mservice=new MailServiceImpl();
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -172,7 +176,16 @@ public class UsuarioServlet extends HttpServlet {
 				target = ControllerPaths.USUARIO+"?"+ParameterNames.ACTION+"="+Actions.PRECONFIGURACION;
 				redirect=true;
 			}else if(Actions.MENSAGE.equalsIgnoreCase(action)) {
+				Usuario u=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
+				String mensage= request.getParameter(ParameterNames.MENSAGE);
+				if(u!=null) {
+					mservice.sendMail("powergaming2019@gmail.com",u.getEmail(), mensage);
+				}else {
+					String email= request.getParameter(ParameterNames.EMAIL);
+					mservice.sendMail("powergaming2019@gmail.com",email, mensage);
+				}
 				
+				target=ViewPaths.CONTACTO;
 			}else {
 				logger.error("Action desconocida");
 				target= request.getContextPath()+ViewPaths.ERROR404;

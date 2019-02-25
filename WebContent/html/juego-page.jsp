@@ -1,5 +1,4 @@
 <%@ page import="com.eddie.ecommerce.service.*, com.eddie.web.controller.*, java.util.List, com.eddie.ecommerce.model.*,java.util.Map" %>
-
 <%@include file="/html/common/header.jsp"%>
 
 
@@ -8,10 +7,7 @@
 			
 			Juego resultados =(Juego) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);
 			Map<Usuario, ItemBiblioteca> comentarios= (Map<Usuario, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
-			List<Juego> resultadosBiblioteca = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);
-			
-			resultadosBiblioteca.forEach(j -> System.out.println(j.getNombre()));
-			
+			List<Juego> resultadosBiblioteca = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);		
 			
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
@@ -40,7 +36,26 @@
 						%>
 						
 		<%}
-	   
+ 
+			comentarios.forEach((k,v) -> {
+				%>
+				<div class="comentario">
+					<p><%=k.getNombreUser()%></p>
+					<p><%=v.getFechaComentario()%></p>
+					<p><%=v.getComentario()%></p>
+				</div>
+				<%
+			});
+		
+		if(u!=null){
+			%>
+			<div class="comentario">
+				<p>Tu comentario <%=u.getNombreUser()%> :</p>
+				<textarea rows="10" cols="50" name=""><%=comentarios.get(u.getNombreUser()).getComentario()%></textarea>
+				<a href="">Modificar</a>			
+			</div>
+			<%
+		}
 	     
 		
 		%>
