@@ -186,6 +186,14 @@ public class UsuarioServlet extends HttpServlet {
 				}
 				
 				target=ViewPaths.CONTACTO;
+			}else if(Actions.FORGOTPASS.equalsIgnoreCase(action)) {
+				String email= request.getParameter(ParameterNames.EMAIL);
+				String emailvalid=LimpiezaValidacion.validEmail(email);
+				//buscas el usuario que tiene el email si no hay no se envia el correo y te lleva a registrarse
+				mservice.sendMail(emailvalid,"Restauracion de contraseña", 
+						"<a href='"+request.getContextPath()+ControllerPaths.USUARIO+
+						"?"+ParameterNames.ACTION+"="+Actions.FORGOTPASS+"'></a>");
+				
 			}else {
 				logger.error("Action desconocida");
 				target= request.getContextPath()+ViewPaths.ERROR404;

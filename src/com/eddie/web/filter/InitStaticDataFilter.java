@@ -14,8 +14,17 @@ import javax.servlet.annotation.WebFilter;
 
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Categoria;
+import com.eddie.ecommerce.model.Creador;
+import com.eddie.ecommerce.model.Idioma;
+import com.eddie.ecommerce.model.Plataforma;
 import com.eddie.ecommerce.service.CategoriaService;
+import com.eddie.ecommerce.service.CreadorService;
+import com.eddie.ecommerce.service.IdiomaService;
+import com.eddie.ecommerce.service.PlataformaService;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
+import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
+import com.eddie.ecommerce.service.impl.IdiomaServiceImpl;
+import com.eddie.ecommerce.service.impl.PlataformaServiceImpl;
 
 /**
  * Servlet Filter implementation class InitStaticDataFilter
@@ -24,9 +33,15 @@ import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 public class InitStaticDataFilter implements Filter {
 
 	private CategoriaService cservice=null;
+	private CreadorService crservice=null;
+	private PlataformaService pservice=null;
+	private IdiomaService iservice=null;
 	
     public InitStaticDataFilter() {
     	cservice = new CategoriaServiceImpl();
+    	crservice= new CreadorServiceImpl();
+    	pservice = new PlataformaServiceImpl();
+    	iservice= new IdiomaServiceImpl();
     }
 
 	
@@ -38,8 +53,9 @@ public class InitStaticDataFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		try {
 			List<Categoria> categorias= cservice.findAll("ES");
-			
-			
+			List<Creador> creador= crservice.findAll();
+			List<Plataforma> plataformas=pservice.findAll();
+			List<Idioma> idioma=iservice.findAll("ES"); 
 			
 			
 		} catch (SQLException e) {

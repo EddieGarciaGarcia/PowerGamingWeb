@@ -1,4 +1,5 @@
-<%@ page import="com.eddie.ecommerce.service.*, com.eddie.web.controller.*, java.util.List, com.eddie.ecommerce.model.*,java.util.Map" %>
+<%@ page import="com.eddie.ecommerce.service.*, com.eddie.web.controller.*, java.util.List, com.eddie.ecommerce.model.*,java.util.Map, java.io.IOException,java.io.*" %>
+
 <%@include file="/html/common/header.jsp"%>
 
 
@@ -38,13 +39,15 @@
 		<%}
  
 			comentarios.forEach((k,v) -> {
-				%>
+				try{%>
 				<div class="comentario">
 					<p><%=k.getNombreUser()%></p>
 					<p><%=v.getFechaComentario()%></p>
 					<p><%=v.getComentario()%></p>
 				</div>
-				<%
+				<%}catch(IOException e){
+					throw new UncheckedIOException(e);
+				}
 			});
 		
 		if(u!=null){

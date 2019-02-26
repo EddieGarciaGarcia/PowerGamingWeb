@@ -30,6 +30,7 @@
 			<input type="password" name="<%=ParameterNames.PASSWORD%>" required minlength="8" maxlength="30"/>
 			<input type="submit" value="Entrar" />
 		</form>
+		<a href="<%=request.getContextPath()%><%=ViewPaths.FORGETPASS%>">Olvide mi password</a>
 		<h3>¿No tienes cuenta?</h3>
 		<a href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=
 				<%=Actions.PREREGISTRO%>">Regístrate</a>

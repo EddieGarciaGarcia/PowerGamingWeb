@@ -50,13 +50,11 @@ public class ProductoServlet extends HttpServlet {
 	private static Logger logger = LogManager.getLogger(ProductoServlet.class);
 
 	private JuegoService jservice = null;
-	private CategoriaService cservice=null;
 	private UsuarioService userv=null;
 	
 	public ProductoServlet() {
 		super();
 		jservice = new JuegoServiceImpl();
-		cservice= new CategoriaServiceImpl();
 		userv=new UsuarioServiceImpl();
 	}
 	
