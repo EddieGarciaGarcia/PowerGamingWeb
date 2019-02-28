@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Categoria;
+import com.eddie.ecommerce.model.Creador;
 import com.eddie.ecommerce.model.Idioma;
 import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
@@ -26,10 +27,16 @@ import com.eddie.ecommerce.model.JuegoCriteria;
 import com.eddie.ecommerce.model.Plataforma;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.CategoriaService;
+import com.eddie.ecommerce.service.CreadorService;
+import com.eddie.ecommerce.service.IdiomaService;
 import com.eddie.ecommerce.service.JuegoService;
+import com.eddie.ecommerce.service.PlataformaService;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
+import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
+import com.eddie.ecommerce.service.impl.IdiomaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
+import com.eddie.ecommerce.service.impl.PlataformaServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.LimpiezaValidacion;
@@ -51,11 +58,19 @@ public class ProductoServlet extends HttpServlet {
 
 	private JuegoService jservice = null;
 	private UsuarioService userv=null;
+	private CategoriaService cservice=null;
+	private PlataformaService pservice=null;
+	private IdiomaService iservice=null;
+	private CreadorService crservice=null;
 	
 	public ProductoServlet() {
 		super();
 		jservice = new JuegoServiceImpl();
 		userv=new UsuarioServiceImpl();
+		cservice=new CategoriaServiceImpl();
+		pservice= new PlataformaServiceImpl();
+		iservice = new IdiomaServiceImpl();
+		crservice= new CreadorServiceImpl();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -75,8 +90,17 @@ public class ProductoServlet extends HttpServlet {
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				// Recuperar parametros
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
+				String categoria=request.getParameter(ParameterNames.CATEGORIA);
+				String creador=request.getParameter(ParameterNames.CREADOR);
+				//String[] plataforma=request.getParameter(ParameterNames.PLATAFORMA);
+				//String[] idioma=request.getParameter(ParameterNames.IDIOMA);
+				String fecha=request.getParameter(ParameterNames.FECHA);
 				
 				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
+			
+				
+					 
+			   
 				// Limpiar
 				// ...
 
@@ -86,17 +110,39 @@ public class ProductoServlet extends HttpServlet {
 				// if hasErrors
 
 				// else
+				
+
+			       
+
+			          
+				
 				JuegoCriteria jc=new JuegoCriteria();
 				Idioma idiom=new Idioma();
 				List<Idioma>idiomas=new ArrayList<Idioma>();
 				Plataforma plataf=new Plataforma();
-				List<Plataforma> plataforma=new ArrayList<Plataforma>();
+				List<Plataforma> plataformas=new ArrayList<Plataforma>();
 				Categoria ca=new Categoria();
 				List<Categoria> cat=new ArrayList<Categoria>();
 				
-				jc.setCategoria(cat);
+				
+				if(categoria!=null) {
+					Integer categoriaValid= Integer.valueOf(categoria);
+					ca.setIdCategria(categoriaValid);
+					cat.add(ca);
+				}
+				if(idiomas!=null) {
+					
+				}
+				if(plataformas!=null) {
+					
+				}
+				if(creador!=null) {
+					Integer creadorValid=Integer.valueOf(creador);
+					jc.setIdCreador(creadorValid);
+				}
 				jc.setIdioma(idiomas);
-				jc.setPlataforma(plataforma);
+				jc.setPlataforma(plataformas);
+				jc.setCategoria(cat);
 				jc.setNombre(nombreValid);
 				List<Juego> resultados;
 				resultados = jservice.findByJuegoCriteria(jc,"ES");
@@ -122,6 +168,11 @@ public class ProductoServlet extends HttpServlet {
 				Integer idJuego= Integer.valueOf(id);
 				
 				Juego juego = jservice.findById(idJuego, "ES");
+				List<Categoria> categoria=cservice.findByJuego(idJuego, "ES");
+				List<Plataforma> plataforma=pservice.findByJuego(idJuego);
+				List<Idioma> idioma=iservice.findByJuego(idJuego, "ES");
+				Creador creador=crservice.findbyIdCreador(juego.getIdCreador());
+				
 				//Listado de comentarios
 				List<ItemBiblioteca> comentarios=jservice.findByJuego(juego.getIdJuego());
 				
@@ -144,7 +195,10 @@ public class ProductoServlet extends HttpServlet {
 					}		
 					request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
 				}	
-				
+				request.setAttribute(AttributeNames.CATEGORIA_JUEGO,categoria);
+				request.setAttribute(AttributeNames.CREADOR_JUEGO, creador);
+				request.setAttribute(AttributeNames.PLATAFORMA_JUEGO, plataforma);
+				request.setAttribute(AttributeNames.IDIOMA_JUEGO, idioma);
 				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, juego);
 				
 				target =ViewPaths.JUEGO;

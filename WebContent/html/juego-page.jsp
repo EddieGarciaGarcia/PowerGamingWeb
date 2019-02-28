@@ -9,11 +9,19 @@
 			Juego resultados =(Juego) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);
 			Map<Usuario, ItemBiblioteca> comentarios= (Map<Usuario, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
 			List<Juego> resultadosBiblioteca = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);		
-			
+			List<Categoria> categoria=(List<Categoria>) request.getAttribute(AttributeNames.CATEGORIA_JUEGO);
+			List<Plataforma> plataforma=(List<Plataforma>)request.getAttribute(AttributeNames.PLATAFORMA_JUEGO);
+			List<Idioma> idioma=(List<Idioma>)request.getAttribute(AttributeNames.IDIOMA_JUEGO);
+			Creador creador=(Creador)request.getAttribute(AttributeNames.CREADOR_JUEGO);
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
 		<h1><%=resultados.getNombre()%></h1>
-		<p><%=resultados.getFechaLanzamiento() %></p>
+		<p>Fecha de Lanzamiento : <%=resultados.getFechaLanzamiento() %><br>
+		Creador : <%=creador.getNombre()%><br>
+		Categorias : <%for(Categoria c: categoria){%><%=c.getNombre()%> <%}%><br>
+		Plataformas disponibles: <%for(Plataforma p: plataforma){%><%=p.getNombre()%> <%}%><br>
+		Idiomas disponibles : <%for(Idioma i: idioma){%><%=i.getNombre()%> <%}%>
+		</p>
 		
 		<% if(u!=null){
 						Boolean mostrar=false;
@@ -37,30 +45,18 @@
 						%>
 						
 		<%}
- 
-			comentarios.forEach((k,v) -> {
-				try{%>
-				<div class="comentario">
-					<p><%=k.getNombreUser()%></p>
-					<p><%=v.getFechaComentario()%></p>
-					<p><%=v.getComentario()%></p>
-				</div>
-				<%}catch(IOException e){
-					throw new UncheckedIOException(e);
-				}
-			});
 		
 		if(u!=null){
 			%>
 			<div class="comentario">
 				<p>Tu comentario <%=u.getNombreUser()%> :</p>
-				<textarea rows="10" cols="50" name=""><%=comentarios.get(u.getNombreUser()).getComentario()%></textarea>
+				<textarea rows="10" cols="50" name=""></textarea>
 				<a href="">Modificar</a>			
 			</div>
 			<%
+		}else{
+			
 		}
-	     
-		
 		%>
 				
 	</section>

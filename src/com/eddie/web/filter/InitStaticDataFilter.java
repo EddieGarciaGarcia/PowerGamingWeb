@@ -34,26 +34,26 @@ import com.eddie.ecommerce.service.impl.IdiomaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.PlataformaServiceImpl;
 import com.eddie.web.controller.AttributeNames;
-import com.eddie.web.controller.ParameterNames;
+
 
 /**
  * Servlet Filter implementation class InitStaticDataFilter
  */
-@WebFilter("/index.jsp/*")
+@WebFilter("/*")
 public class InitStaticDataFilter implements Filter {
-
 	private CategoriaService cservice=null;
 	private CreadorService crservice=null;
 	private PlataformaService pservice=null;
 	private IdiomaService iservice=null;
+	
 	private JuegoService jservice=null;
 	private Logger logger=LogManager.getLogger(InitFilter.class);
 	
     public InitStaticDataFilter() {
-    	cservice = new CategoriaServiceImpl();
+    	cservice=new CategoriaServiceImpl();
     	crservice= new CreadorServiceImpl();
-    	pservice = new PlataformaServiceImpl();
-    	iservice= new IdiomaServiceImpl();
+    	pservice= new PlataformaServiceImpl();
+    	iservice = new IdiomaServiceImpl();
     	jservice= new JuegoServiceImpl();
     }
 
@@ -63,20 +63,30 @@ public class InitStaticDataFilter implements Filter {
 		try {
 			HttpServletRequest httpRequest= (HttpServletRequest) request;
 			HttpServletResponse httpResponse= (HttpServletResponse) response;
+
+			List<Juego> todos=jservice.findAllByDate();
+			List<Juego> valoracion=jservice.findAllByValoración();
 			
 			List<Categoria> categorias= cservice.findAll("ES");
 			List<Creador> creador= crservice.findAll();
 			List<Plataforma> plataformas=pservice.findAll();
 			List<Idioma> idioma=iservice.findAll("ES"); 
 			
-			List<Juego> todos=jservice.findAllByDate();
-			List<Juego> valoracion=jservice.findAllByValoración();
+			request.setAttribute(AttributeNames.CATEGORIA_RESULTADOS, categorias);
+			request.setAttribute(AttributeNames.CREADOR_RESULTADOS, creador);
+			request.setAttribute(AttributeNames.PLATAFORMA_RESULTADOS, plataformas);
+			request.setAttribute(AttributeNames.IDIOMA_RESULTADOS, idioma);
 			if(logger.isDebugEnabled()) {
 				logger.debug(todos);
 				logger.debug(valoracion);
+				logger.debug(categorias);
+				logger.debug(creador);
+				logger.debug(plataformas);
+				logger.debug(idioma);
 			}
 			request.setAttribute(AttributeNames.RESULTADOS_TODOS, todos);
 			request.setAttribute(AttributeNames.RESULTADOS_TODOS_VALOR, valoracion);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (DataException e) {

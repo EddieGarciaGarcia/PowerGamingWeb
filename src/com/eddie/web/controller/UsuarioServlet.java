@@ -189,10 +189,20 @@ public class UsuarioServlet extends HttpServlet {
 			}else if(Actions.FORGOTPASS.equalsIgnoreCase(action)) {
 				String email= request.getParameter(ParameterNames.EMAIL);
 				String emailvalid=LimpiezaValidacion.validEmail(email);
-				//buscas el usuario que tiene el email si no hay no se envia el correo y te lleva a registrarse
+				Usuario u=userv.findById(emailvalid);
+				if(u==null) {
+					target=ControllerPaths.USUARIO+"?"+ParameterNames.ACTION+"="+Actions.PREREGISTRO;
+					redirect=true;
+				}else {
+					String enlace="http://localhost:8080/"+request.getContextPath()+ViewPaths.CHANGEPASS+"?"+ParameterNames.EMAIL+"="+emailvalid;
 				mservice.sendMail(emailvalid,"Restauracion de contraseña", 
-						"<a href='"+request.getContextPath()+ControllerPaths.USUARIO+
-						"?"+ParameterNames.ACTION+"="+Actions.CHANGEPASS+"&"+ParameterNames.EMAIL+"="+emailvalid+"'></a>");
+						"<html><h2>Power Gaming</h2><h4>Pulse en enlace o copielo entero para cambiar su contraseña:</h4>"
+						+ "<a href='"+enlace+"'>Restablecer contraseña</a><p>"+enlace+"</p></html>");
+					
+				target=request.getContextPath()+ViewPaths.HOME;
+				redirect=true;
+				}
+			}else if(Actions.CHANGEPASS.equalsIgnoreCase(action)){
 				
 			}else {
 				logger.error("Action desconocida");
