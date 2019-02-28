@@ -28,18 +28,11 @@ import com.eddie.web.controller.ViewPaths;
 @WebFilter("/usuario/*")
 public class InitFilter implements Filter {
 
-	
 	private Logger logger=LogManager.getLogger(InitFilter.class);
 	
-	
-    public InitFilter() {
-        
-    }
+    public InitFilter() {}
 
-
-	public void destroy() {
-		
-	}
+	public void destroy() {}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 	
@@ -50,7 +43,6 @@ public class InitFilter implements Filter {
 			&& !Actions.PREREGISTRO.equals(action) 
 			&& !Actions.LOGIN.equals(action) 
 			&& !Actions.MENSAGE.equals(action)
-			&& !Actions.FORGOTPASS.equals(action)
 			&& (SessionManager.get((HttpServletRequest)request, SessionAttributeNames.USER))==null) {
 			logger.info("Filtro de autentificacion");
 			httpResponse.sendRedirect(httpRequest.getContextPath()+ViewPaths.LOGIN);

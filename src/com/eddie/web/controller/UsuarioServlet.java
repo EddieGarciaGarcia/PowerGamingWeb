@@ -192,7 +192,7 @@ public class UsuarioServlet extends HttpServlet {
 				//buscas el usuario que tiene el email si no hay no se envia el correo y te lleva a registrarse
 				mservice.sendMail(emailvalid,"Restauracion de contraseña", 
 						"<a href='"+request.getContextPath()+ControllerPaths.USUARIO+
-						"?"+ParameterNames.ACTION+"="+Actions.FORGOTPASS+"'></a>");
+						"?"+ParameterNames.ACTION+"="+Actions.CHANGEPASS+"&"+ParameterNames.EMAIL+"="+emailvalid+"'></a>");
 				
 			}else {
 				logger.error("Action desconocida");
