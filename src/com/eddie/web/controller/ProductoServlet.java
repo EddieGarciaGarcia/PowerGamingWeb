@@ -90,10 +90,10 @@ public class ProductoServlet extends HttpServlet {
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				// Recuperar parametros
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
-				String categoria=request.getParameter(ParameterNames.CATEGORIA);
+				String[] categoria=request.getParameterValues(ParameterNames.CATEGORIA);
 				String creador=request.getParameter(ParameterNames.CREADOR);
 				//String[] plataforma=request.getParameter(ParameterNames.PLATAFORMA);
-				//String[] idioma=request.getParameter(ParameterNames.IDIOMA);
+				//String[] idioma=request.getParameter(ParameterNames.IDIOMA); 
 				String fecha=request.getParameter(ParameterNames.FECHA);
 				
 				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
