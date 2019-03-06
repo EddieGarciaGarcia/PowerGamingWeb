@@ -2,7 +2,10 @@ package com.eddie.web.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +42,8 @@ import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.PlataformaServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
+import com.eddie.web.util.ArrayUtils;
+import com.eddie.web.util.DateUtils;
 import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
@@ -92,15 +97,13 @@ public class ProductoServlet extends HttpServlet {
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
 				String[] categoria=request.getParameterValues(ParameterNames.CATEGORIA);
 				String creador=request.getParameter(ParameterNames.CREADOR);
-				//String[] plataforma=request.getParameter(ParameterNames.PLATAFORMA);
-				//String[] idioma=request.getParameter(ParameterNames.IDIOMA); 
+				String[] plataforma=request.getParameterValues(ParameterNames.PLATAFORMA);
+				String[] idioma=request.getParameterValues(ParameterNames.IDIOMA); 
 				String fecha=request.getParameter(ParameterNames.FECHA);
 				
-				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
-			
 				
-					 
-			   
+				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
+				
 				// Limpiar
 				// ...
 
@@ -111,41 +114,34 @@ public class ProductoServlet extends HttpServlet {
 
 				// else
 				
-
-			       
-
-			          
 				
 				JuegoCriteria jc=new JuegoCriteria();
-				Idioma idiom=new Idioma();
-				List<Idioma>idiomas=new ArrayList<Idioma>();
-				Plataforma plataf=new Plataforma();
-				List<Plataforma> plataformas=new ArrayList<Plataforma>();
-				Categoria ca=new Categoria();
-				List<Categoria> cat=new ArrayList<Categoria>();
 				
 				
-				if(categoria!=null) {
-					Integer categoriaValid= Integer.valueOf(categoria);
-					ca.setIdCategria(categoriaValid);
-					cat.add(ca);
-				}
-				if(idiomas!=null) {
+					if(nombreValid!=null && nombreValid!="") {
+						jc.setNombre(nombreValid);
+					}
+					if(categoria!=null) {
+						jc.setCategoria(ArrayUtils.arrayCategoria(categoria));
+					}
+					if(idioma!=null) {
+						jc.setIdiomas(ArrayUtils.arrayIdioma(idioma));
+					}
+					if(plataforma!=null) {
+						jc.setPlataformas(ArrayUtils.arrayPlataforma(plataforma));
+					}
+					if(creador!=null) {
+						Integer creadorValid=Integer.valueOf(creador);
+						jc.setIdCreador(creadorValid);
+					}if(fecha!=null) {
+						Integer fechaformat=Integer.valueOf(fecha);
+						jc.setFechaLanzamiento(fechaformat);
+					}else {
+						jc.setNombre(nombreValid);
+					}
 					
-				}
-				if(plataformas!=null) {
 					
-				}
-				if(creador!=null) {
-					Integer creadorValid=Integer.valueOf(creador);
-					jc.setIdCreador(creadorValid);
-				}
-				jc.setIdioma(idiomas);
-				jc.setPlataforma(plataformas);
-				jc.setCategoria(cat);
-				jc.setNombre(nombreValid);
-				List<Juego> resultados;
-				resultados = jservice.findByJuegoCriteria(jc,"ES");
+				List<Juego> resultados = jservice.findByJuegoCriteria(jc,"ES");
 				
 				// Buscar juegos que tiene incluidos en la biblioteca
 				if(user!=null) {
@@ -218,7 +214,7 @@ public class ProductoServlet extends HttpServlet {
 				logger.info(e.getMessage(),e);
 			} catch (SQLException e) {
 				logger.info(e.getMessage(),e);
-			}	
+			} 
 	}
 
 	

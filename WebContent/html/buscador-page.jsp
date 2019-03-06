@@ -24,6 +24,7 @@
 					<% if(u!=null){
 						Boolean mostrar=false;
 						List<Juego> resultadosBiblioteca = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);
+						
 						for(Juego j:resultadosBiblioteca){
 							if(resultado.getIdJuego()==j.getIdJuego()){
 								mostrar=true;
@@ -49,9 +50,9 @@
 		
 				<%
 					}
+			}else{
+				%><h2>No se han encontrado resultados</h2><%
 			}
-			%><%
-		
-%>
+			%>
 </section>
 <%@include file="/html/common/footer.jsp"%>

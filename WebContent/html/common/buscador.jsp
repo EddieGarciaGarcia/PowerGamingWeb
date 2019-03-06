@@ -8,39 +8,48 @@
 		List<Plataforma> plataforma= (List<Plataforma>) request.getAttribute(AttributeNames.PLATAFORMA_RESULTADOS);
 		List<Idioma> idioma= (List<Idioma>) request.getAttribute(AttributeNames.IDIOMA_RESULTADOS);
 	%>
+	<script>
+		function ver(n) {
+        	document.getElementById("meumenudes"+n).style.display="block"
+        }
+		function ocultar(n) {
+        	document.getElementById("meumenudes"+n).style.display="none"
+        }
+	</script>
 		<form action="<%=ControllerPaths.PRODUCTO%>" method="post">	
 			<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.BUSCAR%>"/>
-			<label>Categoria:</label>
-			<select name="<%=ParameterNames.CATEGORIA%>">
-			<option value="" selected disabled>Escoge</option>
+			<a onmouseover="ver(1)" onmouseout="ocultar(1)" class="dropbtn">Categoria:
+			<div id="meumenudes1" class="menu-search" > 
+			
 				<%for(Categoria c: categoria){%>
-				<option value="<%=c.getIdCategria()%>"><%=c.getNombre()%></option>
+				<input type="checkbox" name="<%=ParameterNames.CATEGORIA%>" value="<%=c.getIdCategria()%>"><%=c.getNombre()%></option>
 				<%}%>
-			</select>
+			</div>
+			</a>
 			<label>Creador:</label>
 			<select name="<%=ParameterNames.CREADOR%>">
-			<option value="" selected disabled>Escoge</option>
+			<option selected disabled>Escoge</option>
 				<%for(Creador cr: creador){%>
 				<option value="<%=cr.getIdCreador()%>"><%=cr.getNombre()%></option>
 				<%} %>
 			</select>
-			<label>Plataforma:</label>
-			<select name="<%=ParameterNames.PLATAFORMA%>">
-			<option value="" selected disabled>Escoge</option>
+			<a onmouseover="ver(2)" onmouseout="ocultar(2)" class="dropbtn">Plataforma:
+			<div id="meumenudes2" class="menu-search2"> 
 				<%for(Plataforma p: plataforma){%>
-				<option value="<%=p.getIdPlatadorma()%>"><%=p.getNombre()%></option>
+				<input type="checkbox" name="<%=ParameterNames.PLATAFORMA%>" value="<%=p.getIdPlatadorma()%>"><%=p.getNombre()%></option>
 				<%} %>
-			</select>
-			<label>Idioma:</label>
-			<select name="<%=ParameterNames.IDIOMA%>">
-			<option value="" selected disabled>Escoge</option>
+			</div>
+			</a>
+			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dropbtn"s>Idioma:
+			<div id="meumenudes3" class="menu-search3"> 
 				<%for(Idioma i: idioma){%>
-				<option value="<%=i.getIdIdioma()%>"><%=i.getNombre()%></option>
+				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"><%=i.getNombre()%></option>
 				<%} %>
-			</select>
+			</div>
+			</a>
 			<label>Fecha:</label>
 			<select name="<%=ParameterNames.FECHA%>">
-				<option value="" selected disabled>Escoge</option>
+				<option  selected disabled>Escoge</option>
 				<option value="1990">1990</option>
                 <option value="1991">1991</option>
                 <option value="1992">1992</option>
