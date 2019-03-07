@@ -2,10 +2,7 @@ package com.eddie.web.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +40,6 @@ import com.eddie.ecommerce.service.impl.PlataformaServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.ArrayUtils;
-import com.eddie.web.util.DateUtils;
 import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
@@ -107,7 +103,7 @@ public class ProductoServlet extends HttpServlet {
 				// Limpiar
 				// ...
 
-				// Validar
+				// Validar Arrays e creador
 				//..
 
 				// if hasErrors

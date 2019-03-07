@@ -22,6 +22,7 @@
 		Plataformas disponibles: <%for(Plataforma p: plataforma){%><%=p.getNombre()%> <%}%><br>
 		Idiomas disponibles : <%for(Idioma i: idioma){%><%=i.getNombre()%> <%}%>
 		</p>
+		<div><video src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.mp4" width="640" height="480" controls></video></div>
 		
 		<% if(u!=null){
 						Boolean mostrar=false;
