@@ -1,13 +1,7 @@
 package com.eddie.web.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.eddie.ecommerce.model.Categoria;
-import com.eddie.ecommerce.model.Idioma;
-import com.eddie.ecommerce.model.Plataforma;
-
 public class ArrayUtils {
+	/*
 	public static List<Categoria> arrayCategoria(String [] arrayParameter){
 		
 			String[] categoria = arrayParameter;	
@@ -19,7 +13,17 @@ public class ArrayUtils {
 			}
 			return categorias;
 		}
+	*/
 	
+	public static final int[] asInteger(String ss[]) {
+		int[] ii = new int[ss.length];
+		for (int i = 0; i<ss.length; i++) {
+			ii[i] = Integer.valueOf(ss[i]);
+		}
+		return ii;
+	}
+	
+	/*
 	public static List<Idioma> arrayIdioma(String [] arrayParameter){
 			
 			String[] idioma = arrayParameter;	
@@ -31,7 +35,8 @@ public class ArrayUtils {
 			}
 			return idiomas;
 		}
-	
+	*/
+	/*
 	public static List<Plataforma> arrayPlataforma(String [] arrayParameter){
 		
 		String[] plataforma = arrayParameter;		
@@ -43,5 +48,6 @@ public class ArrayUtils {
 		}
 		return lista;
 	}
+	*/
 	
 }

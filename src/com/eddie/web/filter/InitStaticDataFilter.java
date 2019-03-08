@@ -2,6 +2,7 @@ package com.eddie.web.filter;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.Filter;
@@ -63,9 +64,18 @@ public class InitStaticDataFilter implements Filter {
 		try {
 			HttpServletRequest httpRequest= (HttpServletRequest) request;
 			HttpServletResponse httpResponse= (HttpServletResponse) response;
-
-			List<Juego> todos=jservice.findAllByDate();
-			List<Juego> valoracion=jservice.findAllByValoración();
+	
+			Enumeration<String> headerNames = httpRequest.getHeaderNames();
+			while (headerNames.hasMoreElements()) {
+				String headerName = headerNames.nextElement();
+				String headerValue = httpRequest.getHeader(headerName);
+				if(logger.isDebugEnabled()) {
+					logger.debug(headerName+"="+headerValue);
+				}
+			}
+			
+			List<Juego> todos=jservice.findAllByDate("ES");
+			List<Juego> valoracion=jservice.findAllByValoracion("ES");
 			
 			List<Categoria> categorias= cservice.findAll("ES");
 			List<Creador> creador= crservice.findAll();

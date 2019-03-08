@@ -9,20 +9,16 @@
 			Juego resultados =(Juego) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);
 			Map<Usuario, ItemBiblioteca> comentarios= (Map<Usuario, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
 			List<Juego> resultadosBiblioteca = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);		
-			List<Categoria> categoria=(List<Categoria>) request.getAttribute(AttributeNames.CATEGORIA_JUEGO);
-			List<Plataforma> plataforma=(List<Plataforma>)request.getAttribute(AttributeNames.PLATAFORMA_JUEGO);
-			List<Idioma> idioma=(List<Idioma>)request.getAttribute(AttributeNames.IDIOMA_JUEGO);
 			Creador creador=(Creador)request.getAttribute(AttributeNames.CREADOR_JUEGO);
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
 		<h1><%=resultados.getNombre()%></h1>
 		<p>Fecha de Lanzamiento : <%=resultados.getFechaLanzamiento() %><br>
 		Creador : <%=creador.getNombre()%><br>
-		Categorias : <%for(Categoria c: categoria){%><%=c.getNombre()%> <%}%><br>
-		Plataformas disponibles: <%for(Plataforma p: plataforma){%><%=p.getNombre()%> <%}%><br>
-		Idiomas disponibles : <%for(Idioma i: idioma){%><%=i.getNombre()%> <%}%>
+		Categorias : <%for(Categoria c: resultados.getCategoria()){%><%=c.getNombre()%> <%}%><br>
+		Plataformas disponibles: <%for(Plataforma p: resultados.getPlataformas()){%><%=p.getNombre()%> <%}%><br>
+		Idiomas disponibles : <%for(Idioma i: resultados.getIdiomas()){%><%=i.getNombre()%> <%}%>
 		</p>
-		<div><video src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.mp4" width="640" height="480" controls></video></div>
 		
 		<% if(u!=null){
 						Boolean mostrar=false;
@@ -45,8 +41,9 @@
 						}
 						%>
 						
-		<%}
-		
+						
+		<%}%>
+		<div><video src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.mp4" width="640" height="480" controls></video></div>	<% 
 		if(u!=null){
 			%>
 			<div class="comentario">
@@ -59,7 +56,7 @@
 			
 		}
 		%>
-				
+			
 	</section>
 	
 <%@include file="/html/common/footer.jsp"%>
