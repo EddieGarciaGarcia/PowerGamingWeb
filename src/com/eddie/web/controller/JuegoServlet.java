@@ -43,17 +43,17 @@ import com.eddie.web.controller.ViewPaths;
  * Servlet implementation class ProductoServlet
  */
 @WebServlet("/producto")
-public class ProductoServlet extends HttpServlet {
+public class JuegoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger logger = LogManager.getLogger(ProductoServlet.class);
+	private static Logger logger = LogManager.getLogger(JuegoServlet.class);
 
 	private JuegoService jservice = null;
 	private UsuarioService userv=null;
 
 	private CreadorService crservice=null;
 	
-	public ProductoServlet() {
+	public JuegoServlet() {
 		super();
 		jservice = new JuegoServiceImpl();
 		userv=new UsuarioServiceImpl();

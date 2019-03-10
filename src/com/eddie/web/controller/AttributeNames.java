@@ -11,11 +11,7 @@ public interface AttributeNames {
 	public static final String BIBLIOTECA_RESULTADOS = "biblioteca_resultados";
 	public static final String PRODUCTO_RESULTADOS = "producto_resultados";
 	
-	public static final String CATEGORIA_JUEGO="categoria_juego";
 	public static final String CREADOR_JUEGO="creador_juego";
-	public static final String PLATAFORMA_JUEGO="plataforma_juego";
-	public static final String IDIOMA_JUEGO="idioma_juego";
-
 	
 	public static final String CATEGORIA_RESULTADOS = "categoria_resultados";
 	public static final String CREADOR_RESULTADOS = "creador_resultados";
