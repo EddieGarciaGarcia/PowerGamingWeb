@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link href="<%=request.getContextPath()%>/html/css/index.css" rel="stylesheet" type="text/css">
     <script type="text/Javascript" href="<%=request.getContextPath()%>/html/js/index.js"></script>
-	<!--  .js .css -->
+	<script type="text/Javascript" href="<%=request.getContextPath()%>/html/js/fucniones.js"></script>
 </head>
 
 <body>
