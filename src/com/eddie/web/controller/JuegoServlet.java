@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.eddie.ecommerce.service.Resultados;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Creador;
 import com.eddie.ecommerce.model.ItemBiblioteca;
@@ -34,6 +36,9 @@ import com.eddie.web.util.ArrayUtils;
 import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
+import com.eddie.web.util.WebUtils;
+import com.eddie.web.config.ConfigurationManager;
+import com.eddie.web.config.ConfigurationParameterNames;
 import com.eddie.web.controller.Actions;
 import com.eddie.web.controller.AttributeNames;
 import com.eddie.web.controller.ParameterNames;
@@ -45,7 +50,15 @@ import com.eddie.web.controller.ViewPaths;
 @WebServlet("/producto")
 public class JuegoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private static int pageSize = Integer.valueOf(
+			ConfigurationManager.getInstance().getParameter(
+						ConfigurationParameterNames.RESULTS_PAGE_SIZE_DEFAULT)); 
 
+	private static int pagingPageCount = Integer.valueOf(
+			ConfigurationManager.getInstance().getParameter(
+						ConfigurationParameterNames.RESULTS_PAGING_PAGE_COUNT)); 
+	
 	private static Logger logger = LogManager.getLogger(JuegoServlet.class);
 
 	private JuegoService jservice = null;
@@ -72,6 +85,7 @@ public class JuegoServlet extends HttpServlet {
 			Errors errors = new Errors(); 
 			String target = null;
 			boolean redirect=false;
+			boolean hasErrors = false;
 			
 			if (Actions.BUSCAR.equalsIgnoreCase(action)) {
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
@@ -95,52 +109,69 @@ public class JuegoServlet extends HttpServlet {
 				// if hasErrors
 
 				// else
-				
-				
-				JuegoCriteria jc=new JuegoCriteria();
-				
-				
-					if(nombreValid!=null && nombreValid!="") {
-						jc.setNombre(nombreValid);
-					}
-					if(categorias!=null) {
-						//jc.setCategoria(ArrayUtils.arrayCategoria(categoria));
-						jc.setCategoriaIDs(ArrayUtils.asInteger(categorias));
-					}
-					if(idioma!=null) {
-						jc.setIdiomaIDs(idioma);
-					}
-					if(plataforma!=null) {
-						jc.setPlataformaIDs(ArrayUtils.asInteger(plataforma));
-					}
-					if(creador!=null) {
-						Integer creadorValid=Integer.valueOf(creador);
-						jc.setIdCreador(creadorValid);
-					}if(fecha!=null) {
-						Integer fechaformat=Integer.valueOf(fecha);
-						jc.setFechaLanzamiento(fechaformat);
-					}else {
-						jc.setNombre(nombreValid);
-					}
+				if (hasErrors) {
+					
+					target = ViewPaths.BUSCADOR;
+				} else {
+					int page = WebUtils.
+							getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
+					
+					JuegoCriteria jc=new JuegoCriteria();
 					
 					
-				List<Juego> resultados = jservice.findByJuegoCriteria(jc,"ES");
-				
-				// Buscar juegos que tiene incluidos en la biblioteca
-				if(user!=null) {
-					List<ItemBiblioteca> results=userv.findByUsuario(user.getEmail());
-					List<Juego> j=new ArrayList<Juego>();
-					for (ItemBiblioteca it: results) {
-						Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
-						j.add(addjuego);
+						if(nombreValid!=null && nombreValid!="") {
+							jc.setNombre(nombreValid);
+						}
+						if(categorias!=null) {
+							//jc.setCategoria(ArrayUtils.arrayCategoria(categoria));
+							jc.setCategoriaIDs(ArrayUtils.asInteger(categorias));
+						}
+						if(idioma!=null) {
+							jc.setIdiomaIDs(idioma);
+						}
+						if(plataforma!=null) {
+							jc.setPlataformaIDs(ArrayUtils.asInteger(plataforma));
+						}
+						if(creador!=null) {
+							Integer creadorValid=Integer.valueOf(creador);
+							jc.setIdCreador(creadorValid);
+						}if(fecha!=null) {
+							Integer fechaformat=Integer.valueOf(fecha);
+							jc.setFechaLanzamiento(fechaformat);
+						}else {
+							jc.setNombre(nombreValid);
+						}
+						
+						
+					Resultados<Juego> resultados = jservice.findByJuegoCriteria(jc,"ES",(page-1)*pageSize+1, pageSize);
+					
+					// Buscar juegos que tiene incluidos en la biblioteca
+					if(user!=null) {
+						Resultados<ItemBiblioteca> results=userv.findByUsuario(user.getEmail(),(page-1)*pageSize+1, pageSize);
+						List<Juego> j=new ArrayList<Juego>();
+						Iterator iterador= ((Iterable<Throwable>) results).iterator();
+						for (ItemBiblioteca it: results) {
+							Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
+							j.add(addjuego);
+						}
+						request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, j);
 					}
-					request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, j);
+					
+					request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados.getResultados());
+					request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
+					
+					int totalPages = (int) Math.ceil(resultados.getTotal()/(double)pageSize);
+					int firstPagedPage = Math.max(1, page-pagingPageCount);
+					int lastPagedPage = Math.min(totalPages, page+pagingPageCount);
+					request.setAttribute(ParameterNames.PAGE, page);
+					request.setAttribute(AttributeNames.TOTAL_PAGES, totalPages);
+					request.setAttribute(AttributeNames.FIRST_PAGED_PAGES, firstPagedPage);
+					request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
+					
+					
+					target = ViewPaths.BUSCADOR;
+				
 				}
-		
-				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados);
-				
-				target = ViewPaths.BUSCADOR;
-				
 			}else if(Actions.JUEGO.equalsIgnoreCase(action)) {
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				String id=request.getParameter(ParameterNames.ID);
@@ -154,7 +185,7 @@ public class JuegoServlet extends HttpServlet {
 				
 				// Buscar juegos que tiene incluidos en la biblioteca para mostrar o no el boton de añadir
 				if(user!=null) {
-					List<ItemBiblioteca> results=userv.findByUsuario(user.getEmail());
+					Resultados<ItemBiblioteca> results=userv.findByUsuario(user.getEmail(),(1)*pageSize+1, pageSize);
 					List<Juego> j=new ArrayList<Juego>();
 					for (ItemBiblioteca it: results) {
 						Juego addjuego=jservice.findById(it.getIdJuego(), "ES");

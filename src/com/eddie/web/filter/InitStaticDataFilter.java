@@ -29,12 +29,17 @@ import com.eddie.ecommerce.service.CreadorService;
 import com.eddie.ecommerce.service.IdiomaService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.PlataformaService;
+import com.eddie.ecommerce.service.Resultados;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
 import com.eddie.ecommerce.service.impl.IdiomaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.PlataformaServiceImpl;
+import com.eddie.web.config.ConfigurationManager;
+import com.eddie.web.config.ConfigurationParameterNames;
 import com.eddie.web.controller.AttributeNames;
+import com.eddie.web.controller.ParameterNames;
+import com.eddie.web.util.WebUtils;
 
 
 /**
@@ -49,6 +54,14 @@ public class InitStaticDataFilter implements Filter {
 	
 	private JuegoService jservice=null;
 	private Logger logger=LogManager.getLogger(InitFilter.class);
+	
+	private static int pageSize = Integer.valueOf(
+			ConfigurationManager.getInstance().getParameter(
+						ConfigurationParameterNames.RESULTS_PAGE_SIZE_DEFAULT)); 
+
+	private static int pagingPageCount = Integer.valueOf(
+			ConfigurationManager.getInstance().getParameter(
+						ConfigurationParameterNames.RESULTS_PAGING_PAGE_COUNT)); 
 	
     public InitStaticDataFilter() {
     	cservice=new CategoriaServiceImpl();
@@ -74,7 +87,10 @@ public class InitStaticDataFilter implements Filter {
 				}
 			}
 			
-			List<Juego> todos=jservice.findAllByDate("ES");
+			int page = WebUtils.
+					getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
+			
+			Resultados<Juego> todos=jservice.findAllByDate("ES",(page-1)*pageSize+1, pageSize);
 			List<Juego> valoracion=jservice.findAllByValoracion("ES");
 			
 			List<Categoria> categorias= cservice.findAll("ES");
@@ -94,7 +110,20 @@ public class InitStaticDataFilter implements Filter {
 				logger.debug(plataformas);
 				logger.debug(idioma);
 			}
-			request.setAttribute(AttributeNames.RESULTADOS_TODOS, todos);
+			
+			request.setAttribute(AttributeNames.RESULTADOS_TODOS, todos.getResultados());
+			request.setAttribute(AttributeNames.TOTAL, todos.getTotal());
+			
+			int totalPages = (int) Math.ceil(todos.getTotal()/(double)pageSize);
+			int firstPagedPage = Math.max(1, page-pagingPageCount);
+			int lastPagedPage = Math.min(totalPages, page+pagingPageCount);
+			request.setAttribute(ParameterNames.PAGE, page);
+			request.setAttribute(AttributeNames.TOTAL_PAGES, totalPages);
+			request.setAttribute(AttributeNames.FIRST_PAGED_PAGES, firstPagedPage);
+			request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
+			
+			
+			
 			request.setAttribute(AttributeNames.RESULTADOS_TODOS_VALOR, valoracion);
 			
 		} catch (SQLException e) {

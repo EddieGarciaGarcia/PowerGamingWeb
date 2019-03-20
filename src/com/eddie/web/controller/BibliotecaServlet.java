@@ -15,6 +15,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.eddie.ecommerce.service.Resultados;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
@@ -23,9 +24,12 @@ import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
+import com.eddie.web.config.ConfigurationManager;
+import com.eddie.web.config.ConfigurationParameterNames;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
+import com.eddie.web.util.WebUtils;
 
 /**
  * Servlet implementation class BibliotecaServlet
@@ -33,6 +37,15 @@ import com.eddie.web.util.SessionManager;
 @WebServlet("/biblioteca")
 public class BibliotecaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private static int pageSize = Integer.valueOf(
+			ConfigurationManager.getInstance().getParameter(
+						ConfigurationParameterNames.RESULTS_PAGE_SIZE_DEFAULT)); 
+
+	private static int pagingPageCount = Integer.valueOf(
+			ConfigurationManager.getInstance().getParameter(
+						ConfigurationParameterNames.RESULTS_PAGING_PAGE_COUNT));
+	
 	private static Logger logger = LogManager.getLogger(UsuarioServlet.class);  
 	
 	private JuegoService jservice = null;
@@ -60,15 +73,28 @@ public class BibliotecaServlet extends HttpServlet {
 			if(Actions.BIBLIOTECA.equalsIgnoreCase(action)) {
 				String email = request.getParameter(ParameterNames.EMAIL);
 				
-				List<ItemBiblioteca> results=userv.findByUsuario(email);
+				int page = WebUtils.
+						getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
 				
-				List<Juego> resultados=new ArrayList<Juego>();
+				Resultados<ItemBiblioteca> results=userv.findByUsuario(email,(page-1)*pageSize+1, pageSize);
+				
+				Resultados<Juego> resultados=null;
 				for (ItemBiblioteca it: results) {
 					Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
-					resultados.add(addjuego);
+					((List<Juego>) resultados).add(addjuego);
 				}
 
-				request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, resultados);
+				request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, resultados.getResultados());
+				request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
+				
+				int totalPages = (int) Math.ceil(resultados.getTotal()/(double)pageSize);
+				int firstPagedPage = Math.max(1, page-pagingPageCount);
+				int lastPagedPage = Math.min(totalPages, page+pagingPageCount);
+				request.setAttribute(ParameterNames.PAGE, page);
+				request.setAttribute(AttributeNames.TOTAL_PAGES, totalPages);
+				request.setAttribute(AttributeNames.FIRST_PAGED_PAGES, firstPagedPage);
+				request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
+				
 				
 				target= ViewPaths.BIBLIOTECA;
 				
@@ -92,7 +118,7 @@ public class BibliotecaServlet extends HttpServlet {
 				it.setEmail(user.getEmail().toString());
 				it.setIdJuego(id);
 				
-				List<ItemBiblioteca> results=userv.findByUsuario(user.getEmail());
+				List<ItemBiblioteca> results=(List<ItemBiblioteca>) userv.findByUsuario(user.getEmail(),1,1);
 
 				if(results.size()<1) {
 					userv.addJuegoBiblioteca(it);
