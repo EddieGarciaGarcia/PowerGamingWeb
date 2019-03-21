@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,13 +48,10 @@ public class BibliotecaServlet extends HttpServlet {
 						ConfigurationParameterNames.RESULTS_PAGING_PAGE_COUNT));
 	
 	private static Logger logger = LogManager.getLogger(UsuarioServlet.class);  
-	
-	private JuegoService jservice = null;
 	private UsuarioService userv=null;
 	
     public BibliotecaServlet() {
         super();
-        jservice = new JuegoServiceImpl();
         userv=new UsuarioServiceImpl();
     }
 
@@ -78,16 +76,15 @@ public class BibliotecaServlet extends HttpServlet {
 				
 				Resultados<ItemBiblioteca> results=userv.findByUsuario(email,(page-1)*pageSize+1, pageSize);
 				
-				Resultados<Juego> resultados=null;
-				for (ItemBiblioteca it: results) {
-					Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
-					((List<Juego>) resultados).add(addjuego);
-				}
-
-				request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, resultados.getResultados());
-				request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
+				//Lambda expresion stream collectors
+				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
 				
-				int totalPages = (int) Math.ceil(resultados.getTotal()/(double)pageSize);
+				
+				
+				request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, juegoIDs);
+				request.setAttribute(AttributeNames.TOTAL, results.getTotal());
+				
+				int totalPages = (int) Math.ceil(results.getTotal()/(double)pageSize);
 				int firstPagedPage = Math.max(1, page-pagingPageCount);
 				int lastPagedPage = Math.min(totalPages, page+pagingPageCount);
 				request.setAttribute(ParameterNames.PAGE, page);
@@ -115,10 +112,10 @@ public class BibliotecaServlet extends HttpServlet {
 				Boolean anhadir=false;
 			
 				ItemBiblioteca it= new ItemBiblioteca();
-				it.setEmail(user.getEmail().toString());
+				it.setEmail(user.getEmail());
 				it.setIdJuego(id);
 				
-				List<ItemBiblioteca> results=(List<ItemBiblioteca>) userv.findByUsuario(user.getEmail(),1,1);
+				List<ItemBiblioteca> results=userv.findByUsuario(user.getEmail(),1,1);
 
 				if(results.size()<1) {
 					userv.addJuegoBiblioteca(it);

@@ -144,13 +144,12 @@ public class JuegoServlet extends HttpServlet {
 						
 						
 					Resultados<Juego> resultados = jservice.findByJuegoCriteria(jc,"ES",(page-1)*pageSize+1, pageSize);
-					
+					List<Juego> j=new ArrayList<Juego>();
 					// Buscar juegos que tiene incluidos en la biblioteca
 					if(user!=null) {
 						Resultados<ItemBiblioteca> results=userv.findByUsuario(user.getEmail(),(page-1)*pageSize+1, pageSize);
-						List<Juego> j=new ArrayList<Juego>();
-						Iterator iterador= ((Iterable<Throwable>) results).iterator();
-						for (ItemBiblioteca it: results) {
+						
+						for (ItemBiblioteca it: results.getResultados()) {
 							Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
 							j.add(addjuego);
 						}
@@ -187,10 +186,10 @@ public class JuegoServlet extends HttpServlet {
 				if(user!=null) {
 					Resultados<ItemBiblioteca> results=userv.findByUsuario(user.getEmail(),(1)*pageSize+1, pageSize);
 					List<Juego> j=new ArrayList<Juego>();
-					for (ItemBiblioteca it: results) {
-						Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
-						j.add(addjuego);
-					}
+//					for (ItemBiblioteca it: results) {
+//						Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
+//						j.add(addjuego);
+//					}
 
 					request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, j);
 				}
