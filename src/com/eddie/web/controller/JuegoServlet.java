@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -85,10 +86,10 @@ public class JuegoServlet extends HttpServlet {
 			Errors errors = new Errors(); 
 			String target = null;
 			boolean redirect=false;
-			boolean hasErrors = false;
+			boolean hasErrors = false;			
+			Usuario user = (Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 			
-			if (Actions.BUSCAR.equalsIgnoreCase(action)) {
-				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
+			if (Actions.BUSCAR.equalsIgnoreCase(action)) {				
 				// Recuperar parametros
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
 				String[] categorias=request.getParameterValues(ParameterNames.CATEGORIA);
@@ -144,16 +145,12 @@ public class JuegoServlet extends HttpServlet {
 						
 						
 					Resultados<Juego> resultados = jservice.findByJuegoCriteria(jc,"ES",(page-1)*pageSize+1, pageSize);
-					List<Juego> j=new ArrayList<Juego>();
 					// Buscar juegos que tiene incluidos en la biblioteca
 					if(user!=null) {
-						Resultados<ItemBiblioteca> results=userv.findByUsuario(user.getEmail(),(page-1)*pageSize+1, pageSize);
+						List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList()); 						
+						List<Integer> idsJuegosEnBiblioteca = jsevice.existsInBiblioteca(idsJuegos, user.getEmail());
 						
-						for (ItemBiblioteca it: results.getResultados()) {
-							Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
-							j.add(addjuego);
-						}
-						request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, j);
+						request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
 					}
 					
 					request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados.getResultados());
@@ -172,7 +169,7 @@ public class JuegoServlet extends HttpServlet {
 				
 				}
 			}else if(Actions.JUEGO.equalsIgnoreCase(action)) {
-				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
+				
 				String id=request.getParameter(ParameterNames.ID);
 				Integer idJuego= Integer.valueOf(id);
 				

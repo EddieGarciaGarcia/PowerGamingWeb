@@ -49,10 +49,12 @@ public class BibliotecaServlet extends HttpServlet {
 	
 	private static Logger logger = LogManager.getLogger(UsuarioServlet.class);  
 	private UsuarioService userv=null;
+	private JuegoService jservice = null;
 	
     public BibliotecaServlet() {
         super();
         userv=new UsuarioServiceImpl();
+        jservice = new JuegoServiceImpl();
     }
 
 
@@ -79,9 +81,9 @@ public class BibliotecaServlet extends HttpServlet {
 				//Lambda expresion stream collectors
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
 				
+				List<Juegos> juegos =jservice.findByIDs(juegosIDS,"ES");
 				
-				
-				request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, juegoIDs);
+				request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, juegos);
 				request.setAttribute(AttributeNames.TOTAL, results.getTotal());
 				
 				int totalPages = (int) Math.ceil(results.getTotal()/(double)pageSize);
@@ -115,7 +117,7 @@ public class BibliotecaServlet extends HttpServlet {
 				it.setEmail(user.getEmail());
 				it.setIdJuego(id);
 				
-				List<ItemBiblioteca> results=userv.findByUsuario(user.getEmail(),1,1);
+				List<ItemBiblioteca> results=userv.findByUsuarioComprobar(user.getEmail());
 
 				if(results.size()<1) {
 					userv.addJuegoBiblioteca(it);

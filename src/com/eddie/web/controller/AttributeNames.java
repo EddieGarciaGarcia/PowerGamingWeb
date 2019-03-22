@@ -8,7 +8,7 @@ public interface AttributeNames {
 	public static final String COMENTARIOS_USER = "comentario_user";
 	public static final String COMENTARIOS_JUEGO = "comentarios_juego";
 	
-	public static final String BIBLIOTECA_RESULTADOS = "biblioteca_resultados";
+	public static final String PRODUCTOS_EN_BIBLIOTECA = "biblioteca_resultados";
 	public static final String PRODUCTO_RESULTADOS = "producto_resultados";
 	
 	public static final String CREADOR_JUEGO="creador_juego";
