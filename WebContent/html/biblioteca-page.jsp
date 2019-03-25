@@ -2,7 +2,7 @@
 <%@include file="/html/common/header.jsp"%>
 <section class="biblioteca">
 		<% 
-			List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);
+			List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA);
 		
 		if (resultados!=null && !resultados.isEmpty()) {
 			%>

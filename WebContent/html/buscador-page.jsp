@@ -7,7 +7,7 @@
 		
 		List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);	
 
-	     List<Integer> idsJuegosEnBiblioteca = (List<Integer>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);
+	    List<Integer> idsJuegosEnBiblioteca = (List<Integer>) request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);
 	
 		
 
@@ -24,22 +24,21 @@
 						<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=(Integer)resultado.getIdJuego()%>.jpg"></img><p class="pjuego"><%=resultado.getNombre()%></p>
 					</a>
 					
-					<% 
-					    mostrart = (u!=null) && ();
-
-					    if (mostrar==true){
+					<% if(u!=null){ 
+						boolean mostrar=idsJuegosEnBiblioteca.contains(resultado.getIdJuego());
+						    if (mostrar==true){
+								%>
+									<p class="a">Ya esta Añadido</p>
+								<% 
+							}else{
+								%>
+									<a class="a" href="<%=ControllerPaths.BIBLIOTECA%>?
+										<%=ParameterNames.ACTION%>=<%=Actions.ADDJUEGO%>&amp;<%=ParameterNames.ID%>=
+										<%=resultado.getIdJuego()%>"><button>Añadir a la Biblioteca</button></a>
+								<% 
+									
+							}
 							%>
-								<p class="a">Ya esta Añadido</p>
-							<% 
-						}else if(mostrar==false){
-							%>
-								<a class="a" href="<%=ControllerPaths.BIBLIOTECA%>?
-									<%=ParameterNames.ACTION%>=<%=Actions.ADDJUEGO%>&amp;<%=ParameterNames.ID%>=
-									<%=resultado.getIdJuego()%>"><button>Añadir a la Biblioteca</button></a>
-							<% 
-								
-						}
-						%>
 					
 					<%}%>
 					

@@ -8,7 +8,7 @@
 			
 			Juego resultados =(Juego) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);
 			Map<Usuario, ItemBiblioteca> comentarios= (Map<Usuario, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
-			List<Juego> resultadosBiblioteca = (List<Juego>) request.getAttribute(AttributeNames.BIBLIOTECA_RESULTADOS);		
+			Boolean resultadosBiblioteca = (Boolean)request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);		
 			Creador creador=(Creador)request.getAttribute(AttributeNames.CREADOR_JUEGO);
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
@@ -20,18 +20,12 @@
 		Idiomas disponibles : <%for(Idioma i: resultados.getIdiomas()){%><%=i.getNombre()%> <%}%>
 		</p>
 		
-		<% if(u!=null){
-						Boolean mostrar=false;
-						for(Juego j:resultadosBiblioteca){
-							if(resultados.getIdJuego()==j.getIdJuego()){
-								mostrar=true;
-							}
-						}
-						if(mostrar==true){
+		<% if(u!=null){	
+						if(resultadosBiblioteca==true){
 							%>
 								<p class="a">Ya esta Añadido</p>
 							<% 
-						}else if(mostrar==false){
+						}else if(resultadosBiblioteca==false){
 							%>
 								<a class="a" href="<%=ControllerPaths.BIBLIOTECA%>?
 									<%=ParameterNames.ACTION%>=<%=Actions.ADDJUEGO%>&amp;<%=ParameterNames.ID%>=

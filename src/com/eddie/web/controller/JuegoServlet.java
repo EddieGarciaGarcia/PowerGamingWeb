@@ -62,16 +62,16 @@ public class JuegoServlet extends HttpServlet {
 	
 	private static Logger logger = LogManager.getLogger(JuegoServlet.class);
 
-	private JuegoService jservice = null;
-	private UsuarioService userv=null;
+	private JuegoService juegoService = null;
+	private UsuarioService usuarioService=null;
 
-	private CreadorService crservice=null;
+	private CreadorService creadorService=null;
 	
 	public JuegoServlet() {
 		super();
-		jservice = new JuegoServiceImpl();
-		userv=new UsuarioServiceImpl();
-		crservice= new CreadorServiceImpl();
+		juegoService = new JuegoServiceImpl();
+		usuarioService=new UsuarioServiceImpl();
+		creadorService= new CreadorServiceImpl();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -144,11 +144,11 @@ public class JuegoServlet extends HttpServlet {
 						}
 						
 						
-					Resultados<Juego> resultados = jservice.findByJuegoCriteria(jc,"ES",(page-1)*pageSize+1, pageSize);
+					Resultados<Juego> resultados = juegoService.findByJuegoCriteria(jc,"ES",(page-1)*pageSize+1, pageSize);
 					// Buscar juegos que tiene incluidos en la biblioteca
 					if(user!=null) {
 						List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList()); 						
-						List<Integer> idsJuegosEnBiblioteca = jsevice.existsInBiblioteca(idsJuegos, user.getEmail());
+						List<Integer> idsJuegosEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idsJuegos);
 						
 						request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
 					}
@@ -173,27 +173,22 @@ public class JuegoServlet extends HttpServlet {
 				String id=request.getParameter(ParameterNames.ID);
 				Integer idJuego= Integer.valueOf(id);
 				
-				Juego juego = jservice.findById(idJuego, "ES");
-				Creador creador=crservice.findbyIdCreador(juego.getIdCreador());
+				Juego juego = juegoService.findById(idJuego, "ES");
+				Creador creador=creadorService.findbyIdCreador(juego.getIdCreador());
 				
 				//Listado de comentarios
-				List<ItemBiblioteca> comentarios=jservice.findByJuego(juego.getIdJuego());
+				List<ItemBiblioteca> comentarios=juegoService.findByJuego(juego.getIdJuego());
 				
 				// Buscar juegos que tiene incluidos en la biblioteca para mostrar o no el boton de añadir
 				if(user!=null) {
-					Resultados<ItemBiblioteca> results=userv.findByUsuario(user.getEmail(),(1)*pageSize+1, pageSize);
-					List<Juego> j=new ArrayList<Juego>();
-//					for (ItemBiblioteca it: results) {
-//						Juego addjuego=jservice.findById(it.getIdJuego(), "ES");
-//						j.add(addjuego);
-//					}
+					Boolean idJuegoEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idJuego);
 
-					request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, j);
+					request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idJuegoEnBiblioteca);
 				}
 				if(comentarios.size()>0) {
 					Map<Usuario, ItemBiblioteca> comentario= new HashMap<Usuario, ItemBiblioteca>();
 					for(ItemBiblioteca i:comentarios){
-						Usuario u=userv.findById(i.getEmail());
+						Usuario u=usuarioService.findById(i.getEmail());
 						comentario.put(u, i);
 					}		
 					request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);

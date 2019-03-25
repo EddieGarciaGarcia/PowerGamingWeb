@@ -1,8 +1,6 @@
 package com.eddie.web.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,13 +46,13 @@ public class BibliotecaServlet extends HttpServlet {
 						ConfigurationParameterNames.RESULTS_PAGING_PAGE_COUNT));
 	
 	private static Logger logger = LogManager.getLogger(UsuarioServlet.class);  
-	private UsuarioService userv=null;
-	private JuegoService jservice = null;
+	private UsuarioService usuarioService=null;
+	private JuegoService juegoService = null;
 	
     public BibliotecaServlet() {
         super();
-        userv=new UsuarioServiceImpl();
-        jservice = new JuegoServiceImpl();
+        usuarioService=new UsuarioServiceImpl();
+        juegoService = new JuegoServiceImpl();
     }
 
 
@@ -69,6 +67,7 @@ public class BibliotecaServlet extends HttpServlet {
 			Errors errors = new Errors(); 
 			String target = null;
 			boolean redirect=false;
+			Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 			
 			if(Actions.BIBLIOTECA.equalsIgnoreCase(action)) {
 				String email = request.getParameter(ParameterNames.EMAIL);
@@ -76,14 +75,14 @@ public class BibliotecaServlet extends HttpServlet {
 				int page = WebUtils.
 						getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
 				
-				Resultados<ItemBiblioteca> results=userv.findByUsuario(email,(page-1)*pageSize+1, pageSize);
+				Resultados<ItemBiblioteca> results=usuarioService.findByUsuario(email,(page-1)*pageSize+1, pageSize);
 				
 				//Lambda expresion stream collectors
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
 				
-				List<Juegos> juegos =jservice.findByIDs(juegosIDS,"ES");
+				List<Juego> juegos =juegoService.findByIDs(juegoIDs, "ES");
 				
-				request.setAttribute(AttributeNames.BIBLIOTECA_RESULTADOS, juegos);
+				request.setAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA, juegos);
 				request.setAttribute(AttributeNames.TOTAL, results.getTotal());
 				
 				int totalPages = (int) Math.ceil(results.getTotal()/(double)pageSize);
@@ -99,41 +98,29 @@ public class BibliotecaServlet extends HttpServlet {
 				
 			}else if(Actions.DELETEJUEGO.equalsIgnoreCase(action)) {
 				String idJuego = request.getParameter(ParameterNames.ID);
-				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
+				
 				Integer id=Integer.valueOf(idJuego);
 				
-				userv.borrarJuegoBiblioteca(user.getEmail(), id);
+				usuarioService.borrarJuegoBiblioteca(user.getEmail(), id);
 				
 				target= ControllerPaths.BIBLIOTECA+"?"+ParameterNames.ACTION+"="+Actions.BIBLIOTECA+"&"+ParameterNames.EMAIL+"="+user.getEmail();
 				redirect=true;
 			}else if(Actions.ADDJUEGO.equalsIgnoreCase(action)) {
 				String idJuego = request.getParameter(ParameterNames.ID);
-				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				Integer id=Integer.valueOf(idJuego);
-				
-				Boolean anhadir=false;
 			
 				ItemBiblioteca it= new ItemBiblioteca();
 				it.setEmail(user.getEmail());
 				it.setIdJuego(id);
 				
-				List<ItemBiblioteca> results=userv.findByUsuarioComprobar(user.getEmail());
+				Boolean results=usuarioService.existsInBiblioteca(user.getEmail(),id);
 
-				if(results.size()<1) {
-					userv.addJuegoBiblioteca(it);
-					target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.BUSCAR+"&"+ParameterNames.ID+"="+id;
-				}else if(results.size()>=1){
-					for(ItemBiblioteca item: results) {
-						if(item.getIdJuego()==id) {
-							anhadir=true;
-						}
-					}			
-					if(anhadir==false) {
-						userv.addJuegoBiblioteca(it);	
-						target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
-					}else if(anhadir==true){
-						target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
-					}
+				if(results==false) {
+					usuarioService.addJuegoBiblioteca(user.getEmail(), it);	
+					target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
+				}else if(results==true){
+					target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
+					
 				}
 				redirect=true;
 			}
@@ -148,8 +135,6 @@ public class BibliotecaServlet extends HttpServlet {
 				logger.info("forwarding to "+target);
 				request.getRequestDispatcher(target).forward(request, response);
 			}
-		} catch (SQLException e) {
-			logger.info(e.getMessage(),e);
 		} catch (DataException e) {
 			logger.info(e.getMessage(),e);
 		}
