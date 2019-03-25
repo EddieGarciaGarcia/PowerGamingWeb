@@ -87,10 +87,6 @@ public class InitStaticDataFilter implements Filter {
 				}
 			}
 			
-			int page = WebUtils.
-					getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
-			
-			Resultados<Juego> todos=jservice.findAllByDate("ES",(page-1)*pageSize+1, pageSize);
 			List<Juego> valoracion=jservice.findAllByValoracion("ES");
 			
 			List<Categoria> categorias= cservice.findAll("ES");
@@ -103,26 +99,12 @@ public class InitStaticDataFilter implements Filter {
 			request.setAttribute(AttributeNames.PLATAFORMA_RESULTADOS, plataformas);
 			request.setAttribute(AttributeNames.IDIOMA_RESULTADOS, idioma);
 			if(logger.isDebugEnabled()) {
-				logger.debug(todos);
 				logger.debug(valoracion);
 				logger.debug(categorias);
 				logger.debug(creador);
 				logger.debug(plataformas);
 				logger.debug(idioma);
 			}
-			
-			request.setAttribute(AttributeNames.RESULTADOS_TODOS, todos.getResultados());
-			request.setAttribute(AttributeNames.TOTAL, todos.getTotal());
-			
-			int totalPages = (int) Math.ceil(todos.getTotal()/(double)pageSize);
-			int firstPagedPage = Math.max(1, page-pagingPageCount);
-			int lastPagedPage = Math.min(totalPages, page+pagingPageCount);
-			request.setAttribute(ParameterNames.PAGE, page);
-			request.setAttribute(AttributeNames.TOTAL_PAGES, totalPages);
-			request.setAttribute(AttributeNames.FIRST_PAGED_PAGES, firstPagedPage);
-			request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
-			
-			
 			
 			request.setAttribute(AttributeNames.RESULTADOS_TODOS_VALOR, valoracion);
 			

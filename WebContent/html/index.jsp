@@ -16,7 +16,7 @@
 			for (Juego resultado: todos) {
 				%>
 					<div>
-					<a class="a2" href="<%=ControllerPaths.PRODUCTO%>?
+					<a class="a2" href="<%=ControllerPaths.JUEGO%>?
 							<%=ParameterNames.ACTION%>=<%=Actions.JUEGO%>&amp;<%=ParameterNames.ID%>=
 							<%=resultado.getIdJuego()%>">
 						<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=(Integer)resultado.getIdJuego()%>.jpg"></img><p class="pjuego"><%=resultado.getNombre()%></p>
@@ -37,7 +37,7 @@
 			for (Juego valor: valoracion) {
 				%>
 					<div>
-					<a class="a2" href="<%=ControllerPaths.PRODUCTO%>?
+					<a class="a2" href="<%=ControllerPaths.JUEGO%>?
 							<%=ParameterNames.ACTION%>=<%=Actions.JUEGO%>&amp;<%=ParameterNames.ID%>=
 							<%=valor.getIdJuego()%>">
 						<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=(Integer)valor.getIdJuego()%>.jpg"></img><p class="pjuego"><%=valor.getNombre()%></p>

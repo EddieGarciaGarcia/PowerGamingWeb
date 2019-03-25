@@ -2,7 +2,8 @@ package com.eddie.web.controller;
 
 public interface ViewPaths {
 	
-	public static final String HOME = "/index.jsp";
+	public static final String INICIO= "/inicio";
+	public static final String HOME = "/html/index.jsp";
 	public static final String LOGIN = "/html/login-page.jsp";
 	public static final String BUSCADOR = "/html/buscador-page.jsp";
 	public static final String REGISTRO = "/html/registro-page.jsp";

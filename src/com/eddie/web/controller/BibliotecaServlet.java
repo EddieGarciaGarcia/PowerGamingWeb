@@ -117,16 +117,16 @@ public class BibliotecaServlet extends HttpServlet {
 
 				if(results==false) {
 					usuarioService.addJuegoBiblioteca(user.getEmail(), it);	
-					target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
+					target=ControllerPaths.JUEGO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
 				}else if(results==true){
-					target=ControllerPaths.PRODUCTO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
+					target=ControllerPaths.JUEGO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
 					
 				}
 				redirect=true;
 			}
 			else {
 				logger.error("Action desconocida");
-				target= ViewPaths.HOME;
+				target= ViewPaths.INICIO;
 			}
 			if(redirect==true) {
 				logger.info("Redirect to "+target);

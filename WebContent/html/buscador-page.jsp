@@ -18,7 +18,7 @@
 			for (Juego resultado: resultados) {
 				%>
 					<div>
-					<a class="a2" href="<%=ControllerPaths.PRODUCTO%>?
+					<a class="a2" href="<%=ControllerPaths.JUEGO%>?
 							<%=ParameterNames.ACTION%>=<%=Actions.JUEGO%>&amp;<%=ParameterNames.ID%>=
 							<%=resultado.getIdJuego()%>">
 						<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=(Integer)resultado.getIdJuego()%>.jpg"></img><p class="pjuego"><%=resultado.getNombre()%></p>

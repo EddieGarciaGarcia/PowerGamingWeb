@@ -2,9 +2,7 @@ package com.eddie.web.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -48,7 +46,7 @@ import com.eddie.web.controller.ViewPaths;
 /**
  * Servlet implementation class ProductoServlet
  */
-@WebServlet("/producto")
+@WebServlet("/juego")
 public class JuegoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -88,7 +86,7 @@ public class JuegoServlet extends HttpServlet {
 			boolean redirect=false;
 			boolean hasErrors = false;			
 			Usuario user = (Usuario) SessionManager.get(request, SessionAttributeNames.USER);
-			
+					
 			if (Actions.BUSCAR.equalsIgnoreCase(action)) {				
 				// Recuperar parametros
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
@@ -199,8 +197,7 @@ public class JuegoServlet extends HttpServlet {
 				target =ViewPaths.JUEGO;
 			}else {
 				logger.error("Action desconocida");
-				target= ViewPaths.HOME;
-				
+				target= ViewPaths.INICIO;
 			}
 			if(redirect==true) {
 				logger.info("Redirect to "+target);

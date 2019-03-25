@@ -16,7 +16,7 @@
         	document.getElementById("meumenudes"+n).style.display="none"
         }
 	</script>
-		<form action="<%=ControllerPaths.PRODUCTO%>" method="post">	
+		<form action="<%=ControllerPaths.JUEGO%>" method="post">	
 			<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.BUSCAR%>"/>
 			<a onmouseover="ver(1)" onmouseout="ocultar(1)" class="dropbtn">Categoria:
 			<div id="meumenudes1" class="menu-search" > 

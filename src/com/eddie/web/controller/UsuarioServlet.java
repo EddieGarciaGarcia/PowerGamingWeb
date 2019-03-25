@@ -101,13 +101,13 @@ public class UsuarioServlet extends HttpServlet {
 					target = ViewPaths.LOGIN;				
 				} else {				
 					SessionManager.set(request, SessionAttributeNames.USER, usuario);		
-					target = request.getContextPath()+ViewPaths.HOME;
+					target = request.getContextPath()+ViewPaths.INICIO;
 					redirect=true;
 				}
 				
 			}else if (Actions.LOGOUT.equalsIgnoreCase(action)) {
 				SessionManager.set(request, SessionAttributeNames.USER, null);
-				target = request.getContextPath()+ViewPaths.HOME;
+				target = request.getContextPath()+ViewPaths.INICIO;
 				redirect=true;
 			} else if(Actions.PREREGISTRO.equalsIgnoreCase(action)){
 				List<Pais> paises = pserv.findAll();
@@ -199,7 +199,7 @@ public class UsuarioServlet extends HttpServlet {
 						"<html><h2>Power Gaming</h2><h4>Pulse en enlace o copielo entero para cambiar su contraseña:</h4>"
 						+ "<a href='"+enlace+"'>Restablecer contraseña</a><p>"+enlace+"</p></html>");
 					
-				target=request.getContextPath()+ViewPaths.HOME;
+				target=request.getContextPath()+ViewPaths.INICIO;
 				redirect=true;
 				}
 			}else if(Actions.CHANGEPASS.equalsIgnoreCase(action)){
