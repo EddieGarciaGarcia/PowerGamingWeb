@@ -6,9 +6,8 @@
 <%		
 		
 		List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);	
-
 	    List<Integer> idsJuegosEnBiblioteca = (List<Integer>) request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);
-	
+	    List<Edicion> edicionesJuegos = (List<Edicion>) request.getAttribute(AttributeNames.EDICIONES_JUEGO);
 		
 
 		if (resultados!=null && !resultados.isEmpty()) {

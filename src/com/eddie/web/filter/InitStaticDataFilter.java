@@ -21,21 +21,25 @@ import org.apache.logging.log4j.Logger;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Categoria;
 import com.eddie.ecommerce.model.Creador;
+import com.eddie.ecommerce.model.Formato;
 import com.eddie.ecommerce.model.Idioma;
 import com.eddie.ecommerce.model.Juego;
 import com.eddie.ecommerce.model.Plataforma;
+import com.eddie.ecommerce.model.TipoEdicion;
 import com.eddie.ecommerce.service.CategoriaService;
 import com.eddie.ecommerce.service.CreadorService;
+import com.eddie.ecommerce.service.FormatoService;
 import com.eddie.ecommerce.service.IdiomaService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.PlataformaService;
+import com.eddie.ecommerce.service.TipoEdicionService;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
+import com.eddie.ecommerce.service.impl.FormatoServiceImpl;
 import com.eddie.ecommerce.service.impl.IdiomaServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.PlataformaServiceImpl;
-import com.eddie.web.config.ConfigurationManager;
-import com.eddie.web.config.ConfigurationParameterNames;
+import com.eddie.ecommerce.service.impl.TipoEdicionServiceImpl;
 import com.eddie.web.controller.AttributeNames;
 import com.eddie.web.util.SessionManager;
 import com.eddie.web.util.WebConstants;
@@ -46,28 +50,24 @@ import com.eddie.web.util.WebConstants;
  */
 @WebFilter("/*")
 public class InitStaticDataFilter implements Filter {
-	private CategoriaService cservice=null;
-	private CreadorService crservice=null;
-	private PlataformaService pservice=null;
-	private IdiomaService iservice=null;
+	private CategoriaService categoriaService=null;
+	private CreadorService creadorService=null;
+	private PlataformaService plataformaService=null;
+	private IdiomaService idiomaService=null;
+	private FormatoService formatoService=null;
+	private TipoEdicionService tipoEdicionService= null;
+	private JuegoService juegoService=null;
 	
-	private JuegoService jservice=null;
 	private Logger logger=LogManager.getLogger(InitFilter.class);
 	
-	private static int pageSize = Integer.valueOf(
-			ConfigurationManager.getInstance().getParameter(
-						ConfigurationParameterNames.RESULTS_PAGE_SIZE_DEFAULT)); 
-
-	private static int pagingPageCount = Integer.valueOf(
-			ConfigurationManager.getInstance().getParameter(
-						ConfigurationParameterNames.RESULTS_PAGING_PAGE_COUNT)); 
-	
     public InitStaticDataFilter() {
-    	cservice=new CategoriaServiceImpl();
-    	crservice= new CreadorServiceImpl();
-    	pservice= new PlataformaServiceImpl();
-    	iservice = new IdiomaServiceImpl();
-    	jservice= new JuegoServiceImpl();
+    	categoriaService=new CategoriaServiceImpl();
+    	creadorService= new CreadorServiceImpl();
+    	plataformaService= new PlataformaServiceImpl();
+    	idiomaService = new IdiomaServiceImpl();
+    	formatoService = new FormatoServiceImpl();
+    	tipoEdicionService= new TipoEdicionServiceImpl();
+    	juegoService= new JuegoServiceImpl();
     }
 
 	public void destroy() {}
@@ -87,31 +87,36 @@ public class InitStaticDataFilter implements Filter {
 				}
 			}
 			String idiomaPagina=SessionManager.get(httpRequest,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
-			List<Juego> valoracion=jservice.findAllByValoracion(idiomaPagina);
+			List<Juego> valoracion=juegoService.findAllByValoracion(idiomaPagina);
 			
-			List<Categoria> categorias= cservice.findAll(idiomaPagina);
-			List<Creador> creador= crservice.findAll();
-			List<Plataforma> plataformas=pservice.findAll();
-			List<Idioma> idioma=iservice.findAll(idiomaPagina); 
+			List<Categoria> categorias= categoriaService.findAll(idiomaPagina);
+			List<Creador> creador= creadorService.findAll();
+			List<Plataforma> plataformas=plataformaService.findAll();
+			List<Idioma> idioma=idiomaService.findAll(idiomaPagina); 
+			List<Formato> formatos= formatoService.findAll(idiomaPagina);
+			List<TipoEdicion> tipoEdicion=tipoEdicionService.findAll(idiomaPagina);
 			
 			request.setAttribute(AttributeNames.CATEGORIA_RESULTADOS, categorias);
 			request.setAttribute(AttributeNames.CREADOR_RESULTADOS, creador);
 			request.setAttribute(AttributeNames.PLATAFORMA_RESULTADOS, plataformas);
 			request.setAttribute(AttributeNames.IDIOMA_RESULTADOS, idioma);
+			request.setAttribute(AttributeNames.FORMATO_RESULTADOS, formatos);
+			request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, tipoEdicion);
+			
 			if(logger.isDebugEnabled()) {
 				logger.debug(valoracion);
 				logger.debug(categorias);
 				logger.debug(creador);
 				logger.debug(plataformas);
 				logger.debug(idioma);
+				logger.debug(formatos);
+				logger.debug(tipoEdicion);
 			}
 			
 			request.setAttribute(AttributeNames.RESULTADOS_TODOS_VALOR, valoracion);
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} catch (DataException e) {
-			e.printStackTrace();
+			logger.info(e.getMessage(),e);
 		}
 		chain.doFilter(request, response);
 	}

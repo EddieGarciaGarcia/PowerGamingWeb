@@ -16,11 +16,14 @@ import org.apache.logging.log4j.Logger;
 
 import com.eddie.ecommerce.service.Resultados;
 import com.eddie.ecommerce.exceptions.DataException;
+import com.eddie.ecommerce.model.Edicion;
 import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
 import com.eddie.ecommerce.model.Usuario;
+import com.eddie.ecommerce.service.EdicionService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.UsuarioService;
+import com.eddie.ecommerce.service.impl.EdicionServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.config.ConfigurationManager;
@@ -49,11 +52,13 @@ public class BibliotecaServlet extends HttpServlet {
 	private static Logger logger = LogManager.getLogger(UsuarioServlet.class);  
 	private UsuarioService usuarioService=null;
 	private JuegoService juegoService = null;
+	private EdicionService edicionService=null;
 	
     public BibliotecaServlet() {
         super();
         usuarioService=new UsuarioServiceImpl();
         juegoService = new JuegoServiceImpl();
+        edicionService= new EdicionServiceImpl();
     }
 
 
@@ -82,8 +87,15 @@ public class BibliotecaServlet extends HttpServlet {
 				//Lambda expresion stream collectors
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
 				
+				List<Edicion> edicionesJuegos= edicionService.findByIdsJuego(juegoIDs);
+				List<Integer> formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
+				List<Integer> tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
+				
 				List<Juego> juegos =juegoService.findByIDs(juegoIDs, idiomaPagina);
 				
+				request.setAttribute(AttributeNames.FORMATOIDS, formatoIds);
+				request.setAttribute(AttributeNames.TIPOEDICIONIDS, tipoEdicionIds);
+				request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
 				request.setAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA, juegos);
 				request.setAttribute(AttributeNames.TOTAL, results.getTotal());
 				

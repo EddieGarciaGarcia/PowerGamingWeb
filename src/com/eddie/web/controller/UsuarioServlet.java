@@ -231,19 +231,20 @@ public class UsuarioServlet extends HttpServlet {
 					logger.debug("Locale changed to "+newLocale);
 				}
 
-				target = request.getContextPath()+ViewPaths.INICIO; // Ejercicio: como hacer que siga en la misma URL		
-				redirect = true;
-
+				target=request.getHeader(ViewPaths.REFERER);
+				response.sendRedirect(target);
 			}else {
 				logger.error("Action desconocida");
 				target= request.getContextPath()+ViewPaths.ERROR404;
 			}
-			if(redirect==true) {
-				logger.info("Redirect to "+target);
-				response.sendRedirect(target);
-			}else {
-				logger.info("forwarding to "+target);
-				request.getRequestDispatcher(target).forward(request, response);
+			if(!Actions.CAMBIAR_IDIOMA.equalsIgnoreCase(action)) {
+				if(redirect==true) {
+					logger.info("Redirect to "+target);
+					response.sendRedirect(target);
+				}else {
+					logger.info("forwarding to "+target);
+					request.getRequestDispatcher(target).forward(request, response);
+				}
 			}
 			} catch (SQLException e) {	
 				logger.info(e.getMessage(),e);

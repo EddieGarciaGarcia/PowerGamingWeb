@@ -3,7 +3,13 @@
 <section class="biblioteca">
 		<% 
 			List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA);
-		
+			List<Edicion> edicionesJuegos = (List<Edicion>) request.getAttribute(AttributeNames.EDICIONES_JUEGO);
+			List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
+			List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
+			List<Integer> formatoIds= (List<Integer>) request.getAttribute(AttributeNames.FORMATOIDS);
+			List<Integer> tipoEdicionIds= (List<Integer>) request.getAttribute(AttributeNames.TIPOEDICIONIDS);
+			
+			
 		if (resultados!=null && !resultados.isEmpty()) {
 			%>
 			<h1>Resultados:</h1>
@@ -21,6 +27,28 @@
 					<a href="<%=ControllerPaths.BIBLIOTECA%>?
 							<%=ParameterNames.ACTION%>=<%=Actions.DELETEJUEGO%>&amp;<%=ParameterNames.ID%>=
 							<%=resultado.getIdJuego()%>"><button>Eliminar</button></a>
+					<div class="addCarrito">
+						<form>
+							<select>
+							<%for(Formato f : formato){
+								
+								%>
+								<option><%=f.getNombre()%></option>
+								<%
+								}
+							%>
+							</select>
+							<select>
+							<%for(TipoEdicion tipoE : tipoEdicion){
+								%>
+								<option><%=tipoE.getNombre()%></option>
+								<%
+							}%>
+							</select>
+							<label>Precio:</label>
+							<input type="button" value="Añadir a Carrito"/>
+						</form>
+					</div>
 				<%
 					}
 			}

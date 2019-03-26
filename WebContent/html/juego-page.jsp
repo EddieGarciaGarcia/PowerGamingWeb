@@ -10,6 +10,8 @@
 			Map<Usuario, ItemBiblioteca> comentarios= (Map<Usuario, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
 			Boolean resultadosBiblioteca = (Boolean)request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);		
 			Creador creador=(Creador)request.getAttribute(AttributeNames.CREADOR_JUEGO);
+			List<Edicion> edicionesJuegos = (List<Edicion>) request.getAttribute(AttributeNames.EDICIONES_JUEGO);
+			
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
 		<h1><%=resultados.getNombre()%></h1>

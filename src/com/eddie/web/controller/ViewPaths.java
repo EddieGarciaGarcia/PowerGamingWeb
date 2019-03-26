@@ -16,4 +16,5 @@ public interface ViewPaths {
 	public static final String ERROR500="/html/errors/500.jsp";
 	public static final String FORGETPASS="/html/forget_pass.jsp";
 	public static final String CHANGEPASS="/html/change_pass.jsp";
+	public static final String REFERER="referer";
 }

@@ -5,6 +5,13 @@ public interface AttributeNames {
 	public static final String USER = "user";
 	public static final String PAISES = "paises";
 	
+	public static final String EDICIONES_JUEGO="ediciones_juego";
+	public static final String FORMATO_RESULTADOS="formato_resultados";
+	public static final String TIPOEDICION_RESULTADOS="tipo_edicion_resultados";
+	
+	public static final String FORMATOIDS="formato_ids";
+	public static final String TIPOEDICIONIDS="tipo_edicion_ids";
+	
 	public static final String COMENTARIOS_USER = "comentario_user";
 	public static final String COMENTARIOS_JUEGO = "comentarios_juego";
 	

@@ -1,7 +1,6 @@
 package com.eddie.web.controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,14 +19,17 @@ import org.apache.logging.log4j.Logger;
 import com.eddie.ecommerce.service.Resultados;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Creador;
+import com.eddie.ecommerce.model.Edicion;
 import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
 import com.eddie.ecommerce.model.JuegoCriteria;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.CreadorService;
+import com.eddie.ecommerce.service.EdicionService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
+import com.eddie.ecommerce.service.impl.EdicionServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
@@ -63,14 +65,15 @@ public class JuegoServlet extends HttpServlet {
 
 	private JuegoService juegoService = null;
 	private UsuarioService usuarioService=null;
-
 	private CreadorService creadorService=null;
+	private EdicionService edicionService=null;
 	
 	public JuegoServlet() {
 		super();
 		juegoService = new JuegoServiceImpl();
 		usuarioService=new UsuarioServiceImpl();
 		creadorService= new CreadorServiceImpl();
+		edicionService= new EdicionServiceImpl();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -146,14 +149,22 @@ public class JuegoServlet extends HttpServlet {
 						
 						
 					Resultados<Juego> resultados = juegoService.findByJuegoCriteria(jc,idiomaPagina,(page-1)*pageSize+1, pageSize);
+					List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList());
 					// Buscar juegos que tiene incluidos en la biblioteca
-					if(user!=null) {
-						List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList()); 						
+					if(user!=null) {						
 						List<Integer> idsJuegosEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idsJuegos);
 						
 						request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
 					}
 					
+					List<Edicion> edicionesJuegos= edicionService.findByIdsJuego(idsJuegos);
+					List<Integer> formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
+					List<Integer> tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
+					
+					request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
+					
+					request.setAttribute(AttributeNames.FORMATOIDS, formatoIds);
+					request.setAttribute(AttributeNames.TIPOEDICIONIDS, tipoEdicionIds);
 					request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados.getResultados());
 					request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
 					
@@ -164,8 +175,7 @@ public class JuegoServlet extends HttpServlet {
 					request.setAttribute(AttributeNames.TOTAL_PAGES, totalPages);
 					request.setAttribute(AttributeNames.FIRST_PAGED_PAGES, firstPagedPage);
 					request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
-					
-					
+				
 					target = ViewPaths.BUSCADOR;
 				
 				}
@@ -173,6 +183,10 @@ public class JuegoServlet extends HttpServlet {
 				
 				String id=request.getParameter(ParameterNames.ID);
 				Integer idJuego= Integer.valueOf(id);
+				
+				List<Edicion> edicionesJuego= edicionService.findByIdJuego(idJuego);
+				List<Integer> formatoIds=edicionesJuego.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
+				List<Integer> tipoEdicionIds= edicionesJuego.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
 				
 				Juego juego = juegoService.findById(idJuego, idiomaPagina);
 				Creador creador=creadorService.findbyIdCreador(juego.getIdCreador());
@@ -194,6 +208,9 @@ public class JuegoServlet extends HttpServlet {
 					}		
 					request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
 				}	
+				request.setAttribute(AttributeNames.FORMATOIDS, formatoIds);
+				request.setAttribute(AttributeNames.TIPOEDICIONIDS, tipoEdicionIds);
+				request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuego);
 				request.setAttribute(AttributeNames.CREADOR_JUEGO, creador);
 				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, juego);
 				
@@ -210,8 +227,6 @@ public class JuegoServlet extends HttpServlet {
 				request.getRequestDispatcher(target).forward(request, response);
 			}	
 			} catch (DataException e) {
-				logger.info(e.getMessage(),e);
-			} catch (SQLException e) {
 				logger.info(e.getMessage(),e);
 			} 
 	}
