@@ -45,6 +45,7 @@ public class InitFilter implements Filter {
 			&& !Actions.MENSAGE.equals(action)
 			&& !Actions.FORGOTPASS.equals(action)
 			&& !Actions.CHANGEPASS.equals(action)
+			&& !Actions.CAMBIAR_IDIOMA.equals(action)
 			&& (SessionManager.get((HttpServletRequest)request, SessionAttributeNames.USER))==null) {
 			logger.info("Filtro de autentificacion");
 			httpResponse.sendRedirect(httpRequest.getContextPath()+ViewPaths.LOGIN);

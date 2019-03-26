@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +35,9 @@ import com.eddie.web.util.DateUtils;
 import com.eddie.web.controller.ParameterNames;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
+import com.eddie.web.util.CookieManager;
+import com.eddie.web.util.LocaleManager;
+import com.eddie.web.util.WebConstants;
 import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.controller.ViewPaths;
 
@@ -139,6 +143,10 @@ public class UsuarioServlet extends HttpServlet {
 				u.setNombreUser(nombre+apellido1.charAt(0)+apellido2.charAt(0));
 				
 				userv.create(u);
+				
+				//Implementar direccion con un checked
+			
+				
 				target = request.getContextPath()+ViewPaths.LOGIN;
 				redirect=true;
 			}else if(Actions.PRECONFIGURACION.equalsIgnoreCase(action)) {
@@ -159,7 +167,6 @@ public class UsuarioServlet extends HttpServlet {
 				String nombreUser=request.getParameter(ParameterNames.NOMBREUSER);
 				
 				Usuario userupdate=new Usuario();
-				
 				
 				userupdate.setNombre(LimpiezaValidacion.validNombre(nombre));
 				userupdate.setApellido1(LimpiezaValidacion.validApellido1(apellido1));
@@ -204,6 +211,29 @@ public class UsuarioServlet extends HttpServlet {
 				}
 			}else if(Actions.CHANGEPASS.equalsIgnoreCase(action)){
 				
+			} else if (Actions.CAMBIAR_IDIOMA.equalsIgnoreCase(action)) {
+				String localeName = request.getParameter(ParameterNames.LOCALE);
+				// Recordar que hay que validar... lo que nos envian, incluso en algo como esto.
+				// Buscamos entre los Locale soportados por la web:
+				List<Locale> results = LocaleManager.getMatchedLocales(localeName);
+				Locale newLocale = null;
+				if (results.size()>0) {
+					newLocale = results.get(0);
+				} else {
+					logger.warn("Request locale not supported: "+localeName);
+					newLocale = LocaleManager.getDefault();
+				}
+
+				SessionManager.set(request, WebConstants.USER_LOCALE, newLocale);			
+				CookieManager.addCookie(response, WebConstants.USER_LOCALE, newLocale.toString(), "/", 365*24*60*60);
+
+				if (logger.isDebugEnabled()) {
+					logger.debug("Locale changed to "+newLocale);
+				}
+
+				target = request.getContextPath()+ViewPaths.INICIO; // Ejercicio: como hacer que siga en la misma URL		
+				redirect = true;
+
 			}else {
 				logger.error("Action desconocida");
 				target= request.getContextPath()+ViewPaths.ERROR404;

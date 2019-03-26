@@ -14,9 +14,10 @@
 	<header class="menu"> 
                 <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaming.png"></img>
                 <div class="menuimg">
-                    <img id="img1" src="<%=request.getContextPath()%>/imgs/en-us.png"></img>
-                    <img id="img2" src="<%=request.getContextPath()%>/imgs/es.png"></img>
-                    
+                    <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=<%=ParameterNames.EN%>">
+                    <img id="img1" src="<%=request.getContextPath()%>/imgs/en-us.png"></img></a>
+                    <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=<%=ParameterNames.ES%>">
+                    <img id="img2" src="<%=request.getContextPath()%>/imgs/es.png"></img></a>
                 </div>
                 <nav>
                     <ul class="nav">

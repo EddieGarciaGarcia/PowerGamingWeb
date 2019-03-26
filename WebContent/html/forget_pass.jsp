@@ -9,7 +9,7 @@
 				minlength="8" maxlength="75"/><br>
 	<input type="submit" value="Enviar"/>
 	</form>
-	<h3>¿No tienes cuenta?</h3>
+	<h3>¿Aún no tienes cuenta?</h3>
 		<a href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=
 				<%=Actions.PREREGISTRO%>">Regístrate</a>
 </section>

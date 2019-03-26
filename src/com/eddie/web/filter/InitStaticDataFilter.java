@@ -29,7 +29,6 @@ import com.eddie.ecommerce.service.CreadorService;
 import com.eddie.ecommerce.service.IdiomaService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.PlataformaService;
-import com.eddie.ecommerce.service.Resultados;
 import com.eddie.ecommerce.service.impl.CategoriaServiceImpl;
 import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
 import com.eddie.ecommerce.service.impl.IdiomaServiceImpl;
@@ -38,8 +37,8 @@ import com.eddie.ecommerce.service.impl.PlataformaServiceImpl;
 import com.eddie.web.config.ConfigurationManager;
 import com.eddie.web.config.ConfigurationParameterNames;
 import com.eddie.web.controller.AttributeNames;
-import com.eddie.web.controller.ParameterNames;
-import com.eddie.web.util.WebUtils;
+import com.eddie.web.util.SessionManager;
+import com.eddie.web.util.WebConstants;
 
 
 /**
@@ -74,6 +73,7 @@ public class InitStaticDataFilter implements Filter {
 	public void destroy() {}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		
 		try {
 			HttpServletRequest httpRequest= (HttpServletRequest) request;
 			HttpServletResponse httpResponse= (HttpServletResponse) response;
@@ -86,13 +86,13 @@ public class InitStaticDataFilter implements Filter {
 					logger.debug(headerName+"="+headerValue);
 				}
 			}
+			String idiomaPagina=SessionManager.get(httpRequest,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
+			List<Juego> valoracion=jservice.findAllByValoracion(idiomaPagina);
 			
-			List<Juego> valoracion=jservice.findAllByValoracion("ES");
-			
-			List<Categoria> categorias= cservice.findAll("ES");
+			List<Categoria> categorias= cservice.findAll(idiomaPagina);
 			List<Creador> creador= crservice.findAll();
 			List<Plataforma> plataformas=pservice.findAll();
-			List<Idioma> idioma=iservice.findAll("ES"); 
+			List<Idioma> idioma=iservice.findAll(idiomaPagina); 
 			
 			request.setAttribute(AttributeNames.CATEGORIA_RESULTADOS, categorias);
 			request.setAttribute(AttributeNames.CREADOR_RESULTADOS, creador);

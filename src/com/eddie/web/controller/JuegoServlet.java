@@ -35,6 +35,7 @@ import com.eddie.web.util.ArrayUtils;
 import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
+import com.eddie.web.util.WebConstants;
 import com.eddie.web.util.WebUtils;
 import com.eddie.web.config.ConfigurationManager;
 import com.eddie.web.config.ConfigurationParameterNames;
@@ -86,7 +87,9 @@ public class JuegoServlet extends HttpServlet {
 			boolean redirect=false;
 			boolean hasErrors = false;			
 			Usuario user = (Usuario) SessionManager.get(request, SessionAttributeNames.USER);
-					
+			String idiomaPagina=SessionManager.get(request,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
+			
+			
 			if (Actions.BUSCAR.equalsIgnoreCase(action)) {				
 				// Recuperar parametros
 				String nombre = request.getParameter(ParameterNames.NOMBRE);
@@ -142,7 +145,7 @@ public class JuegoServlet extends HttpServlet {
 						}
 						
 						
-					Resultados<Juego> resultados = juegoService.findByJuegoCriteria(jc,"ES",(page-1)*pageSize+1, pageSize);
+					Resultados<Juego> resultados = juegoService.findByJuegoCriteria(jc,idiomaPagina,(page-1)*pageSize+1, pageSize);
 					// Buscar juegos que tiene incluidos en la biblioteca
 					if(user!=null) {
 						List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList()); 						
@@ -171,7 +174,7 @@ public class JuegoServlet extends HttpServlet {
 				String id=request.getParameter(ParameterNames.ID);
 				Integer idJuego= Integer.valueOf(id);
 				
-				Juego juego = juegoService.findById(idJuego, "ES");
+				Juego juego = juegoService.findById(idJuego, idiomaPagina);
 				Creador creador=creadorService.findbyIdCreador(juego.getIdCreador());
 				
 				//Listado de comentarios

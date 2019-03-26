@@ -28,6 +28,7 @@ import com.eddie.web.config.ConfigurationParameterNames;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
+import com.eddie.web.util.WebConstants;
 import com.eddie.web.util.WebUtils;
 
 /**
@@ -59,7 +60,8 @@ public class BibliotecaServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String action = request.getParameter(ParameterNames.ACTION);
-	
+			String idiomaPagina=SessionManager.get(request,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
+			
 			if (logger.isDebugEnabled()) {
 				logger.debug("Action {}: {}", action, ToStringBuilder.reflectionToString(request.getParameterMap()));
 			}
@@ -80,7 +82,7 @@ public class BibliotecaServlet extends HttpServlet {
 				//Lambda expresion stream collectors
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
 				
-				List<Juego> juegos =juegoService.findByIDs(juegoIDs, "ES");
+				List<Juego> juegos =juegoService.findByIDs(juegoIDs, idiomaPagina);
 				
 				request.setAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA, juegos);
 				request.setAttribute(AttributeNames.TOTAL, results.getTotal());

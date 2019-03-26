@@ -17,6 +17,8 @@ import com.eddie.ecommerce.service.Resultados;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.web.config.ConfigurationManager;
 import com.eddie.web.config.ConfigurationParameterNames;
+import com.eddie.web.util.SessionManager;
+import com.eddie.web.util.WebConstants;
 import com.eddie.web.util.WebUtils;
 
 /**
@@ -43,13 +45,13 @@ public class InicioServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String target = null;
-		
+		String idiomaPagina=SessionManager.get(request,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
 		int page = WebUtils.
 				getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
 		
 		Resultados<Juego> todos;
 		try {
-			todos = juegoService.findAllByDate("ES",(page-1)*pageSize+1, pageSize);
+			todos = juegoService.findAllByDate(idiomaPagina,(page-1)*pageSize+1, pageSize);
 		
 			request.setAttribute(AttributeNames.RESULTADOS_TODOS, todos.getResultados());
 			request.setAttribute(AttributeNames.TOTAL, todos.getTotal());
