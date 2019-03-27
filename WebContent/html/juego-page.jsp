@@ -11,6 +11,8 @@
 			Boolean resultadosBiblioteca = (Boolean)request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);		
 			Creador creador=(Creador)request.getAttribute(AttributeNames.CREADOR_JUEGO);
 			List<Edicion> edicionesJuegos = (List<Edicion>) request.getAttribute(AttributeNames.EDICIONES_JUEGO);
+			List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
+			List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
 			
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
@@ -39,6 +41,27 @@
 						
 						
 		<%}%>
+		<div class="addCarrito">
+						<form>
+							<select>
+							<%for(Formato f : formato){
+								%>
+								<option><%=f.getNombre()%></option>
+								<%
+								}
+							%>
+							</select>
+							<select>
+							<%for(TipoEdicion tipoE : tipoEdicion){
+								%>
+								<option><%=tipoE.getNombre()%></option>
+								<%
+							}%>
+							</select>
+							<label>Precio:</label>
+							<input type="button" value="Añadir a Carrito"/>
+						</form>
+		</div>
 		<div><video src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.mp4" width="640" height="480" controls></video></div>	<% 
 		if(u!=null){
 			%>

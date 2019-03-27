@@ -15,16 +15,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.eddie.ecommerce.service.Resultados;
+import com.eddie.ecommerce.service.TipoEdicionService;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Edicion;
+import com.eddie.ecommerce.model.Formato;
 import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
+import com.eddie.ecommerce.model.TipoEdicion;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.EdicionService;
+import com.eddie.ecommerce.service.FormatoService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.EdicionServiceImpl;
+import com.eddie.ecommerce.service.impl.FormatoServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
+import com.eddie.ecommerce.service.impl.TipoEdicionServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.config.ConfigurationManager;
 import com.eddie.web.config.ConfigurationParameterNames;
@@ -53,12 +59,16 @@ public class BibliotecaServlet extends HttpServlet {
 	private UsuarioService usuarioService=null;
 	private JuegoService juegoService = null;
 	private EdicionService edicionService=null;
+	private FormatoService formatoService=null;
+	private TipoEdicionService tipoEdicionService= null;
 	
     public BibliotecaServlet() {
         super();
         usuarioService=new UsuarioServiceImpl();
         juegoService = new JuegoServiceImpl();
         edicionService= new EdicionServiceImpl();
+        formatoService= new FormatoServiceImpl();
+        tipoEdicionService= new TipoEdicionServiceImpl();
     }
 
 
@@ -88,13 +98,17 @@ public class BibliotecaServlet extends HttpServlet {
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
 				
 				List<Edicion> edicionesJuegos= edicionService.findByIdsJuego(juegoIDs);
+				
 				List<Integer> formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
+				List<Formato> resultadosFormato=formatoService.findbyIdsFormato(formatoIds,idiomaPagina);
+				
 				List<Integer> tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
+				List<TipoEdicion> resultadosTipoEdicion= tipoEdicionService.findbyIdsTipoEdicion(tipoEdicionIds, idiomaPagina);
 				
 				List<Juego> juegos =juegoService.findByIDs(juegoIDs, idiomaPagina);
 				
-				request.setAttribute(AttributeNames.FORMATOIDS, formatoIds);
-				request.setAttribute(AttributeNames.TIPOEDICIONIDS, tipoEdicionIds);
+				request.setAttribute(AttributeNames.FORMATO_RESULTADOS, resultadosFormato);
+				request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, resultadosTipoEdicion);
 				request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
 				request.setAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA, juegos);
 				request.setAttribute(AttributeNames.TOTAL, results.getTotal());

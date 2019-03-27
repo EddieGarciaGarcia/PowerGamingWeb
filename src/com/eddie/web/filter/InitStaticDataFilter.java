@@ -89,6 +89,7 @@ public class InitStaticDataFilter implements Filter {
 			String idiomaPagina=SessionManager.get(httpRequest,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
 			List<Juego> valoracion=juegoService.findAllByValoracion(idiomaPagina);
 			
+			//Precarga de todos los datos en cache
 			List<Categoria> categorias= categoriaService.findAll(idiomaPagina);
 			List<Creador> creador= creadorService.findAll();
 			List<Plataforma> plataformas=plataformaService.findAll();
@@ -100,8 +101,6 @@ public class InitStaticDataFilter implements Filter {
 			request.setAttribute(AttributeNames.CREADOR_RESULTADOS, creador);
 			request.setAttribute(AttributeNames.PLATAFORMA_RESULTADOS, plataformas);
 			request.setAttribute(AttributeNames.IDIOMA_RESULTADOS, idioma);
-			request.setAttribute(AttributeNames.FORMATO_RESULTADOS, formatos);
-			request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, tipoEdicion);
 			
 			if(logger.isDebugEnabled()) {
 				logger.debug(valoracion);

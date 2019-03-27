@@ -6,8 +6,7 @@
 			List<Edicion> edicionesJuegos = (List<Edicion>) request.getAttribute(AttributeNames.EDICIONES_JUEGO);
 			List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
 			List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
-			List<Integer> formatoIds= (List<Integer>) request.getAttribute(AttributeNames.FORMATOIDS);
-			List<Integer> tipoEdicionIds= (List<Integer>) request.getAttribute(AttributeNames.TIPOEDICIONIDS);
+			
 			
 			
 		if (resultados!=null && !resultados.isEmpty()) {
@@ -31,7 +30,6 @@
 						<form>
 							<select>
 							<%for(Formato f : formato){
-								
 								%>
 								<option><%=f.getNombre()%></option>
 								<%

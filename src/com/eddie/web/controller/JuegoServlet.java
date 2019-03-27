@@ -17,20 +17,26 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.eddie.ecommerce.service.Resultados;
+import com.eddie.ecommerce.service.TipoEdicionService;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Creador;
 import com.eddie.ecommerce.model.Edicion;
+import com.eddie.ecommerce.model.Formato;
 import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
 import com.eddie.ecommerce.model.JuegoCriteria;
+import com.eddie.ecommerce.model.TipoEdicion;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.CreadorService;
 import com.eddie.ecommerce.service.EdicionService;
+import com.eddie.ecommerce.service.FormatoService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
 import com.eddie.ecommerce.service.impl.EdicionServiceImpl;
+import com.eddie.ecommerce.service.impl.FormatoServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
+import com.eddie.ecommerce.service.impl.TipoEdicionServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.ArrayUtils;
@@ -67,6 +73,8 @@ public class JuegoServlet extends HttpServlet {
 	private UsuarioService usuarioService=null;
 	private CreadorService creadorService=null;
 	private EdicionService edicionService=null;
+	private FormatoService formatoService=null;
+	private TipoEdicionService tipoEdicionService= null;
 	
 	public JuegoServlet() {
 		super();
@@ -74,6 +82,8 @@ public class JuegoServlet extends HttpServlet {
 		usuarioService=new UsuarioServiceImpl();
 		creadorService= new CreadorServiceImpl();
 		edicionService= new EdicionServiceImpl();
+		formatoService= new FormatoServiceImpl();
+		tipoEdicionService= new TipoEdicionServiceImpl();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -91,7 +101,11 @@ public class JuegoServlet extends HttpServlet {
 			boolean hasErrors = false;			
 			Usuario user = (Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 			String idiomaPagina=SessionManager.get(request,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
-			
+			List<Edicion> edicionesJuegos= null;
+			List<Integer> formatoIds= null;
+			List<Formato> resultadosFormato=null;
+			List<Integer> tipoEdicionIds=null;
+			List<TipoEdicion> resultadosTipoEdicion=null;
 			
 			if (Actions.BUSCAR.equalsIgnoreCase(action)) {				
 				// Recuperar parametros
@@ -149,25 +163,32 @@ public class JuegoServlet extends HttpServlet {
 						
 						
 					Resultados<Juego> resultados = juegoService.findByJuegoCriteria(jc,idiomaPagina,(page-1)*pageSize+1, pageSize);
-					List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList());
-					// Buscar juegos que tiene incluidos en la biblioteca
-					if(user!=null) {						
-						List<Integer> idsJuegosEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idsJuegos);
+					if((resultados!=null) && (resultados.getTotal()!=0)) {
+						System.out.println("Entra");
+						List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList());
+						// Buscar juegos que tiene incluidos en la biblioteca
+						if(user!=null) {						
+							List<Integer> idsJuegosEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idsJuegos);
+							
+							request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
+						}
 						
-						request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
+						edicionesJuegos= edicionService.findByIdsJuego(idsJuegos);
+						
+						formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
+						resultadosFormato=formatoService.findbyIdsFormato(formatoIds,idiomaPagina);
+						
+						tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
+						resultadosTipoEdicion= tipoEdicionService.findbyIdsTipoEdicion(tipoEdicionIds, idiomaPagina);
+						
+						request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
+						
+						request.setAttribute(AttributeNames.FORMATO_RESULTADOS, resultadosFormato);
+						request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, resultadosTipoEdicion);
+						
 					}
-					
-					List<Edicion> edicionesJuegos= edicionService.findByIdsJuego(idsJuegos);
-					List<Integer> formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
-					List<Integer> tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
-					
-					request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
-					
-					request.setAttribute(AttributeNames.FORMATOIDS, formatoIds);
-					request.setAttribute(AttributeNames.TIPOEDICIONIDS, tipoEdicionIds);
 					request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados.getResultados());
 					request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
-					
 					int totalPages = (int) Math.ceil(resultados.getTotal()/(double)pageSize);
 					int firstPagedPage = Math.max(1, page-pagingPageCount);
 					int lastPagedPage = Math.min(totalPages, page+pagingPageCount);
@@ -175,7 +196,7 @@ public class JuegoServlet extends HttpServlet {
 					request.setAttribute(AttributeNames.TOTAL_PAGES, totalPages);
 					request.setAttribute(AttributeNames.FIRST_PAGED_PAGES, firstPagedPage);
 					request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
-				
+					
 					target = ViewPaths.BUSCADOR;
 				
 				}
@@ -184,9 +205,12 @@ public class JuegoServlet extends HttpServlet {
 				String id=request.getParameter(ParameterNames.ID);
 				Integer idJuego= Integer.valueOf(id);
 				
-				List<Edicion> edicionesJuego= edicionService.findByIdJuego(idJuego);
-				List<Integer> formatoIds=edicionesJuego.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
-				List<Integer> tipoEdicionIds= edicionesJuego.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
+				edicionesJuegos= edicionService.findByIdJuego(idJuego);
+				formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
+				resultadosFormato=formatoService.findbyIdsFormato(formatoIds,idiomaPagina);
+				
+				tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
+				resultadosTipoEdicion= tipoEdicionService.findbyIdsTipoEdicion(tipoEdicionIds, idiomaPagina);
 				
 				Juego juego = juegoService.findById(idJuego, idiomaPagina);
 				Creador creador=creadorService.findbyIdCreador(juego.getIdCreador());
@@ -208,9 +232,9 @@ public class JuegoServlet extends HttpServlet {
 					}		
 					request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
 				}	
-				request.setAttribute(AttributeNames.FORMATOIDS, formatoIds);
-				request.setAttribute(AttributeNames.TIPOEDICIONIDS, tipoEdicionIds);
-				request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuego);
+				request.setAttribute(AttributeNames.FORMATO_RESULTADOS, resultadosFormato);
+				request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, resultadosTipoEdicion);
+				request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
 				request.setAttribute(AttributeNames.CREADOR_JUEGO, creador);
 				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, juego);
 				

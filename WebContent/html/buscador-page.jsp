@@ -6,8 +6,11 @@
 <%		
 		
 		List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);	
-	    List<Integer> idsJuegosEnBiblioteca = (List<Integer>) request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);
+	   
+		List<Integer> idsJuegosEnBiblioteca = (List<Integer>) request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);
 	    List<Edicion> edicionesJuegos = (List<Edicion>) request.getAttribute(AttributeNames.EDICIONES_JUEGO);
+	    List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
+		List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
 		
 
 		if (resultados!=null && !resultados.isEmpty()) {
@@ -42,7 +45,27 @@
 					<%}%>
 					
 					</div>
-		
+					<div class="addCarrito">
+						<form>
+							<select>
+							<%for(Formato f : formato){
+								%>
+								<option><%=f.getNombre()%></option>
+								<%
+								}
+							%>
+							</select>
+							<select>
+							<%for(TipoEdicion tipoE : tipoEdicion){
+								%>
+								<option><%=tipoE.getNombre()%></option>
+								<%
+							}%>
+							</select>
+							<label>Precio:</label>
+							<input type="button" value="Añadir a Carrito"/>
+						</form>
+					</div>
 				<%
 					}
 			}else{
