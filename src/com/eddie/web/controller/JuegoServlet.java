@@ -72,18 +72,14 @@ public class JuegoServlet extends HttpServlet {
 	private JuegoService juegoService = null;
 	private UsuarioService usuarioService=null;
 	private CreadorService creadorService=null;
-	private EdicionService edicionService=null;
-	private FormatoService formatoService=null;
-	private TipoEdicionService tipoEdicionService= null;
+
 	
 	public JuegoServlet() {
 		super();
 		juegoService = new JuegoServiceImpl();
 		usuarioService=new UsuarioServiceImpl();
 		creadorService= new CreadorServiceImpl();
-		edicionService= new EdicionServiceImpl();
-		formatoService= new FormatoServiceImpl();
-		tipoEdicionService= new TipoEdicionServiceImpl();
+
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -101,11 +97,6 @@ public class JuegoServlet extends HttpServlet {
 			boolean hasErrors = false;			
 			Usuario user = (Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 			String idiomaPagina=SessionManager.get(request,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
-			List<Edicion> edicionesJuegos= null;
-			List<Integer> formatoIds= null;
-			List<Formato> resultadosFormato=null;
-			List<Integer> tipoEdicionIds=null;
-			List<TipoEdicion> resultadosTipoEdicion=null;
 			
 			if (Actions.BUSCAR.equalsIgnoreCase(action)) {				
 				// Recuperar parametros
@@ -163,30 +154,17 @@ public class JuegoServlet extends HttpServlet {
 						
 						
 					Resultados<Juego> resultados = juegoService.findByJuegoCriteria(jc,idiomaPagina,(page-1)*pageSize+1, pageSize);
-					if((resultados!=null) && (resultados.getTotal()!=0)) {
-						System.out.println("Entra");
-						List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList());
+				
+					List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList());
 						// Buscar juegos que tiene incluidos en la biblioteca
-						if(user!=null) {						
-							List<Integer> idsJuegosEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idsJuegos);
+					if(user!=null) {						
+						List<Integer> idsJuegosEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idsJuegos);
 							
-							request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
-						}
-						
-						edicionesJuegos= edicionService.findByIdsJuego(idsJuegos);
-						
-						formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
-						resultadosFormato=formatoService.findbyIdsFormato(formatoIds,idiomaPagina);
-						
-						tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
-						resultadosTipoEdicion= tipoEdicionService.findbyIdsTipoEdicion(tipoEdicionIds, idiomaPagina);
-						
-						request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
-						
-						request.setAttribute(AttributeNames.FORMATO_RESULTADOS, resultadosFormato);
-						request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, resultadosTipoEdicion);
-						
+						request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
 					}
+	
+						
+			
 					request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados.getResultados());
 					request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
 					int totalPages = (int) Math.ceil(resultados.getTotal()/(double)pageSize);
@@ -204,13 +182,6 @@ public class JuegoServlet extends HttpServlet {
 				
 				String id=request.getParameter(ParameterNames.ID);
 				Integer idJuego= Integer.valueOf(id);
-				
-				edicionesJuegos= edicionService.findByIdJuego(idJuego);
-				formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
-				resultadosFormato=formatoService.findbyIdsFormato(formatoIds,idiomaPagina);
-				
-				tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
-				resultadosTipoEdicion= tipoEdicionService.findbyIdsTipoEdicion(tipoEdicionIds, idiomaPagina);
 				
 				Juego juego = juegoService.findById(idJuego, idiomaPagina);
 				Creador creador=creadorService.findbyIdCreador(juego.getIdCreador());
@@ -232,9 +203,7 @@ public class JuegoServlet extends HttpServlet {
 					}		
 					request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
 				}	
-				request.setAttribute(AttributeNames.FORMATO_RESULTADOS, resultadosFormato);
-				request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, resultadosTipoEdicion);
-				request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
+				
 				request.setAttribute(AttributeNames.CREADOR_JUEGO, creador);
 				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, juego);
 				

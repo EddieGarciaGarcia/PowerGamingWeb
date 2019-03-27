@@ -97,6 +97,8 @@ public class InitStaticDataFilter implements Filter {
 			List<Formato> formatos= formatoService.findAll(idiomaPagina);
 			List<TipoEdicion> tipoEdicion=tipoEdicionService.findAll(idiomaPagina);
 			
+			request.setAttribute(AttributeNames.FORMATO_RESULTADOS, formatos);
+			request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, tipoEdicion);
 			request.setAttribute(AttributeNames.CATEGORIA_RESULTADOS, categorias);
 			request.setAttribute(AttributeNames.CREADOR_RESULTADOS, creador);
 			request.setAttribute(AttributeNames.PLATAFORMA_RESULTADOS, plataformas);

@@ -3,7 +3,7 @@
 <section class="biblioteca">
 		<% 
 			List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA);
-			List<Edicion> edicionesJuegos = (List<Edicion>) request.getAttribute(AttributeNames.EDICIONES_JUEGO);
+			
 			List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
 			List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
 			
@@ -28,25 +28,22 @@
 							<%=resultado.getIdJuego()%>"><button>Eliminar</button></a>
 					<div class="addCarrito">
 						<form>
-							<select>
-							<%for(Formato f : formato){
-								%>
-								<option><%=f.getNombre()%></option>
-								<%
-								}
-							%>
-							</select>
-							<select>
-							<%for(TipoEdicion tipoE : tipoEdicion){
-								%>
-								<option><%=tipoE.getNombre()%></option>
-								<%
-							}%>
-							</select>
-							<label>Precio:</label>
-							<input type="button" value="Añadir a Carrito"/>
+						<%for(Edicion e: resultado.getEdiciones()){  %>
+						<input type="checkbox" value="<%=e.getId()%>">
+						<label>Formato: <%for(Formato f:formato){
+											if(f.getIdFormato().equals(e.getIdFormato())){
+												%><%=f.getNombre()%>
+											<%}
+											}%> 
+								Tipo Edicion: <%for(TipoEdicion te:tipoEdicion){
+											if(te.getIdTipoEdicion().equals(e.getIdTipoEdicion())){
+												%><%=te.getNombre()%>
+											<%}}%> Precio: <%=e.getPrecio() %></label><br>
+		
+						<%}%>
+						<input type="button" value="Añadir a Carrito"/>
 						</form>
-					</div>
+				</div>
 				<%
 					}
 			}

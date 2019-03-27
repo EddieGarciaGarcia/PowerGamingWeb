@@ -32,6 +32,7 @@ import com.eddie.ecommerce.service.impl.FormatoServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.TipoEdicionServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
+import com.eddie.web.cache.WebCache;
 import com.eddie.web.config.ConfigurationManager;
 import com.eddie.web.config.ConfigurationParameterNames;
 import com.eddie.web.model.Errors;
@@ -58,17 +59,11 @@ public class BibliotecaServlet extends HttpServlet {
 	private static Logger logger = LogManager.getLogger(UsuarioServlet.class);  
 	private UsuarioService usuarioService=null;
 	private JuegoService juegoService = null;
-	private EdicionService edicionService=null;
-	private FormatoService formatoService=null;
-	private TipoEdicionService tipoEdicionService= null;
 	
     public BibliotecaServlet() {
         super();
         usuarioService=new UsuarioServiceImpl();
         juegoService = new JuegoServiceImpl();
-        edicionService= new EdicionServiceImpl();
-        formatoService= new FormatoServiceImpl();
-        tipoEdicionService= new TipoEdicionServiceImpl();
     }
 
 
@@ -97,19 +92,8 @@ public class BibliotecaServlet extends HttpServlet {
 				//Lambda expresion stream collectors
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
 				
-				List<Edicion> edicionesJuegos= edicionService.findByIdsJuego(juegoIDs);
-				
-				List<Integer> formatoIds=edicionesJuegos.stream().map(Edicion::getIdFormato).collect(Collectors.toList());
-				List<Formato> resultadosFormato=formatoService.findbyIdsFormato(formatoIds,idiomaPagina);
-				
-				List<Integer> tipoEdicionIds= edicionesJuegos.stream().map(Edicion::getIdTipoEdicion).collect(Collectors.toList());
-				List<TipoEdicion> resultadosTipoEdicion= tipoEdicionService.findbyIdsTipoEdicion(tipoEdicionIds, idiomaPagina);
-				
 				List<Juego> juegos =juegoService.findByIDs(juegoIDs, idiomaPagina);
 				
-				request.setAttribute(AttributeNames.FORMATO_RESULTADOS, resultadosFormato);
-				request.setAttribute(AttributeNames.TIPOEDICION_RESULTADOS, resultadosTipoEdicion);
-				request.setAttribute(AttributeNames.EDICIONES_JUEGO, edicionesJuegos);
 				request.setAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA, juegos);
 				request.setAttribute(AttributeNames.TOTAL, results.getTotal());
 				
