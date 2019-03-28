@@ -40,7 +40,7 @@
 				<%} %>
 			</div>
 			</a>
-			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dropbtn"s>Idioma:
+			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dropbtn">Idioma:
 			<div id="meumenudes3" class="menu-search3"> 
 				<%for(Idioma i: idioma){%>
 				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"><%=i.getNombre()%></option>

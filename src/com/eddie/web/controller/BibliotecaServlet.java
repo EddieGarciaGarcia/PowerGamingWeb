@@ -129,23 +129,25 @@ public class BibliotecaServlet extends HttpServlet {
 
 				if(results==false) {
 					usuarioService.addJuegoBiblioteca(user.getEmail(), it);	
-					target=ControllerPaths.JUEGO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
+					target=request.getHeader(ViewPaths.REFERER);
 				}else if(results==true){
-					target=ControllerPaths.JUEGO+"?"+ParameterNames.ACTION+"="+Actions.JUEGO+"&"+ParameterNames.ID+"="+id;
+					target=request.getHeader(ViewPaths.REFERER);
 					
 				}
-				redirect=true;
+				response.sendRedirect(target);
 			}
 			else {
 				logger.error("Action desconocida");
 				target= ViewPaths.INICIO;
 			}
-			if(redirect==true) {
-				logger.info("Redirect to "+target);
-				response.sendRedirect(target);
-			}else {
-				logger.info("forwarding to "+target);
-				request.getRequestDispatcher(target).forward(request, response);
+			if(!Actions.ADDJUEGO.equalsIgnoreCase(action)) {
+				if(redirect==true) {
+					logger.info("Redirect to "+target);
+					response.sendRedirect(target);
+				}else {
+					logger.info("forwarding to "+target);
+					request.getRequestDispatcher(target).forward(request, response);
+				}
 			}
 		} catch (DataException e) {
 			logger.info(e.getMessage(),e);

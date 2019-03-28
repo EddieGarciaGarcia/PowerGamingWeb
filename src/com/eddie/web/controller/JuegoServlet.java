@@ -17,26 +17,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.eddie.ecommerce.service.Resultados;
-import com.eddie.ecommerce.service.TipoEdicionService;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Creador;
-import com.eddie.ecommerce.model.Edicion;
-import com.eddie.ecommerce.model.Formato;
 import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
 import com.eddie.ecommerce.model.JuegoCriteria;
-import com.eddie.ecommerce.model.TipoEdicion;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.CreadorService;
-import com.eddie.ecommerce.service.EdicionService;
-import com.eddie.ecommerce.service.FormatoService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
-import com.eddie.ecommerce.service.impl.EdicionServiceImpl;
-import com.eddie.ecommerce.service.impl.FormatoServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
-import com.eddie.ecommerce.service.impl.TipoEdicionServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.ArrayUtils;
@@ -176,7 +167,7 @@ public class JuegoServlet extends HttpServlet {
 					request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
 					
 					target = ViewPaths.BUSCADOR;
-				
+					
 				}
 			}else if(Actions.JUEGO.equalsIgnoreCase(action)) {
 				
