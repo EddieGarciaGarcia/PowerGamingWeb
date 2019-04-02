@@ -144,6 +144,8 @@ public class UsuarioServlet extends HttpServlet {
 				
 				userv.create(u);
 				
+				//create de direccion
+				
 				//Implementar direccion con un checked
 			
 				
@@ -175,6 +177,8 @@ public class UsuarioServlet extends HttpServlet {
 				userupdate.setPassword(LimpiezaValidacion.validPassword(passwordconfig));
 				userupdate.setNombreUser(LimpiezaValidacion.validNombreUser(nombreUser));
 				userupdate.setEmail(user.getEmail());
+				
+				//update de direccion
 				
 				if(userupdate.getNombre()!=null || userupdate.getApellido1()!=null || userupdate.getApellido2()!=null 
 						|| userupdate.getTelefono()!=null || userupdate.getPassword()!=null || userupdate.getNombreUser()!=null) {

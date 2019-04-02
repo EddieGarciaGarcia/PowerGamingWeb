@@ -6,6 +6,7 @@
 	<h2>Configuracion de Usuario</h2>
 	<form action="<%=ControllerPaths.USUARIO%>" method="post">
 	<%
+				List<Pais> paises= (List<Pais>) request.getAttribute(AttributeNames.PAISES);
 				List<String> parameterErrors = errors.getErrors(ParameterNames.ACTION);
 				for (String error: parameterErrors) {
 					%><li><%=error%></li><%
@@ -40,16 +41,27 @@
 		<label><%=user.getNombreUser()%> , Cambiar a: </label>
 		<input type="text" name="<%=ParameterNames.NOMBREUSER%>" /><br>
 		
-		<label>Pais:</label><select name="<%=ParameterNames.PAIS%>">
+		<label>Pais:(Ignorar de momento)</label><select name="<%=ParameterNames.PAIS%>">
 				<%
-					List<Pais> paises= (List<Pais>) request.getAttribute(AttributeNames.PAISES);
 					for(Pais pais: paises){
 						%>
-						<option value="<%=pais.getIdPais()%>"><%=pais.getNombre()%></option>
+						<option id="Pais+<%=pais.getIdPais()%>" value="<%=pais.getIdPais()%>"><%=pais.getNombre()%></option>
 						<%
 					}
 				%>
 		</select><br>
+		<label>Provincia:</label><select name="<%=ParameterNames.PROVINCIA%>">
+			<% 
+				
+			%><option id="Provincia+<%=idProvincia%>"><%=nombre pais %></option><%
+			
+			%>
+		</select>
+		<label>Localidad</label><input type="text" name="<%=ParameterNames.LOCALIDAD%>"/>
+		<label>Codigo Postal</label><input type="text" name="<%=ParameterNames.CODPOSTAL%>"/>
+		<label>Calle</label><input type="text" name="<%=ParameterNames.CALLE%>"/>
+		<label>Numero</label><input type="text" name="<%=ParameterNames.NUMERO%>"/>
+		<label>Piso</label><input type="text" name="<%=ParameterNames.PISO%>"/>
 		
 		<input type="submit" value="Actualizar"/>	
 	</form>
