@@ -13,9 +13,7 @@
 <body>
 
 <script>
-			function desplegarMenu2() {
-				  document.getElementById("meumenudes2").classList.toggle("show");
-				}
+			
 				function desplegarMenu() {
 					  document.getElementById("meumenudes").classList.toggle("show");
 					}
@@ -33,6 +31,7 @@
 						    }
 						  }
 						}
+					
 				</script>
 
 	<header class="menu"> 

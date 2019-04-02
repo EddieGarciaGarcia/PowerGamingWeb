@@ -32,6 +32,7 @@ import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.ArrayUtils;
 import com.eddie.web.util.LimpiezaValidacion;
+import com.eddie.web.util.ParamsUtils;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
 import com.eddie.web.util.WebConstants;
@@ -98,7 +99,7 @@ public class JuegoServlet extends HttpServlet {
 				String[] idioma=request.getParameterValues(ParameterNames.IDIOMA); 
 				String fecha=request.getParameter(ParameterNames.FECHA);
 				
-				
+				StringBuilder targetString=new StringBuilder(ViewPaths.BUSCADOR);
 				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
 				
 				// Limpiar
@@ -122,25 +123,32 @@ public class JuegoServlet extends HttpServlet {
 					
 						if(nombreValid!=null && nombreValid!="") {
 							jc.setNombre(nombreValid);
+							//targetString.append("&"+jc.getNombre());
 						}
 						if(categorias!=null) {
 							//jc.setCategoria(ArrayUtils.arrayCategoria(categoria));
 							jc.setCategoriaIDs(ArrayUtils.asInteger(categorias));
+							//targetString.append("&"+jc.getCategoriaIDs());
 						}
 						if(idioma!=null) {
 							jc.setIdiomaIDs(idioma);
+							//targetString.append("&"+jc.getIdiomaIDs());
 						}
 						if(plataforma!=null) {
 							jc.setPlataformaIDs(ArrayUtils.asInteger(plataforma));
+							//targetString.append("&"+jc.getPlataformaIDs());
 						}
 						if(creador!=null) {
 							Integer creadorValid=Integer.valueOf(creador);
 							jc.setIdCreador(creadorValid);
+							//targetString.append("&"+jc.getIdCreador());
 						}if(fecha!=null) {
 							Integer fechaformat=Integer.valueOf(fecha);
 							jc.setFechaLanzamiento(fechaformat);
+							//targetString.append("&"+jc.getFechaLanzamiento());
 						}else {
 							jc.setNombre(nombreValid);
+							//targetString.append("&"+jc.getNombre());
 						}
 						
 						

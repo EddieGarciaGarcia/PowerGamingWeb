@@ -27,4 +27,6 @@ public interface Actions {
 	public static final String ELIMINAR="eliminar";
 	public static final String ID="id";
 	public static final String CARRITO="carrito";
+	
+	public static final String ADDHISTORIAL="anhadir_historial";
 }
