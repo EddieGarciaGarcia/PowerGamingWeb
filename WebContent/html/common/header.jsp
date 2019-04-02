@@ -11,6 +11,30 @@
 </head>
 
 <body>
+
+<script>
+			function desplegarMenu2() {
+				  document.getElementById("meumenudes2").classList.toggle("show");
+				}
+				function desplegarMenu() {
+					  document.getElementById("meumenudes").classList.toggle("show");
+					}
+
+					window.onclick = function(event) {
+						  if (!event.target.matches('.dropbtn')) {
+
+						    var menudess = document.getElementsByClassName("menudes-contido");
+						    var i;
+						    for (i = 0; i < menudess.length; i++) {
+						      var openmenudes = menudess[i];
+						      if (openmenudes.classList.contains('show')) {
+						        openmenudes.classList.remove('show');
+						      }
+						    }
+						  }
+						}
+				</script>
+
 	<header class="menu"> 
                 <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaming.png"></img>
                 <div class="menuimg">
@@ -25,6 +49,9 @@
                     	<%@include file="/html/common/user-menu.jsp"%>
                     </ul>
                 </nav>
+                <div>
+                	<%@include file="/html/carrito.jsp"%>
+                </div>
      </header>
 	
 	

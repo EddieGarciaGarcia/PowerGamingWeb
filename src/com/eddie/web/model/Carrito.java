@@ -103,8 +103,8 @@ public class Carrito {
 	private void calcularTotal() {
 		  double totalCarrito = 0;
 		  for(int contador=0;contador<linea.size(); contador++) {
-			  LineaCarrito cartItem = (LineaCarrito) linea.get(contador);
-			  totalCarrito+=cartItem.getPrecioTotal();
+			  LineaCarrito lineaCarrito = (LineaCarrito) linea.get(contador);
+			  totalCarrito+=lineaCarrito.getPrecioTotal();
 		    
 		  }
 		  setTotal(totalCarrito);

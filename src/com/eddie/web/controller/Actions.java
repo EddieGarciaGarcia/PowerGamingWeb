@@ -22,4 +22,9 @@ public interface Actions {
 	public static final String JUEGO="juego";
 	public static final String ALLJUEGO="alljuego";
 	public static final String ALLJUEGOVALOR="alljuegovalor";
+	
+	public static final String ANHADIR="anhadir";
+	public static final String ELIMINAR="eliminar";
+	public static final String ID="id";
+	public static final String CARRITO="carrito";
 }

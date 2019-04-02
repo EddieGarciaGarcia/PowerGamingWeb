@@ -42,10 +42,11 @@
 						
 		<%}%>
 		<div class="addCarrito">
-						<form>
+						<form action="<%=ControllerPaths.CARRITO%>" method="post">
+						<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.ANHADIR%>"/>
+						<select name="<%=ParameterNames.IDEDICION%>">
 						<%for(Edicion e: resultados.getEdiciones()){  %>
-						<input type="checkbox" value="<%=e.getId()%>">
-						<label>Formato: <%for(Formato f:formato){
+						<option value="<%=e.getId()%>">Formato: <%for(Formato f:formato){
 											if(f.getIdFormato().equals(e.getIdFormato())){
 												%><%=f.getNombre()%>
 											<%}
@@ -53,10 +54,11 @@
 								Tipo Edicion: <%for(TipoEdicion te:tipoEdicion){
 											if(te.getIdTipoEdicion().equals(e.getIdTipoEdicion())){
 												%><%=te.getNombre()%>
-											<%}}%> Precio: <%=e.getPrecio() %></label><br>
+											<%}}%> Precio: <%=e.getPrecio() %></option><br>
 		
 						<%}%>
-						<input type="button" value="Añadir a Carrito"/>
+						</select>
+						<input type="submit" value="Añadir a Carrito"/>
 						</form>
 		</div>
 		<div><video src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.mp4" width="640" height="480" controls></video></div>	
