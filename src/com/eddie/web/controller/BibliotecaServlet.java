@@ -82,12 +82,11 @@ public class BibliotecaServlet extends HttpServlet {
 			Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 			
 			if(Actions.BIBLIOTECA.equalsIgnoreCase(action)) {
-				String email = request.getParameter(ParameterNames.EMAIL);
 				
 				int page = WebUtils.
 						getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
 				
-				Resultados<ItemBiblioteca> results=usuarioService.findByUsuario(email,(page-1)*pageSize+1, pageSize);
+				Resultados<ItemBiblioteca> results=usuarioService.findByUsuario(user.getEmail(),(page-1)*pageSize+1, pageSize);
 				
 				//Lambda expresion stream collectors
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());

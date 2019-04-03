@@ -13,7 +13,6 @@ import com.eddie.ecommerce.model.Edicion;
 import com.eddie.ecommerce.service.EdicionService;
 import com.eddie.ecommerce.service.impl.EdicionServiceImpl;
 import com.eddie.web.model.Carrito;
-import com.eddie.web.util.ParamsUtils;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
 
