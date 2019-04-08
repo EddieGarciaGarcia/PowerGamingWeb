@@ -32,4 +32,6 @@ public interface Actions {
 	public static final String HISTORIALPEDIDO= "historial_pedido";
 	public static final String ELIMINARPEDIDO= "eliminar_historial";
 	public static final String CONFIRMARPEDIDO= "confirmarpedido_historial_pedido";
+	
+
 }

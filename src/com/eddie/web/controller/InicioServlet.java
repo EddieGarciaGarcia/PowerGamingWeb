@@ -30,8 +30,8 @@ public class InicioServlet extends HttpServlet {
 	
 	private static int pageSize = Integer.valueOf(
 			ConfigurationManager.getInstance().getParameter(
-						ConfigurationParameterNames.RESULTS_PAGE_SIZE_DEFAULT)); 
-
+						ConfigurationParameterNames.RESULTS_PAGE_SIZE_DEFAULT))+2; 
+	
 	private static int pagingPageCount = Integer.valueOf(
 			ConfigurationManager.getInstance().getParameter(
 						ConfigurationParameterNames.RESULTS_PAGING_PAGE_COUNT)); 
@@ -46,10 +46,13 @@ public class InicioServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String target = null;
 		String idiomaPagina=SessionManager.get(request,WebConstants.USER_LOCALE).toString().substring(0,2).toUpperCase();
+		
 		int page = WebUtils.
 				getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
 		
 		Resultados<Juego> todos;
+		
+		
 		try {
 			todos = juegoService.findAllByDate(idiomaPagina,(page-1)*pageSize+1, pageSize);
 		
@@ -68,7 +71,9 @@ public class InicioServlet extends HttpServlet {
 		}
 		target= ViewPaths.HOME;
 		request.getRequestDispatcher(target).forward(request, response);
+		
 	}
+	
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

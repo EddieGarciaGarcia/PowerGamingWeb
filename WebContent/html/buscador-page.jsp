@@ -11,7 +11,9 @@
 
 		if (resultados!=null && !resultados.isEmpty()) {
 			%>
-			<h1>Resultados:</h1>
+			<p>
+	
+</p>
 			<%
 			for (Juego resultado: resultados) {
 				%>
@@ -39,7 +41,8 @@
 							%>
 					
 					<%}%>
-					
+		
+						
 					</div>
 					<div class="addCarrito">
 						<form action="<%=ControllerPaths.CARRITO%>" method="post">

@@ -161,8 +161,7 @@
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    height:150px;
-    width:200px;
+
 }
 .menu-search2{
 	background-color:#1c05fe;
@@ -172,9 +171,7 @@
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    height:150px;
-    width:200px;
-    left:250px;
+    left:300px;
 }
 .menu-search3{
 	background-color:#1c05fe;
@@ -184,8 +181,6 @@
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    height:150px;
-    width:200px;
     left:400px;
 }
 .menudes-contido2 {
@@ -229,4 +224,7 @@
 	font-size: 30px;
 	position: relative;
 	top: -70px;
+}
+input {
+	margin: 10px;
 }

@@ -22,7 +22,7 @@
 			<div id="meumenudes1" class="menu-search" > 
 			
 				<%for(Categoria c: categoria){%>
-				<input type="checkbox" name="<%=ParameterNames.CATEGORIA%>" value="<%=c.getIdCategria()%>"><%=c.getNombre()%></option>
+				<input type="checkbox" name="<%=ParameterNames.CATEGORIA%>" value="<%=c.getIdCategria()%>"/><%=c.getNombre()%></br>
 				<%}%>
 			</div>
 			</a>
@@ -36,50 +36,40 @@
 			<a onmouseover="ver(2)" onmouseout="ocultar(2)" class="dropbtn">Plataforma:
 			<div id="meumenudes2" class="menu-search2"> 
 				<%for(Plataforma p: plataforma){%>
-				<input type="checkbox" name="<%=ParameterNames.PLATAFORMA%>" value="<%=p.getIdPlatadorma()%>"><%=p.getNombre()%></option>
+				<input type="checkbox" name="<%=ParameterNames.PLATAFORMA%>" value="<%=p.getIdPlatadorma()%>"/><%=p.getNombre()%></br>
 				<%} %>
 			</div>
 			</a>
 			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dropbtn">Idioma:
 			<div id="meumenudes3" class="menu-search3"> 
 				<%for(Idioma i: idioma){%>
-				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"><%=i.getNombre()%></option>
+				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"/><%=i.getNombre()%></br>
 				<%} %>
 			</div>
 			</a>
 			<label>Fecha:</label>
 			<select name="<%=ParameterNames.FECHA%>">
 				<option  selected disabled>Escoge</option>
-				<option value="1990">1990</option>
-                <option value="1991">1991</option>
-                <option value="1992">1992</option>
-                <option value="1993">1993</option>
-                <option value="1994">1994</option>
-                <option value="1995">1995</option>
-                <option value="1996">1996</option>
-                <option value="1997">1997</option>
-                <option value="1998">1998</option>
-                <option value="1999">1999</option>
-                <option value="2000">2000</option>
-                <option value="2001">2001</option>
-                <option value="2002">2002</option>
-                <option value="2003">2003</option>
-                <option value="2004">2004</option>
-                <option value="2005">2005</option>
-                <option value="2006">2006</option>
-                <option value="2007">2007</option>
-                <option value="2008">2008</option>
-                <option value="2009">2009</option>
-                <option value="2010">2010</option>
-                <option value="2011">2011</option>
-                <option value="2012">2012</option>
-                <option value="2013">2013</option>
-                <option value="2014">2014</option>
-                <option value="2015">2015</option>
-                <option value="2016">2016</option>
-                <option value="2017">2017</option>
-				<option value="2018">2018</option>
 				<option value="2019">2019</option>
+				<option value="2018">2018</option>
+				<option value="2017">2017</option>
+				<option value="2016">2016</option>
+				<option value="2015">2015</option>
+				<option value="2014">2014</option>
+				<option value="2013">2013</option>
+				<option value="2012">2012</option>
+				<option value="2011">2011</option>
+				<option value="2010">2010</option>
+				<option value="2009">2009</option>
+				<option value="2008">2008</option>
+				<option value="2007">2007</option>
+				<option value="2006">2006</option>
+				<option value="2005">2005</option>
+				<option value="2004">2004</option>
+				<option value="2003">2003</option>
+				<option value="2002">2002</option>
+				<option value="2001">2001</option>
+                <option value="2000">2000</option>
 			</select>
 			<input type="text"
 					name="<%=ParameterNames.NOMBRE%>" 

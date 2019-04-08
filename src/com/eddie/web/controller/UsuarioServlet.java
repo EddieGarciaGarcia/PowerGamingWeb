@@ -236,6 +236,8 @@ public class UsuarioServlet extends HttpServlet {
 				}
 
 				target=request.getHeader(ViewPaths.REFERER);
+				
+				redirect=true;
 				response.sendRedirect(target);
 			}else {
 				logger.error("Action desconocida");
