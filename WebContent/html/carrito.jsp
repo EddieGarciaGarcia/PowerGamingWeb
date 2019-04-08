@@ -3,7 +3,7 @@
 
 <div id="carrito">
 			<script>
-			function desplegarMenu2() {
+			function desplegarMenu5() {
 				  document.getElementById("meumenudes2").classList.toggle("show2");
 				}
 			window.onclick = function(event) {
@@ -21,7 +21,7 @@
 				}
 		</script>
 <a onclick="desplegarMenu2()" class="dropbtn">Carrito</a>
-<div id="meumenudes2" class="menudes-contido2">
+<div id="meumenudes5" class="menudes-contido2">
 <%
 	List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
 	List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);

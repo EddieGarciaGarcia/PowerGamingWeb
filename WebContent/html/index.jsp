@@ -1,7 +1,8 @@
 <%@ page import="com.eddie.ecommerce.service.*, com.eddie.web.controller.*,java.util.List, com.eddie.ecommerce.model.*" %>
 <%@include file="/html/common/header.jsp"%>
 <%@include file="/html/common/buscador.jsp"%>
-<h1>Bienvenido a Power Gaming</h1>
+
+<h1><fmt:message key="resultados" bundle="${traduccion}"/></h1>
 <section class="sectionjuegos">
 	<%
 		List<Juego> todos= (List<Juego>) request.getAttribute(AttributeNames.RESULTADOS_TODOS);
