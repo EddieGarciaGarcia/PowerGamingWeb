@@ -22,7 +22,7 @@
 			<div id="meumenudes1" class="menu-search" > 
 			
 				<%for(Categoria c: categoria){%>
-				<input type="checkbox" name="<%=ParameterNames.CATEGORIA%>" value="<%=c.getIdCategria()%>"/><%=c.getNombre()%></br>
+				<input type="checkbox" name="<%=ParameterNames.CATEGORIA%>" value="<%=c.getIdCategria()%>"/><%=c.getNombre()%><br>
 				<%}%>
 			</div>
 			</a>
@@ -36,14 +36,14 @@
 			<a onmouseover="ver(2)" onmouseout="ocultar(2)" class="dropbtn">Plataforma:
 			<div id="meumenudes2" class="menu-search2"> 
 				<%for(Plataforma p: plataforma){%>
-				<input type="checkbox" name="<%=ParameterNames.PLATAFORMA%>" value="<%=p.getIdPlatadorma()%>"/><%=p.getNombre()%></br>
+				<input type="checkbox" name="<%=ParameterNames.PLATAFORMA%>" value="<%=p.getIdPlatadorma()%>"/><%=p.getNombre()%><br>
 				<%} %>
 			</div>
 			</a>
-			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dropbtn">Idioma:
+			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dn">Idioma:
 			<div id="meumenudes3" class="menu-search3"> 
 				<%for(Idioma i: idioma){%>
-				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"/><%=i.getNombre()%></br>
+				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"/><%=i.getNombre()%><br>
 				<%} %>
 			</div>
 			</a>

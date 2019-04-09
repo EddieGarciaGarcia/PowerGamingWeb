@@ -99,7 +99,7 @@ public class JuegoServlet extends HttpServlet {
 				String[] idioma=request.getParameterValues(ParameterNames.IDIOMA); 
 				String fecha=request.getParameter(ParameterNames.FECHA);
 				
-				StringBuilder targetString=new StringBuilder(ViewPaths.BUSCADOR);
+				StringBuilder targetString=new StringBuilder();
 				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
 				
 				// Limpiar
@@ -123,32 +123,40 @@ public class JuegoServlet extends HttpServlet {
 					
 						if(nombreValid!=null && nombreValid!="") {
 							jc.setNombre(nombreValid);
-							//targetString.append("&"+jc.getNombre());
+							targetString.append("&nombre="+jc.getNombre());
 						}
 						if(categorias!=null) {
 							//jc.setCategoria(ArrayUtils.arrayCategoria(categoria));
 							jc.setCategoriaIDs(ArrayUtils.asInteger(categorias));
-							//targetString.append("&"+jc.getCategoriaIDs());
+							for(Integer i : jc.getCategoriaIDs()) {
+								targetString.append("&categoria="+i);
+							}
 						}
 						if(idioma!=null) {
 							jc.setIdiomaIDs(idioma);
-							//targetString.append("&"+jc.getIdiomaIDs());
+							for(String i : jc.getIdiomaIDs()) {
+								targetString.append("&idioma="+i);
+							}
 						}
 						if(plataforma!=null) {
 							jc.setPlataformaIDs(ArrayUtils.asInteger(plataforma));
-							//targetString.append("&"+jc.getPlataformaIDs());
+							for(Integer i : jc.getPlataformaIDs()) {
+								targetString.append("&plataforma="+i);
+							}
 						}
 						if(creador!=null) {
 							Integer creadorValid=Integer.valueOf(creador);
 							jc.setIdCreador(creadorValid);
-							//targetString.append("&"+jc.getIdCreador());
+							
+							targetString.append("&creador="+jc.getIdCreador());
+								
 						}if(fecha!=null) {
 							Integer fechaformat=Integer.valueOf(fecha);
 							jc.setFechaLanzamiento(fechaformat);
-							//targetString.append("&"+jc.getFechaLanzamiento());
+							targetString.append("&fecha="+jc.getFechaLanzamiento());
 						}else {
 							jc.setNombre(nombreValid);
-							//targetString.append("&"+jc.getNombre());
+							targetString.append("&"+jc.getNombre());
 						}
 						
 						
@@ -160,9 +168,7 @@ public class JuegoServlet extends HttpServlet {
 						List<Integer> idsJuegosEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idsJuegos);
 							
 						request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
-					}
-	
-						
+					}			
 			
 					request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, resultados.getResultados());
 					request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
@@ -173,6 +179,8 @@ public class JuegoServlet extends HttpServlet {
 					request.setAttribute(AttributeNames.TOTAL_PAGES, totalPages);
 					request.setAttribute(AttributeNames.FIRST_PAGED_PAGES, firstPagedPage);
 					request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
+					
+					SessionManager.set(request, SessionAttributeNames.URL, targetString.toString());
 					
 					target = ViewPaths.BUSCADOR;
 					

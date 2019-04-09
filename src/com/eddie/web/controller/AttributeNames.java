@@ -15,7 +15,7 @@ public interface AttributeNames {
 	
 	public static final String LISTADO_RESULTADOS_BIBLIOTECA="listado_resultados_biblioteca";
 	public static final String PRODUCTOS_EN_BIBLIOTECA = "juegos_en_biblioteca";
-	public static final String PRODUCTO_RESULTADOS = "producto_resultados";
+	public static final String PRODUCTO_RESULTADOS = "juegos_resultados";
 	
 	public static final String CREADOR_JUEGO="creador_juego";
 	
