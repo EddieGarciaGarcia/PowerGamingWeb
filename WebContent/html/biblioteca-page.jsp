@@ -10,14 +10,15 @@
 			<%
 			for (Juego resultado: resultados) {
 				%>
-					<div>
+					<div class="divjuegobiblioteca">
 					<a href="<%=ControllerPaths.JUEGO%>?
 							<%=ParameterNames.ACTION%>=<%=Actions.JUEGO%>&amp;<%=ParameterNames.ID%>=
 							<%=resultado.getIdJuego()%>">
 					<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=(Integer)resultado.getIdJuego()%>.jpg"></img>
-					<p><%=resultado.getNombre()%></p>
 					</a>
 					</div>
+					<div class="divbiblioteca">
+					<p><%=resultado.getNombre()%></p>
 					<a href="<%=ControllerPaths.BIBLIOTECA%>?
 							<%=ParameterNames.ACTION%>=<%=Actions.DELETEJUEGO%>&amp;<%=ParameterNames.ID%>=
 							<%=resultado.getIdJuego()%>"><button>Eliminar</button></a>
@@ -40,6 +41,7 @@
 						</select>
 						<input type="submit" value="Añadir a Carrito"/>
 						</form>
+					</div>
 				</div>
 				<%
 					}

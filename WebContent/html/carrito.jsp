@@ -33,7 +33,7 @@
 %>
 			<div class="lineacarrito">
 				<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=lineaCarrito.getEdicion().getIdJuego()%>.jpg"></img>
-				<div class="edicion"><%for(Formato f:formato){
+				<div class="edicion"><p><%for(Formato f:formato){
 					if(f.getIdFormato().equals(lineaCarrito.getEdicion().getIdFormato())){
 						%><%=f.getNombre()%>
 					<%}
@@ -41,11 +41,11 @@
 					<%for(TipoEdicion te:tipoEdicion){
 											if(te.getIdTipoEdicion().equals(lineaCarrito.getEdicion().getIdTipoEdicion())){
 												%><%=te.getNombre()%>
-											<%}}%></div>
+											<%}}%></br>
 											
-				<div class="precio">Precio: <%=lineaCarrito.getEdicion().getPrecio()%> </div>
+				Precio: <%=lineaCarrito.getEdicion().getPrecio()%> </p></br>
 				<a class="a3" href="<%=ControllerPaths.CARRITO %>?<%=ParameterNames.ACTION%>=<%=Actions.ELIMINAR%>&amp;<%=ParameterNames.IDEDICION%>=<%=lineaCarrito.getEdicion().getId()%>">X</a>
-				
+				</div>
 				<hr>
 					
 			</div>
