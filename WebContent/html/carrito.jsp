@@ -23,8 +23,6 @@
 <a onclick="desplegarMenu5()" class="dropbtn">Carrito</a>
 <div id="meumenudes5" class="menudes-contido2">
 <%
-	List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
-	List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
 	Carrito carrito = (Carrito) SessionManager.get(request, SessionAttributeNames.CARRITO);
 	if (carrito != null) {
 			

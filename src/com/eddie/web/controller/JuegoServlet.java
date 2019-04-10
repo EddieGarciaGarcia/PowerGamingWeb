@@ -1,6 +1,7 @@
 package com.eddie.web.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -156,7 +157,7 @@ public class JuegoServlet extends HttpServlet {
 							targetString.append("&fecha="+jc.getFechaLanzamiento());
 						}else {
 							jc.setNombre(nombreValid);
-							targetString.append("&"+jc.getNombre());
+							//targetString.append("&"+jc.getNombre());
 						}
 						
 						
@@ -196,18 +197,20 @@ public class JuegoServlet extends HttpServlet {
 				//Listado de comentarios
 				List<ItemBiblioteca> comentarios=juegoService.findByJuego(juego.getIdJuego());
 				
+				
 				// Buscar juegos que tiene incluidos en la biblioteca para mostrar o no el boton de añadir
 				if(user!=null) {
 					Boolean idJuegoEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idJuego);
 
 					request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idJuegoEnBiblioteca);
 				}
-				if(comentarios.size()>0) {
-					Map<Usuario, ItemBiblioteca> comentario= new HashMap<Usuario, ItemBiblioteca>();
+				if(!comentarios.isEmpty()) {
+					Map<String, ItemBiblioteca> comentario= new HashMap<String, ItemBiblioteca>();
 					for(ItemBiblioteca i:comentarios){
-						Usuario u=usuarioService.findById(i.getEmail());
-						comentario.put(u, i);
-					}		
+							Usuario u=usuarioService.findById(i.getEmail());
+							comentario.put(u.getNombreUser(), i);
+						
+					}	
 					request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
 				}	
 				
@@ -215,6 +218,18 @@ public class JuegoServlet extends HttpServlet {
 				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, juego);
 				
 				target =ViewPaths.JUEGO;
+			}else if(Actions.ADDCOMENTARIO.equalsIgnoreCase(action)) {
+				String comentario= request.getParameter(ParameterNames.COMENTARIO);
+				
+				ItemBiblioteca it=new ItemBiblioteca();
+				it.setComentario(comentario);
+				it.setEmail(user.getEmail());
+				it.setFechaComentario(new Date());
+				juegoService.addComent(it);
+			
+				target = ViewPaths.REFERER;
+				redirect=true;
+				
 			}else {
 				logger.error("Action desconocida");
 				target= ViewPaths.INICIO;

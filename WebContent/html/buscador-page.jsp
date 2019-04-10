@@ -23,7 +23,7 @@
 						<c:param name="id" value="${resultado.idJuego}"/>
 					</c:url>
 				<a href="${urljuegodetalle}"><img src="${pageContext.request.contextPath}/imgs/icojuego/${resultado.idJuego}.jpg"><p class="pjuego">${resultado.nombre}</p></a>
-				</div>
+				</div>	
 				<c:choose>
 				<c:when test="${not empty u}">
 					<c:when test="${idsJuegosEnBiblioteca.contains(resultado.idJuego)==true}">
@@ -39,32 +39,7 @@
 				</c:when>
 				</c:choose>
 			 	</div>
-				<%-- <div class="addCarrito">
-					<form action="<%=ControllerPaths.CARRITO%>" method=post>
-						<input type="hidden" name="action" value="${Actions.ANHADIR}">
-						<select name="${ParameterNames.IDEDICION}" >
-							<c:forEach items="${resultado.ediciones}" var="edicion">
-								<option value="${edicion.id}">
-									<fmt:message key="formato" bundle="${messages}">
-										<c:forEach items="${edicion.idFormato}" var="formato">
-											<c:if test="${formato.id==edicion.idFormato}">
-												<p>${formato.nombre}</p>
-											</c:if>
-										</c:forEach>
-									</fmt:message>
-									<fmt:message key="tipoedicion" bundle="${messages}">
-									 	<c:forEach items="${edicion.idTipoEdicion}" var="tipoedicion">
-									 		<c:if test="${tipoedicion.id==edicion.idTipoEdicion}">
-									 			<p>${tipoedicion.nombre}</p>
-									 		</c:if>
-									 	</c:forEach>
-									</fmt:message>
-								</option><br>
-							</c:forEach>
-						</select>
-						<input type="submit" value="Añadir a Carrito"/>
-					</form>
-				</div>--%>
+		
 			</c:forEach>
 		</c:if>
 		

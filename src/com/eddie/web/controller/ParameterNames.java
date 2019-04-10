@@ -38,4 +38,6 @@ public interface ParameterNames {
 	public static final String CARRITO="carrito";
 	public static final String IDEDICION="idedicion";
 	public static final String DUPLICADO="duplicado";
+	
+	public static final String COMENTARIO="comentario";
 }

@@ -7,7 +7,7 @@
 		<% 
 			
 			Juego resultados =(Juego) request.getAttribute(AttributeNames.PRODUCTO_RESULTADOS);
-			Map<Usuario, ItemBiblioteca> comentarios= (Map<Usuario, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
+			Map<String, ItemBiblioteca> comentarios= (Map<String, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
 			Boolean resultadosBiblioteca = (Boolean)request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);		
 			Creador creador=(Creador)request.getAttribute(AttributeNames.CREADOR_JUEGO);
 			
@@ -39,38 +39,54 @@
 						
 						
 		<%}%>
+		
 		<div class="addCarrito">
 						<form action="<%=ControllerPaths.CARRITO%>" method="post">
 						<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.ANHADIR%>"/>
 						<select name="<%=ParameterNames.IDEDICION%>">
-						<%for(Edicion e: resultados.getEdiciones()){  %>
-						<option value="<%=e.getId()%>">Formato: <%for(Formato f:formato){
+						<%if(resultados.getEdiciones()!=null){for(Edicion e: resultados.getEdiciones()){  %>
+						<option value="<%=e.getId()%>"><fmt:message key="formato" bundle="${traduccion}"></fmt:message><%for(Formato f:formato){
 											if(f.getIdFormato().equals(e.getIdFormato())){
 												%><%=f.getNombre()%>
 											<%}
 											}%> 
-								Tipo Edicion: <%for(TipoEdicion te:tipoEdicion){
+						<fmt:message key="tipoedicion" bundle="${traduccion}"></fmt:message><%for(TipoEdicion te:tipoEdicion){
 											if(te.getIdTipoEdicion().equals(e.getIdTipoEdicion())){
 												%><%=te.getNombre()%>
 											<%}}%> Precio: <%=e.getPrecio() %></option><br>
 		
-						<%}%>
+						<%}}%>
 						</select>
 						<input type="submit" value="Añadir a Carrito"/>
 						</form>
-		</div>
+</div>
+		
+		
 		<div><video src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.mp4" width="640" height="480" controls></video></div>	
 		<% if(u!=null){%>
 			<div class="comentario">
+			<form action="<%=ControllerPaths.JUEGO%>" method="post">
+				<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.ADDCOMENTARIO%>"/>
 				<p>Tu comentario <%=u.getNombreUser()%> :</p>
-				<textarea rows="10" cols="50" name=""></textarea>
-				<a href="">Modificar</a>			
+				<textarea rows="10" cols="50" name="<%=ParameterNames.COMENTARIO%>"></textarea>
+				<input type="submit" name="Modificar" value="modificar"/>	
+			</form>		
 			</div>
 			<%
-		}else{
-			
 		}
-		%>
+		if(!comentarios.isEmpty() && comentarios!=null){%>
+			<div class="comentarios">
+				<%for (Map.Entry<String, ItemBiblioteca> entry : comentarios.entrySet()) {%>
+				   	<div>
+				   		<%if(entry.getValue().getComentario()!=null && entry.getValue().getIdJuego()!=null){%>
+					    	<h3><%=entry.getKey()%></h3><br>
+					    	<p><%=entry.getValue().getFechaComentario()%></p>
+					    	<p><%=entry.getValue().getComentario()%></p>
+				    	<%}%>
+				    </div>
+				<%}%>
+			</div>
+		<%}%>
 			
 	</section>
 	

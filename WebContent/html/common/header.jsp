@@ -40,7 +40,10 @@
 						}
 					
 				</script>
-
+<%
+List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
+List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
+%>
 	<header class="menu"> 
                 <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaming.png"></img>
                 <div class="menuimg">
