@@ -3,7 +3,7 @@
 <%@include file="/html/common/header.jsp"%>
 <section>
 <%@include file="/html/common/action-error.jsp"%>
-	<h2>Configuracion de Usuario</h2>
+	<h2><fmt:message key="myaccountmensage" bundle="${traduccion}"/></h2>
 	<form action="<%=ControllerPaths.USUARIO%>" method="post">
 	<%
 				List<Pais> paises= (List<Pais>) request.getAttribute(AttributeNames.PAISES);
@@ -17,14 +17,14 @@
 		Usuario user=(Usuario)request.getAttribute(AttributeNames.USER);
 	%>
 	
-		<label>Nombre:</label>
-		<label><%=user.getNombre()%> , Cambiar a: </label>
+		<label><fmt:message key="name" bundle="${traduccion}"/>:</label>
+		<label><%=user.getNombre()%> , <fmt:message key="cambiar" bundle="${traduccion}"/>: </label>
 		<input type="text" name="<%=ParameterNames.NOMBRE%>" /><br>
-		<label>Apellido 1: </label>
-		<label><%=user.getApellido1()%> , Cambiar a: </label>
+		<label><fmt:message key="apellido1" bundle="${traduccion}"/>: </label>
+		<label><%=user.getApellido1()%> , <fmt:message key="cambiar" bundle="${traduccion}"/>: </label>
 		<input type="text" name="<%=ParameterNames.APELLIDO1%>"/><br>
-		<label>Apellido 2: </label>
-		<label><%=user.getApellido2()%> , Cambiar a: </label>
+		<label><fmt:message key="apellido2" bundle="${traduccion}"/>: </label>
+		<label><%=user.getApellido2()%> , <fmt:message key="cambiar" bundle="${traduccion}"/>: </label>
 		<input type="text" name="<%=ParameterNames.APELLIDO2%>"/><br>
 				<%
 					parameterErrors = errors.getErrors(ParameterNames.EMAIL);
@@ -32,13 +32,13 @@
 						%><li><%=error%></li><%
 					}
 				%>
-		<label>Telefono: </label>
+		<label><fmt:message key="telefono" bundle="${traduccion}"/>: </label>
 		<label><%=user.getTelefono()%> , Cambiar a: </label>
 		<input type="text" name="<%=ParameterNames.TELEFONO%>" /><br>
-		<label>Password cambiar a:  </label>
+		<label><fmt:message key="password" bundle="${traduccion}"/>, <fmt:message key="cambiar" bundle="${traduccion}"/>:  </label>
 		<input type="password" name="<%=ParameterNames.PASSWORD%>" /><br>
-		<label>Nombre Usuario: </label>
-		<label><%=user.getNombreUser()%> , Cambiar a: </label>
+		<label><fmt:message key="nombreuser" bundle="${traduccion}"/>: </label>
+		<label><%=user.getNombreUser()%> , <fmt:message key="cambiar" bundle="${traduccion}"/>: </label>
 		<input type="text" name="<%=ParameterNames.NOMBREUSER%>" /><br>
 		
 		<label>Pais:(Ignorar de momento)</label><select name="<%=ParameterNames.PAIS%>">

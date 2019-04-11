@@ -2,7 +2,7 @@
 <%@include file="/html/common/header.jsp"%>
 <%@include file="/html/common/buscador.jsp"%>
 
-<h1><fmt:message key="resultados" bundle="${traduccion}"/></h1>
+<h1><fmt:message key="welcome" bundle="${traduccion}"/></h1>
 <section class="sectionjuegos">
 	<%
 		List<Juego> todos= (List<Juego>) request.getAttribute(AttributeNames.RESULTADOS_TODOS);
@@ -12,7 +12,7 @@
 		<%		
 		if (todos!=null && !todos.isEmpty()) {
 			%>
-			<h2>Juegos mas recientes:</h2>
+			<h2><fmt:message key="indextitle" bundle="${traduccion}"/></h2>
 			<%
 			for (Juego resultado: todos) {
 				%>
@@ -75,7 +75,7 @@
 		<%		
 		if (todos!=null && !todos.isEmpty()) {
 			%>
-			<h2>Juegos mejor valorados:</h2>
+			<h2><fmt:message key="indextitle2" bundle="${traduccion}"/></h2>
 			<%
 			for (Juego valor: valoracion) {
 				%>

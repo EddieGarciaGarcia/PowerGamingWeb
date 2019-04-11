@@ -1,11 +1,11 @@
 <%@ page import="com.eddie.web.controller.*" %>	
 	<footer class="footer">
             <p>©powergaming<br>
-            Contacto:<br>
+            <fmt:message key="contacto" bundle="${traduccion}"></fmt:message>:<br>
             Email: powergaming2019@gmail.com<br>
-            Telefono: 654634543<br>
-            Si prefieres un contacto rápido sin tener que entrar a tu email pulsa en este enlace:
-            <a href="<%=request.getContextPath()%><%=ViewPaths.CONTACTO%>"><button>Contacto</button></a>
+            <fmt:message key="telefono" bundle="${traduccion}"></fmt:message> 654634543<br>
+            <fmt:message key="mensagefooter" bundle="${traduccion}"></fmt:message>
+            <a href="<%=request.getContextPath()%><%=ViewPaths.CONTACTO%>"><button><fmt:message key="contacto" bundle="${traduccion}"></fmt:message></button></a>
             </p>
     </footer>
 	</body>

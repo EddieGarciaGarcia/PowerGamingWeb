@@ -15,23 +15,23 @@
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
 		<h1><%=resultados.getNombre()%></h1>
-		<p>Fecha de Lanzamiento : <%=resultados.getFechaLanzamiento() %><br>
-		Creador : <%=creador.getNombre()%><br>
-		Categorias : <%for(Categoria c: resultados.getCategoria()){%><%=c.getNombre()%> <%}%><br>
-		Plataformas disponibles: <%for(Plataforma p: resultados.getPlataformas()){%><%=p.getNombre()%> <%}%><br>
-		Idiomas disponibles : <%for(Idioma i: resultados.getIdiomas()){%><%=i.getNombre()%> <%}%>
+		<p><fmt:message key="fechalanzamiento" bundle="${traduccion}"/> : <%=resultados.getFechaLanzamiento() %><br>
+		<fmt:message key="creador" bundle="${traduccion}"/> : <%=creador.getNombre()%><br>
+		<fmt:message key="categorias" bundle="${traduccion}"/> : <%for(Categoria c: resultados.getCategoria()){%><%=c.getNombre()%> <%}%><br>
+		<fmt:message key="plataformadisponible" bundle="${traduccion}"/> : <%for(Plataforma p: resultados.getPlataformas()){%><%=p.getNombre()%> <%}%><br>
+		<fmt:message key="idiomadisponible" bundle="${traduccion}"/> : <%for(Idioma i: resultados.getIdiomas()){%><%=i.getNombre()%> <%}%>
 		</p>
 		
 		<% if(u!=null){	
 						if(resultadosBiblioteca==true){
 							%>
-								<p class="a">Ya esta Añadido</p>
+								<p class="a"><fmt:message key="anhadido" bundle="${traduccion}"/></p>
 							<% 
 						}else if(resultadosBiblioteca==false){
 							%>
 								<a class="a" href="<%=ControllerPaths.BIBLIOTECA%>?
 									<%=ParameterNames.ACTION%>=<%=Actions.ADDJUEGO%>&amp;<%=ParameterNames.ID%>=
-									<%=resultados.getIdJuego()%>"><button>Añadir a la Biblioteca</button></a>
+									<%=resultados.getIdJuego()%>"><button><fmt:message key="addbiblioteca" bundle="${traduccion}"/></button></a>
 							<% 
 								
 						}
@@ -53,11 +53,11 @@
 						<fmt:message key="tipoedicion" bundle="${traduccion}"></fmt:message><%for(TipoEdicion te:tipoEdicion){
 											if(te.getIdTipoEdicion().equals(e.getIdTipoEdicion())){
 												%><%=te.getNombre()%>
-											<%}}%> Precio: <%=e.getPrecio() %></option><br>
+											<%}}%> <fmt:message key="precio" bundle="${traduccion}"/>: <%=e.getPrecio() %></option><br>
 		
 						<%}}%>
 						</select>
-						<input type="submit" value="Añadir a Carrito"/>
+						<input type="submit" value="<fmt:message key="addcarrito" bundle="${traduccion}"/>"/>
 						</form>
 </div>
 		
@@ -67,9 +67,9 @@
 			<div class="comentario">
 			<form action="<%=ControllerPaths.JUEGO%>" method="post">
 				<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.ADDCOMENTARIO%>"/>
-				<p>Tu comentario <%=u.getNombreUser()%> :</p>
+				<p><fmt:message key="juegomensage" bundle="${traduccion}"/> <%=u.getNombreUser()%> :</p>
 				<textarea rows="10" cols="50" name="<%=ParameterNames.COMENTARIO%>"></textarea>
-				<input type="submit" name="Modificar" value="modificar"/>	
+				<input type="submit" name="Modificar" value="<fmt:message key="modificar" bundle="${traduccion}"/>"/>	
 			</form>		
 			</div>
 			<%

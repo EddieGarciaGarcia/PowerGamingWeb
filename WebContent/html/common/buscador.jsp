@@ -18,7 +18,7 @@
 	</script>
 		<form action="<%=ControllerPaths.JUEGO%>" method="post">	
 			<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.BUSCAR%>"/>
-			<a onmouseover="ver(1)" onmouseout="ocultar(1)" class="dropbtn">Categoria:
+			<a onmouseover="ver(1)" onmouseout="ocultar(1)" class="dropbtn"><fmt:message key="categoria" bundle="${traduccion}"/>:
 			<div id="meumenudes1" class="menu-search" > 
 			
 				<%for(Categoria c: categoria){%>
@@ -26,30 +26,30 @@
 				<%}%>
 			</div>
 			</a>
-			<label>Creador:</label>
+			<label><fmt:message key="creador" bundle="${traduccion}"/>:</label>
 			<select name="<%=ParameterNames.CREADOR%>">
-			<option selected disabled>Escoge</option>
+			<option selected disabled><fmt:message key="escoge" bundle="${traduccion}"/></option>
 				<%for(Creador cr: creador){%>
 				<option value="<%=cr.getIdCreador()%>"><%=cr.getNombre()%></option>
 				<%} %>
 			</select>
-			<a onmouseover="ver(2)" onmouseout="ocultar(2)" class="dropbtn">Plataforma:
+			<a onmouseover="ver(2)" onmouseout="ocultar(2)" class="dropbtn"><fmt:message key="plataforma" bundle="${traduccion}"/>:
 			<div id="meumenudes2" class="menu-search2"> 
 				<%for(Plataforma p: plataforma){%>
 				<input type="checkbox" name="<%=ParameterNames.PLATAFORMA%>" value="<%=p.getIdPlatadorma()%>"/><%=p.getNombre()%><br>
 				<%} %>
 			</div>
 			</a>
-			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dropbtn"">Idioma:
+			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dropbtn""><fmt:message key="idioma" bundle="${traduccion}"/>:
 			<div id="meumenudes3" class="menu-search3"> 
 				<%for(Idioma i: idioma){%>
 				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"/><%=i.getNombre()%><br>
 				<%} %>
 			</div>
 			</a>
-			<label>Fecha:</label>
+			<label><fmt:message key="fecha" bundle="${traduccion}"/>:</label>
 			<select name="<%=ParameterNames.FECHA%>">
-				<option  selected disabled>Escoge</option>
+				<option  selected disabled><fmt:message key="escoge" bundle="${traduccion}"/></option>
 				<option value="2019">2019</option>
 				<option value="2018">2018</option>
 				<option value="2017">2017</option>
@@ -75,7 +75,7 @@
 					name="<%=ParameterNames.NOMBRE%>" 
 					value="<%=ParamsUtils.getParameter(request, ParameterNames.NOMBRE)%>" minlength="0" maxlength="45"/>
 					
-			<input type="submit" name="buscar" value="Buscar"/>
+			<input type="submit" name="buscar" value="<fmt:message key="buscar" bundle='${traduccion}'/>"/>
 		</form>
 	</p>
 

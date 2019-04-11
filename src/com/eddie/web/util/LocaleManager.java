@@ -1,9 +1,12 @@
 package com.eddie.web.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang3.LocaleUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +16,8 @@ import com.eddie.web.config.ConfigurationParameterNames;
 public class LocaleManager {
 	
 	private static Logger logger = LogManager.getLogger(LocaleManager.class.getName());
+	
+	private static final List<Locale> EMPTY_LOCALE_LIST = new ArrayList<Locale>();
 	
 	// Locales soportados por esta web. 
 	private static List<Locale> supportedLocales = null;
@@ -54,16 +59,63 @@ public class LocaleManager {
 	 * Metodo utilidad para transformar y filtrar Locales 
 	 * desde un String con formato tipo valores del header Accept-Language,
 	 * como por ejemplo: "en-US;q=1.0,en-GB;q=0.5,fr-FR;q=0.0"
-	 * 
-	 * MÃ¡s info: 
+	 *                     
+	 * Mas info: 
      * https://docs.oracle.com/javase/tutorial/i18n/locale/matching.html
 	 * 
 	 * @author https://www.linkedin.com/in/joseantoniolopezperez
 	 */
 	public static List<Locale> getMatchedLocales(String ranges) {
-		List<Locale.LanguageRange> languageRanges = Locale.LanguageRange.parse(ranges);		
-		// Now filter the Locale objects, returning any matches
-		List<Locale> results = Locale.filter(languageRanges,getSupportedLocales());
-		return results;
+		
+		List<Locale> matched = null;
+		
+		// Si viene directamente un locale como string como habitualmente
+		// lo conocemos en java. Ejemplo: gl_ES, es_ES, en_GB.
+		// En este caso no es válido new Locale(String), con un solo parámetro
+		// sino que habría que usar new Locale(String, String). 
+		// Como no reinventamos la rueda, y para evitar todo lo siguiente,
+		// que en muchos casos es innecesarios, usamos directamente,
+		// (ver javadoc de commons-lang LocaleUtils.toLocale)
+		Locale locale = LocaleUtils.toLocale(ranges); 
+		if (getSupportedLocales().contains(locale)) {
+			// Se ha comprobado el contains por Locale funciona como se espera
+			if (getSupportedLocales().contains(locale)) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Matched pure java locale as string: "+ranges);
+				}
+				matched = Arrays.asList(locale);
+			}
+		}
+		
+		if (matched==null) {
+			// No es simplemente un locale tipo gl_ES, es_ES, en_GB, 
+			// sino que es en formato IETF BCP 47 o similar.
+			// Vease https://docs.oracle.com/javase/tutorial/i18n/locale/matching.html
+
+			// Si el valor de ranges es estupidez entonces LanguageRange lanza
+			// una IllegalArgumentException... 
+			// Tenemos que protegernos, ya que este método puede ser invocado con un valor
+			// procedente de una cookie, parametro de request, ... y por tanto
+			// modificado por un usuario
+			List<Locale.LanguageRange> languageRanges = null;
+			try {
+				languageRanges = Locale.LanguageRange.parse(ranges);
+			} catch (IllegalArgumentException iae) {
+				logger.warn("Invalid ranges: "+ranges, iae);
+			}
+
+			if (languageRanges!=null) {
+				// Now filter the Locale objects, returning any matches
+				matched = Locale.filter(languageRanges, getSupportedLocales() );
+			} else {
+				// Sabes porque es necesario esto?
+				matched = Collections.unmodifiableList(EMPTY_LOCALE_LIST);			
+			}
+		}
+		return matched;
 	}
+	
+	
+	
 }
+

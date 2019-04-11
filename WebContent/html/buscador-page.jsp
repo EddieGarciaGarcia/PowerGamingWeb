@@ -24,20 +24,23 @@
 					</c:url>
 				<a href="${urljuegodetalle}"><img src="${pageContext.request.contextPath}/imgs/icojuego/${resultado.idJuego}.jpg"><p class="pjuego">${resultado.nombre}</p></a>
 				</div>	
-				<c:choose>
-				<c:when test="${not empty u}">
-					<c:when test="${idsJuegosEnBiblioteca.contains(resultado.idJuego)==true}">
-						<p class="a"><fmt:message key="anhadido" bundle="${traduccion}"></fmt:message></p>
-					</c:when>
-					<c:otherwise>
-						<c:url var="urlbiblioteca" scope="page" value="/juego">
-							<c:param name="action" value="<%=Actions.ADDJUEGO%>"/>
-							<c:param name="id" value="${resultado.idJuego}"/>
-						</c:url>
-						<a class="a" href="${urlbiblioteca}"><button><fmt:message key="addbiblioteca" bundle="${traduccion}"></fmt:message></button></a>
-					</c:otherwise>
-				</c:when>
-				</c:choose>
+				<div>
+				<c:if test="${not empty u}">
+					<c:forEach items="${juegobiblioteca}" var="idjuegobiblioteca">
+						<c:choose>
+						<c:when test="${idjuegobiblioteca==resultado.idJuego}">
+							<p class="a"><fmt:message key="anhadido" bundle="${traduccion}"></fmt:message></p>
+						</c:when>
+						<c:otherwise>
+							<c:url var="urlbiblioteca" scope="page" value="/biblioteca">
+								<c:param name="action" value="<%=Actions.ADDJUEGO%>"/>
+								<c:param name="id" value="${resultado.idJuego}"/>
+							</c:url>
+							<a class="a" href="${urlbiblioteca}"><button><fmt:message key="addbiblioteca" bundle="${traduccion}"></fmt:message></button></a>
+						</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</c:if>
 			 	</div>
 		
 			</c:forEach>

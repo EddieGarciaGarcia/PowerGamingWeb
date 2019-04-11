@@ -20,7 +20,7 @@
 				  }
 				}
 		</script>
-<a onclick="desplegarMenu5()" class="dropbtn">Carrito</a>
+<a onclick="desplegarMenu5()" class="dropbtn"><fmt:message key="car" bundle="${traduccion}"/></a>
 <div id="meumenudes5" class="menudes-contido2">
 <%
 	Carrito carrito = (Carrito) SessionManager.get(request, SessionAttributeNames.CARRITO);
@@ -41,7 +41,7 @@
 												%><%=te.getNombre()%>
 											<%}}%></br>
 											
-				Precio: <%=lineaCarrito.getEdicion().getPrecio()%> </p></br>
+				<fmt:message key="precio" bundle="${traduccion}"/> <%=lineaCarrito.getEdicion().getPrecio()%> </p></br>
 				<a class="a3" href="<%=ControllerPaths.CARRITO %>?<%=ParameterNames.ACTION%>=<%=Actions.ELIMINAR%>&amp;<%=ParameterNames.IDEDICION%>=<%=lineaCarrito.getEdicion().getId()%>">X</a>
 				</div>
 				<hr>
@@ -56,12 +56,12 @@
 				<div>Total: <%=carrito.getTotal()%></div>
 				<%if(u!=null){%>
 				<a  href="<%=ControllerPaths.HISTORIAL%>?
-										<%=ParameterNames.ACTION%>=<%=Actions.ADDHISTORIAL%>"><button>Guardar Pedido</button></a>
+										<%=ParameterNames.ACTION%>=<%=Actions.ADDHISTORIAL%>"><button><fmt:message key="guardarpedido" bundle="${traduccion}"/></button></a>
 			
 			<% }else{%>
-				<p>Antes debes registrarte</p>
+				<p><fmt:message key="carritomensage" bundle="${traduccion}"/></p>
 				<a  href="<%=ControllerPaths.USUARIO%>?
-										<%=ParameterNames.ACTION%>=<%=Actions.PREREGISTRO%>"><button>Resgistrarse</button></a>
+										<%=ParameterNames.ACTION%>=<%=Actions.PREREGISTRO%>"><button><fmt:message key="registrarse" bundle="${traduccion}"/></button></a>
 			</div>
 			<%}
 	}

@@ -32,8 +32,8 @@ public interface ParameterNames {
 	public static final String FECHA="fecha";
 	
 	public static final String LOCALE="locale";
-	public static final String ES="ES";
-	public static final String EN="EN";
+	public static final String ES="es";
+	public static final String EN="en";
 	
 	public static final String CARRITO="carrito";
 	public static final String IDEDICION="idedicion";

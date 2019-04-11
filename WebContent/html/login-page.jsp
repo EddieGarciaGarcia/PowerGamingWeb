@@ -2,7 +2,7 @@
 
 <%@include file="/html/common/header.jsp"%>
 <div id="login-form">
-		<h3>Bienvenido:</h3>	
+		<h3><fmt:message key="welcome" bundle="${traduccion}"/>:</h3>	
 		<form action="<%=ControllerPaths.USUARIO%>" method="post">
 			
 		<%@include file="/html/common/action-error.jsp"%>
@@ -15,7 +15,7 @@
 			%>
 		
 			<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.LOGIN%>"/>
-			<label>Escriba su email:</label>
+			<label><fmt:message key="loginmensage" bundle="${traduccion}"/>:</label>
 			<input type="email" name="<%=ParameterNames.EMAIL%>" 
 				placeholder="usuario@ejemplo.com"
 				value="<%=ParamsUtils.getParameter(request, ParameterNames.EMAIL)%>" required 
@@ -26,14 +26,14 @@
 						%><li><%=error%></li><%
 					}
 				%>	
-			<label>Escriba su password:</label>		
+			<label><fmt:message key="loginmensage2" bundle="${traduccion}"/>:</label>		
 			<input type="password" name="<%=ParameterNames.PASSWORD%>" required minlength="8" maxlength="30"/>
 			<input type="submit" value="Entrar" />
 		</form>
-		<a href="<%=request.getContextPath()%><%=ViewPaths.FORGETPASS%>">Olvide mi password</a>
-		<h3>¿No tienes cuenta?</h3>
+		<a href="<%=request.getContextPath()%><%=ViewPaths.FORGETPASS%>"><fmt:message key="forgotpass" bundle="${traduccion}"/></a>
+		<h3><fmt:message key="forgetpassmensage2" bundle="${traduccion}"/></h3>
 		<a href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=
-				<%=Actions.PREREGISTRO%>">Regístrate</a>
+				<%=Actions.PREREGISTRO%>"><fmt:message key="registrarse" bundle="${traduccion}"/></a>
 </div>
 
 <%@include file="/html/common/footer.jsp"%>

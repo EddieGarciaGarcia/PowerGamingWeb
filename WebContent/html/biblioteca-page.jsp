@@ -6,7 +6,7 @@
 		
 		if (resultados!=null && !resultados.isEmpty()) {
 			%>
-			<h1>Resultados:</h1>
+			<h1><fmt:message key="biblioteca" bundle="${traduccion}"></fmt:message></h1>
 			<%
 			for (Juego resultado: resultados) {
 				%>
@@ -21,7 +21,7 @@
 					<p><%=resultado.getNombre()%></p>
 					<a href="<%=ControllerPaths.BIBLIOTECA%>?
 							<%=ParameterNames.ACTION%>=<%=Actions.DELETEJUEGO%>&amp;<%=ParameterNames.ID%>=
-							<%=resultado.getIdJuego()%>"><button>Eliminar</button></a>
+							<%=resultado.getIdJuego()%>"><button><fmt:message key="eliminar" bundle="${traduccion}"></fmt:message></button></a>
 					<div class="addCarrito">
 						<form action="<%=ControllerPaths.CARRITO%>" method="post">
 						<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.ANHADIR%>"/>
@@ -35,11 +35,11 @@
 								Tipo Edicion: <%for(TipoEdicion te:tipoEdicion){
 											if(te.getIdTipoEdicion().equals(e.getIdTipoEdicion())){
 												%><%=te.getNombre()%>
-											<%}}%> Precio: <%=e.getPrecio() %></option><br>
+											<%}}%> <fmt:message key="precio" bundle="${traduccion}"></fmt:message> <%=e.getPrecio() %></option><br>
 		
 						<%}%>
 						</select>
-						<input type="submit" value="Añadir a Carrito"/>
+						<input type="submit" value="<fmt:message key="addcarrito" bundle="${traduccion}"></fmt:message>"/>
 						</form>
 					</div>
 				</div>

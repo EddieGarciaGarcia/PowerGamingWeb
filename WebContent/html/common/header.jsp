@@ -47,14 +47,14 @@ List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(Attribut
 	<header class="menu"> 
                 <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaming.png"></img>
                 <div class="menuimg">
-                    <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=<%=ParameterNames.EN%>">
+                    <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=en">
                     <img id="img1" src="<%=request.getContextPath()%>/imgs/en-us.png"></img></a>
-                    <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=<%=ParameterNames.ES%>">
+                    <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=es">
                     <img id="img2" src="<%=request.getContextPath()%>/imgs/es.png"></img></a>
                 </div>
                 <nav>
                     <ul class="nav">
-                    	<li><a href="<%=request.getContextPath()%><%=ViewPaths.INICIO%>">Inicio</a></li>
+                    	<li><a href="<%=request.getContextPath()%><%=ViewPaths.INICIO%>"><fmt:message key="inicio" bundle="${traduccion}"></fmt:message></a></li>
                     	<%@include file="/html/common/user-menu.jsp"%>
                     </ul>
                 </nav>
