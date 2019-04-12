@@ -237,14 +237,17 @@ public class UsuarioServlet extends HttpServlet {
 
 				target=request.getHeader(ViewPaths.REFERER);
 				
-				redirect=true;
+				if (logger.isDebugEnabled()) {
+					logger.debug("Locale changed to "+newLocale);
+				}
+
 				response.sendRedirect(target);
 			}else {
 				logger.error("Action desconocida");
 				target= request.getContextPath()+ViewPaths.ERROR404;
 			}
 			if(!Actions.CAMBIAR_IDIOMA.equalsIgnoreCase(action)) {
-				if(redirect==true) {
+				if(redirect) {
 					logger.info("Redirect to "+target);
 					response.sendRedirect(target);
 				}else {

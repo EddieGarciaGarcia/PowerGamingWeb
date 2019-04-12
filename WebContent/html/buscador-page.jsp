@@ -4,9 +4,8 @@
 <%@include file="/html/common/buscador.jsp"%>
 <section class="sectionjuegos">
 
-<c:set var="urlparams" value="${sessionScope['url']}" scope="session"/>
+<c:set var="urlparams" value="${sessionScope['url']}" scope="request"/>
 <c:set var="resultados" value="${requestScope.juegos_resultados}" />
-<c:set var="juegobiblioteca" value="${requestScope.juegos_en_biblioteca}"/>
 
 			<h1>
 			<c:if test="${not empty total}">
@@ -23,26 +22,32 @@
 						<c:param name="id" value="${resultado.idJuego}"/>
 					</c:url>
 				<a href="${urljuegodetalle}"><img src="${pageContext.request.contextPath}/imgs/icojuego/${resultado.idJuego}.jpg"><p class="pjuego">${resultado.nombre}</p></a>
-				</div>	
-				<div>
-				<c:if test="${not empty u}">
-					<c:forEach items="${juegobiblioteca}" var="idjuegobiblioteca">
+				</div>
+				
+			<div>
+				<c:if test="${not empty sessionScope['user']}">
+					<c:forEach items="${requestScope.juegos_en_biblioteca}" var="idjuegobiblioteca">
+					
 						<c:choose>
-						<c:when test="${idjuegobiblioteca==resultado.idJuego}">
-							<p class="a"><fmt:message key="anhadido" bundle="${traduccion}"></fmt:message></p>
-						</c:when>
-						<c:otherwise>
-							<c:url var="urlbiblioteca" scope="page" value="/biblioteca">
-								<c:param name="action" value="<%=Actions.ADDJUEGO%>"/>
-								<c:param name="id" value="${resultado.idJuego}"/>
-							</c:url>
-							<a class="a" href="${urlbiblioteca}"><button><fmt:message key="addbiblioteca" bundle="${traduccion}"></fmt:message></button></a>
-						</c:otherwise>
+							<c:when test="${idjuegobiblioteca != resultado.idJuego}">
+								<c:url var="urlbiblioteca" scope="page" value="/biblioteca">
+									<c:param name="action" value="<%=Actions.ADDJUEGO%>" />
+									<c:param name="id" value="${resultado.idJuego}" />
+								</c:url>
+								<a class="a" href="${urlbiblioteca}"><button>
+										<fmt:message key="addbiblioteca" bundle="${traduccion}"></fmt:message>
+									</button></a>
+							</c:when>
+							<c:otherwise>
+								<p class="a">
+									<fmt:message key="anhadido" bundle="${traduccion}"></fmt:message>
+								</p>
+							</c:otherwise>
 						</c:choose>
+						
 					</c:forEach>
 				</c:if>
-			 	</div>
-		
+			</div>
 			</c:forEach>
 		</c:if>
 		
