@@ -1,13 +1,12 @@
 <%@ page import="java.util.List, com.eddie.ecommerce.model.*" %>
 <%@include file="/html/common/header.jsp"%>
 <section class="biblioteca">
+	<h1><fmt:message key="biblioteca" bundle="${traduccion}"></fmt:message></h1>
 		<% 
 			List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA);
 		
 		if (resultados!=null && !resultados.isEmpty()) {
-			%>
-			<h1><fmt:message key="biblioteca" bundle="${traduccion}"></fmt:message></h1>
-			<%
+			
 			for (Juego resultado: resultados) {
 				%>
 					<div class="divjuegobiblioteca">

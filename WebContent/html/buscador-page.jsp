@@ -2,7 +2,7 @@
 
 <%@include file="/html/common/header.jsp"%>
 <%@include file="/html/common/buscador.jsp"%>
-<section class="sectionjuegos">
+<section class="biblioteca">
 
 <c:set var="urlparams" value="${sessionScope['url']}" scope="request"/>
 <c:set var="resultados" value="${requestScope.juegos_resultados}" />
@@ -16,36 +16,70 @@
 			</h1> 
 	 	<c:if test="${not empty resultados}">
 			<c:forEach items="${resultados}" var="resultado">
-				<div>
+				<div class="divjuegobiblioteca">
 					<c:url var="urljuegodetalle" scope="page" value="/juego">
-						<c:param name="action" value="<%=Actions.JUEGO%>"/>
+						<c:param name="action" value="${Actions.JUEGO}"/>
 						<c:param name="id" value="${resultado.idJuego}"/>
 					</c:url>
 				<a href="${urljuegodetalle}"><img src="${pageContext.request.contextPath}/imgs/icojuego/${resultado.idJuego}.jpg"><p class="pjuego">${resultado.nombre}</p></a>
 				</div>
 				
-			<div>
+			<div class="divbiblioteca">
+				<div class="addCarrito">
+					<form action="/PowerGamingWeb/carrito" method="post">
+						<input type="hidden" name="action" value="anhadir"/>
+						<select name="idedicion">
+							<c:if test="${resultado.ediciones!=null}">
+								<c:forEach items="${resultado.ediciones}" var="edicion">
+									<option value="${edicion.id}">
+										<fmt:message key="formato" bundle="${traduccion}"></fmt:message>
+										<c:forEach items="${requestScope.formato_resultados}" var="formato">
+											<c:if test="${formato.idFormato==edicion.idFormato}">
+												${formato.nombre}
+											</c:if>
+										</c:forEach>
+										<fmt:message key="tipoedicion" bundle="${traduccion}"></fmt:message>
+										<c:forEach items="${requestScope.tipo_edicion_resultados}" var="tipoedicion">
+											<c:if test="${tipoedicion.idTipoEdicion==edicion.idTipoEdicion}">
+												${tipoedicion.nombre}
+											</c:if>		
+										</c:forEach>
+										<fmt:message key="precio" bundle="${traduccion}"/>: ${edicion.precio}
+									</option><br>
+								</c:forEach>
+							</c:if>
+						</select>
+						<input type="submit" value="<fmt:message key="addcarrito" bundle="${traduccion}"/>"/>
+					</form>
+				</div>
+			
+			
 				<c:if test="${not empty sessionScope['user']}">
+				<c:set var="mostrar" value="false"/>
 					<c:forEach items="${requestScope.juegos_en_biblioteca}" var="idjuegobiblioteca">
 					
+							<c:if test="${idjuegobiblioteca==resultado.idJuego}">
+								<c:set var="mostrar" value="true"/>
+							</c:if>
+							
+					</c:forEach>
 						<c:choose>
-							<c:when test="${idjuegobiblioteca != resultado.idJuego}">
+							<c:when test="${mostrar!=false}">
+								<p class="a">
+									<fmt:message key="anhadido" bundle="${traduccion}"></fmt:message>
+								</p>
+							</c:when>
+							<c:otherwise >
 								<c:url var="urlbiblioteca" scope="page" value="/biblioteca">
-									<c:param name="action" value="<%=Actions.ADDJUEGO%>" />
+									<c:param name="action" value="${Actions.ADDJUEGO}" />
 									<c:param name="id" value="${resultado.idJuego}" />
 								</c:url>
 								<a class="a" href="${urlbiblioteca}"><button>
 										<fmt:message key="addbiblioteca" bundle="${traduccion}"></fmt:message>
 									</button></a>
-							</c:when>
-							<c:otherwise>
-								<p class="a">
-									<fmt:message key="anhadido" bundle="${traduccion}"></fmt:message>
-								</p>
 							</c:otherwise>
 						</c:choose>
 						
-					</c:forEach>
 				</c:if>
 			</div>
 			</c:forEach>

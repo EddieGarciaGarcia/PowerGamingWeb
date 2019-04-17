@@ -87,12 +87,12 @@ public class BibliotecaServlet extends HttpServlet {
 						getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
 				
 				Resultados<ItemBiblioteca> results=usuarioService.findByUsuario(user.getEmail(),(page-1)*pageSize+1, pageSize);
-				
+				List<Juego> juegos =null;
 				//Lambda expresion stream collectors
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
-				
-				List<Juego> juegos =juegoService.findByIDs(juegoIDs, idiomaPagina);
-				
+				if(juegoIDs!=null && !juegoIDs.isEmpty()) {
+					juegos =juegoService.findByIDs(juegoIDs, idiomaPagina);
+				}
 				request.setAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA, juegos);
 				request.setAttribute(AttributeNames.TOTAL, results.getTotal());
 				

@@ -33,7 +33,6 @@ import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.Errors;
 import com.eddie.web.util.ArrayUtils;
 import com.eddie.web.util.LimpiezaValidacion;
-import com.eddie.web.util.ParamsUtils;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
 import com.eddie.web.util.WebConstants;
@@ -204,30 +203,33 @@ public class JuegoServlet extends HttpServlet {
 
 					request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idJuegoEnBiblioteca);
 				}
-				if(!comentarios.isEmpty()) {
-					Map<String, ItemBiblioteca> comentario= new HashMap<String, ItemBiblioteca>();
+				Map<String, ItemBiblioteca> comentario=null;
+				if(comentarios!=null && !comentarios.isEmpty()) {
+					comentario= new HashMap<String, ItemBiblioteca>();
 					for(ItemBiblioteca i:comentarios){
 							Usuario u=usuarioService.findById(i.getEmail());
 							comentario.put(u.getNombreUser(), i);
-						
 					}	
-					request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
 				}	
-				
+				request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
 				request.setAttribute(AttributeNames.CREADOR_JUEGO, creador);
 				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, juego);
 				
 				target =ViewPaths.JUEGO;
 			}else if(Actions.ADDCOMENTARIO.equalsIgnoreCase(action)) {
 				String comentario= request.getParameter(ParameterNames.COMENTARIO);
+				String id=request.getParameter(ParameterNames.ID);
+				Integer idJuego= Integer.valueOf(id);
 				
 				ItemBiblioteca it=new ItemBiblioteca();
+				it.setIdJuego(idJuego);
 				it.setComentario(comentario);
 				it.setEmail(user.getEmail());
-				it.setFechaComentario(new Date());
+				Date d= new Date();
+				it.setFechaComentario(new java.sql.Date(d.getTime()));
 				juegoService.addComent(it);
 			
-				target = ViewPaths.REFERER;
+				target = request.getHeader(ViewPaths.REFERER);
 				redirect=true;
 				
 			}else {

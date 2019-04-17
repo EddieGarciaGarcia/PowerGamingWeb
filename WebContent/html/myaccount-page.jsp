@@ -6,6 +6,7 @@
 	<h2><fmt:message key="myaccountmensage" bundle="${traduccion}"/></h2>
 	<form action="<%=ControllerPaths.USUARIO%>" method="post">
 	<%
+				List<Provincia> provincias= (List<Provincia>) request.getAttribute(AttributeNames.PROVINCIA);
 				List<Pais> paises= (List<Pais>) request.getAttribute(AttributeNames.PAISES);
 				List<String> parameterErrors = errors.getErrors(ParameterNames.ACTION);
 				for (String error: parameterErrors) {
@@ -49,19 +50,19 @@
 						<%
 					}
 				%>
-		</select><br>
+		</select>
 		<label>Provincia:</label><select name="<%=ParameterNames.PROVINCIA%>">
 			<% 
-				
-			%><option id="Provincia+<%=idProvincia%>"><%=nombre pais %></option><%
-			
+				for(Provincia provincia: provincias){
+			%><option id="<%=provincia.getIdProvincia()%>"><%=provincia.getNombre()%></option><%
+				}
 			%>
 		</select>
-		<label>Localidad</label><input type="text" name="<%=ParameterNames.LOCALIDAD%>"/>
+		<label>Localidad</label><input type="text" name="<%=ParameterNames.LOCALIDAD%>"/><br>
 		<label>Codigo Postal</label><input type="text" name="<%=ParameterNames.CODPOSTAL%>"/>
 		<label>Calle</label><input type="text" name="<%=ParameterNames.CALLE%>"/>
 		<label>Numero</label><input type="text" name="<%=ParameterNames.NUMERO%>"/>
-		<label>Piso</label><input type="text" name="<%=ParameterNames.PISO%>"/>
+		<label>Piso</label><input type="text" name="<%=ParameterNames.PISO%>"/><br>
 		
 		<input type="submit" value="Actualizar"/>	
 	</form>

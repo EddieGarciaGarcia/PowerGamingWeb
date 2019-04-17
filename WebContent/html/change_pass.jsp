@@ -2,11 +2,12 @@
 <section>
 	<form action="<%=ControllerPaths.USUARIO%>" method="post">
 	<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.CHANGEPASS%>"/>
+	<input type="hidden" name="<%=ParameterNames.EMAIL%>" value="<%=ParamsUtils.getParameter(request, ParameterNames.EMAIL)%>"/>
 	<label><fmt:message key="cambiarpass" bundle="${traduccion}"/></label><br>
 	<input type="text" name="<%=ParameterNames.PASSWORD%>" 
-				value="<%=ParamsUtils.getParameter(request, ParameterNames.PASSWORD)%>" required 
+				value="<%=ParameterNames.PASSWORD%>" required 
 				minlength="8" maxlength="75"/><br>
-	<input type="submit" value="Enviar"/>
+	<input type="submit" value="<fmt:message key="enviar" bundle="${traduccion}"/>"/>
 	</form>
 </section>
 <%@include file="/html/common/footer.jsp"%>

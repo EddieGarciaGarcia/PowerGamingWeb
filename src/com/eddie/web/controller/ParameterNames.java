@@ -16,6 +16,13 @@ public interface ParameterNames {
 	public static final String GENERO = "genero";
 	public static final String NOMBREUSER = "nombreuser";
 	public static final String MENSAGE="mensage";
+
+	public static final String LOCALIDAD= "localidad";
+	public static final String CODPOSTAL="codpostal";
+	public static final String CALLE="calle";
+	public static final String NUMERO="numero";
+	public static final String PISO="piso";
+	public static final String PROVINCIA="provincia";
 	
 	public static final String CONTROLLER = "controlador";
 	public static final String PAIS = "pais";

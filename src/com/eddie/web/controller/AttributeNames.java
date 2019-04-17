@@ -3,7 +3,9 @@ package com.eddie.web.controller;
 public interface AttributeNames {
 	public static final String ERRORS = "errors";
 	public static final String USER = "user";
+	public static final String PASS = "pass";
 	public static final String PAISES = "paises";
+	public static final String PROVINCIA = "provincias";
 	
 	public static final String EDICIONES_JUEGO="ediciones_juego";
 	public static final String FORMATO_RESULTADOS="formato_resultados";
