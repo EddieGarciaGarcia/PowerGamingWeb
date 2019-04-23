@@ -19,9 +19,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.eddie.ecommerce.exceptions.DataException;
-import com.eddie.ecommerce.model.Direccion;
-import com.eddie.ecommerce.model.Pais;
-import com.eddie.ecommerce.model.Provincia;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.MailService;
 import com.eddie.ecommerce.service.PaisService;
@@ -125,10 +122,6 @@ public class UsuarioServlet extends HttpServlet {
 				target = request.getContextPath()+ViewPaths.INICIO;
 				redirect=true;
 			} else if(Actions.PREREGISTRO.equalsIgnoreCase(action)){
-				List<Pais> paises = paisService.findAll();
-				request.setAttribute(AttributeNames.PAISES, paises);
-				List<Provincia> provincias = provinciaService.findAllByIdPais(1);
-				request.setAttribute(AttributeNames.PROVINCIA, provincias);
 				target = ViewPaths.REGISTRO;
 			}else if(Actions.REGISTRO.equalsIgnoreCase(action)) {
 				String nombre=request.getParameter(ParameterNames.NOMBRE);
@@ -156,39 +149,11 @@ public class UsuarioServlet extends HttpServlet {
 				u.setNombreUser(nombre+apellido1.charAt(0)+apellido2.charAt(0));
 				
 				userv.create(u);
-				
-				Direccion direccion= new Direccion();
-				
-				String pais=request.getParameter(ParameterNames.PAIS);
-				Integer idPais= Integer.valueOf(pais);
-				List<Provincia> provincias = provinciaService.findAllByIdPais(idPais);
-				request.setAttribute(AttributeNames.PROVINCIA, provincias);
-				
-				String provincia=request.getParameter(ParameterNames.PROVINCIA);
-				Integer idProvincia=Integer.valueOf(provincia);
-				String localidad=request.getParameter(ParameterNames.LOCALIDAD);
-				String codigoPostal=request.getParameter(ParameterNames.CODPOSTAL);
-				String calle=request.getParameter(ParameterNames.NUMERO);
-				String piso = request.getParameter(ParameterNames.PISO);
-				String numero=request.getParameter(ParameterNames.NUMERO);
-				
-				direccion.setIdprovincia(idProvincia);
-				direccion.setLocalidad(localidad);
-				direccion.setCodigoPostal(codigoPostal);
-				direccion.setCalle(calle);
-				direccion.setPiso(piso);
-				direccion.setEmail(u.getEmail());
-				direccion.setNumero(numero);
-				
-				userv.createDireccion(direccion);
+			
 				
 				target = request.getContextPath()+ViewPaths.LOGIN;
 				redirect=true;
 			}else if(Actions.PRECONFIGURACION.equalsIgnoreCase(action)) {
-				List<Pais> paises = paisService.findAll();
-				request.setAttribute(AttributeNames.PAISES, paises);
-				List<Provincia> provincias = provinciaService.findAllByIdPais(1);
-				request.setAttribute(AttributeNames.PROVINCIA, provincias);
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				request.setAttribute(AttributeNames.USER, user);
 
@@ -213,33 +178,7 @@ public class UsuarioServlet extends HttpServlet {
 				userupdate.setNombreUser(LimpiezaValidacion.validNombreUser(nombreUser));
 				userupdate.setEmail(user.getEmail());
 				
-				Direccion direccion= new Direccion();
 				
-				String pais=request.getParameter(ParameterNames.PAIS);
-				Integer idPais= Integer.valueOf(pais);
-				List<Provincia> provincias = provinciaService.findAllByIdPais(idPais);
-				request.setAttribute(AttributeNames.PROVINCIA, provincias);
-				
-				String provincia=request.getParameter(ParameterNames.PROVINCIA);
-				Integer idProvincia=Integer.valueOf(provincia);
-				String localidad=request.getParameter(ParameterNames.LOCALIDAD);
-				String codigoPostal=request.getParameter(ParameterNames.CODPOSTAL);
-				String calle=request.getParameter(ParameterNames.NUMERO);
-				String piso = request.getParameter(ParameterNames.PISO);
-				String numero=request.getParameter(ParameterNames.NUMERO);
-				
-				direccion.setIdprovincia(idProvincia);
-				direccion.setLocalidad(localidad);
-				direccion.setCodigoPostal(codigoPostal);
-				direccion.setCalle(calle);
-				direccion.setPiso(piso);
-				direccion.setEmail(user.getEmail());
-				direccion.setNumero(numero);
-				
-				if(direccion.getIdprovincia()!=null || direccion.getLocalidad()!=null || direccion.getCodigoPostal()!=null 
-						|| direccion.getCalle()!=null || direccion.getPiso()!=null || direccion.getNumero()!=null) {
-					userv.updateDireccion(direccion);
-				}
 				
 				if(userupdate.getNombre()!=null || userupdate.getApellido1()!=null || userupdate.getApellido2()!=null 
 						|| userupdate.getTelefono()!=null || userupdate.getPassword()!=null || userupdate.getNombreUser()!=null) {

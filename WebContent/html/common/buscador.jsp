@@ -8,14 +8,6 @@
 		List<Plataforma> plataforma= (List<Plataforma>) request.getAttribute(AttributeNames.PLATAFORMA_RESULTADOS);
 		List<Idioma> idioma= (List<Idioma>) request.getAttribute(AttributeNames.IDIOMA_RESULTADOS);
 	%>
-	<script>
-		function ver(n) {
-        	document.getElementById("meumenudes"+n).style.display="block"
-        }
-		function ocultar(n) {
-        	document.getElementById("meumenudes"+n).style.display="none"
-        }
-	</script>
 		<form action="<%=ControllerPaths.JUEGO%>" method="post">	
 			<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.BUSCAR%>"/>
 			<a onmouseover="ver(1)" onmouseout="ocultar(1)" class="dropbtn"><fmt:message key="categoria" bundle="${traduccion}"/>:

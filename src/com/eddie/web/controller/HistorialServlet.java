@@ -79,7 +79,8 @@ public class HistorialServlet extends HttpServlet {
 			if(Actions.ADDHISTORIAL.equalsIgnoreCase(action)) {
 				
 				pedido.setEmail(usuario.getEmail());
-				pedido.setFecha_pedido(new Date());
+				Date d= new Date();
+				pedido.setFecha_pedido(new java.sql.Date(d.getTime()));
 				pedido.setTotal(carrito.getTotal());
 				
 				pedidoService.create(pedido);
@@ -131,7 +132,6 @@ public class HistorialServlet extends HttpServlet {
 				Integer id=Integer.valueOf(idPedido);
 				
 				pedidoService.delete(id);
-				pedidoService.findByEmail(arg0);
 				lineaPedidoService.delete();
 				
 				target= ControllerPaths.HISTORIAL+"?"+ParameterNames.ACTION+"="+Actions.HISTORIALPEDIDO+"&"+ParameterNames.EMAIL+"="+usuario.getEmail();

@@ -13,33 +13,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link href="<%=request.getContextPath()%>/html/css/index.css" rel="stylesheet" type="text/css">
-    <script type="text/Javascript" href="<%=request.getContextPath()%>/html/js/index.js"></script>
-	<script type="text/Javascript" href="<%=request.getContextPath()%>/html/js/fucniones.js"></script>
+    <script type="text/Javascript" src="<%=request.getContextPath()%>/html/js/index.js"></script>
 </head>
 
 <body>
 
-<script>
-			
-				function desplegarMenu() {
-					  document.getElementById("meumenudes").classList.toggle("show");
-					}
-
-					window.onclick = function(event) {
-						  if (!event.target.matches('.dropbtn')) {
-
-						    var menudess = document.getElementsByClassName("menudes-contido");
-						    var i;
-						    for (i = 0; i < menudess.length; i++) {
-						      var openmenudes = menudess[i];
-						      if (openmenudes.classList.contains('show')) {
-						        openmenudes.classList.remove('show');
-						      }
-						    }
-						  }
-						}
-					
-				</script>
 <%
 List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
 List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);

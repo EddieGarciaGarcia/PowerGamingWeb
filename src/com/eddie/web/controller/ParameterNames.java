@@ -47,4 +47,7 @@ public interface ParameterNames {
 	public static final String DUPLICADO="duplicado";
 	
 	public static final String COMENTARIO="comentario";
+	public static final String VIDEO="video";
+	public static final String IMAGEN="imagen";
+	
 }
