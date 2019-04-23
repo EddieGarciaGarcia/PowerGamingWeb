@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.exceptions.DuplicateInstanceException;
-import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.LineaPedido;
 import com.eddie.ecommerce.model.Pedido;
 import com.eddie.ecommerce.model.Usuario;
@@ -96,7 +95,7 @@ public class HistorialServlet extends HttpServlet {
 				}
 				
 				target = ControllerPaths.HISTORIAL+"?"+ParameterNames.ACTION+"="
-					+Actions.HISTORIALPEDIDO+"&amp;"+ParameterNames.EMAIL+"="+usuario.getEmail();	
+					+Actions.HISTORIALPEDIDO;	
 				
 			}else if(Actions.HISTORIALPEDIDO.equalsIgnoreCase(action)) {
 				
@@ -108,11 +107,8 @@ public class HistorialServlet extends HttpServlet {
 				List<Integer> idPedidos= resultados.getResultados().stream().map(Pedido::getIdPedido).collect(Collectors.toList());
 				
 				//Falta el listado de pedidos del usuario
-				List<Pedido> pedidos=  pedidoService.(idPedidos);
+				List<Pedido> pedidos=  pedidoService.findByIds(idPedidos);
 				
-				List<LineaPedido> lineasPedido=lineaPedidoService.findByPedido(pedido.getIdPedido());
-				
-				request.setAttribute(AttributeNames.LINEAS_PEDIDO, lineasPedido);
 				request.setAttribute(AttributeNames.LISTADO_PEDIDOS, pedidos);
 				request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
 				
@@ -132,7 +128,7 @@ public class HistorialServlet extends HttpServlet {
 				Integer id=Integer.valueOf(idPedido);
 				
 				pedidoService.delete(id);
-				lineaPedidoService.delete();
+				lineaPedidoService.deleteByPedido(id);
 				
 				target= ControllerPaths.HISTORIAL+"?"+ParameterNames.ACTION+"="+Actions.HISTORIALPEDIDO+"&"+ParameterNames.EMAIL+"="+usuario.getEmail();
 				redirect=true;
