@@ -13,7 +13,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link href="<%=request.getContextPath()%>/html/css/index.css" rel="stylesheet" type="text/css">
-	<script type="text/javascript" src="<%=request.getContextPath()%>/html/js/jQuery3.3.1.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/html/js/jQuery3.1.1.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/html/js/index.js"></script>   
 </head>
 

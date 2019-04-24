@@ -50,7 +50,7 @@
 					</div>
 					<div class="puntuacionVotar">
 						<input id="idJuego" type="hidden" name="<%=ParameterNames.ID%>" value="<%=resultado.getIdJuego()%>"/>
-						<select id="puntuacion" type="text" name="<%=ParameterNames.PUNTUACION%>">
+						<select id="puntuacion" name="<%=ParameterNames.PUNTUACION%>">
 							<option value="0">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -63,7 +63,7 @@
 							<option value="9">9</option>
 							<option value="10">10</option>
 						</select>
-						<button value="puntuar" onclick="obtenerPuntuacion( $('#idJuego').val(), $('#puntuacion').children('option:selected').val() )">puntuar</button>
+						<button value="puntuar" onclick="obtenerPuntuacion($('#idJuego').val(), $('#puntuacion').children('option:selected').val())">puntuar</button>
 		
 					</div>
 				</div>

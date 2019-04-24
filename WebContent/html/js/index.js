@@ -24,6 +24,8 @@ function desplegarMenu() {
     	document.getElementById("meumenudes"+n).style.display="none"
     }
 
+	var idJuego;
+	var puntuacion;
 	$(document).ready( function() { 
 		function obtenerPuntuacion(idJuego, puntuacion) { 
 			var parametros={
