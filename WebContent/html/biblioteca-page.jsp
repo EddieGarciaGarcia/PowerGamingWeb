@@ -1,9 +1,10 @@
-<%@ page import="java.util.List, com.eddie.ecommerce.model.*" %>
+<%@ page import="java.util.List, com.eddie.ecommerce.model.*, com.eddie.ecommerce.service.*" %>
 <%@include file="/html/common/header.jsp"%>
 <section class="biblioteca">
 	<h1><fmt:message key="biblioteca" bundle="${traduccion}"></fmt:message></h1>
 		<% 
 			List<Juego> resultados = (List<Juego>) request.getAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA);
+			List<ItemBiblioteca> puntuacion = (List<ItemBiblioteca>) request.getAttribute(AttributeNames.PUNTUACION);
 		
 		if (resultados!=null && !resultados.isEmpty()) {
 			
@@ -35,11 +36,35 @@
 											if(te.getIdTipoEdicion().equals(e.getIdTipoEdicion())){
 												%><%=te.getNombre()%>
 											<%}}%> <fmt:message key="precio" bundle="${traduccion}"></fmt:message> <%=e.getPrecio() %></option><br>
-		
+		www
 						<%}%>
 						</select>
 						<input type="submit" value="<fmt:message key="addcarrito" bundle="${traduccion}"></fmt:message>"/>
 						</form>
+					</div>
+					<div class="puntuacion">
+						<p id="puntuacionResultado"><%for(ItemBiblioteca it: puntuacion){
+								if(it.getIdJuego()==resultado.getIdJuego()){%><fmt:message key="Puntuacion" bundle="${traduccion}"></fmt:message><%=it.getPuntuacion()%><%}
+								}%>
+						</p>
+					</div>
+					<div class="puntuacionVotar">
+						<input id="idJuego" type="hidden" name="<%=ParameterNames.ID%>" value="<%=resultado.getIdJuego()%>"/>
+						<select id="puntuacion" type="text" name="<%=ParameterNames.PUNTUACION%>">
+							<option value="0">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+						<button value="puntuar" onclick="obtenerPuntuacion( $('#idJuego').val(), $('#puntuacion').children('option:selected').val() )">puntuar</button>
+		
 					</div>
 				</div>
 				<%

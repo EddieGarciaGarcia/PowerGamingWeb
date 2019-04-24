@@ -1,3 +1,4 @@
+
 function desplegarMenu() {
 					  document.getElementById("meumenudes").classList.toggle("show");
 					}
@@ -22,3 +23,24 @@ function desplegarMenu() {
 	function ocultar(n) {
     	document.getElementById("meumenudes"+n).style.display="none"
     }
+
+	$(document).ready( function() { 
+		function obtenerPuntuacion(idJuego, puntuacion) { 
+			var parametros={
+				"id":idJuego,
+				"puntuacion":puntuacion
+			};
+				$.ajax({
+					data: parametros,
+					type: "GET",
+					url: "/PowerGamingWeb/puntuacion",
+					success: function (response) {
+							$('#puntuacionResultado').html(response);
+						}
+				});
+			
+	}
+		
+		
+	} );
+

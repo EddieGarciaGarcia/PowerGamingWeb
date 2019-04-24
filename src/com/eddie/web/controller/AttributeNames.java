@@ -6,7 +6,7 @@ public interface AttributeNames {
 	public static final String PASS = "pass";
 	public static final String PAISES = "paises";
 	public static final String PROVINCIA = "provincias";
-	
+	public static final String PUNTUACION = "puntuacion";
 	public static final String EDICIONES_JUEGO="ediciones_juego";
 	public static final String FORMATO_RESULTADOS="formato_resultados";
 	public static final String TIPOEDICION_RESULTADOS="tipo_edicion_resultados";

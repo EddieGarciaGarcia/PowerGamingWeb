@@ -1,6 +1,7 @@
 package com.eddie.web.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,27 +16,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.eddie.ecommerce.service.Resultados;
-import com.eddie.ecommerce.service.TipoEdicionService;
 import com.eddie.ecommerce.exceptions.DataException;
-import com.eddie.ecommerce.model.Edicion;
-import com.eddie.ecommerce.model.Formato;
 import com.eddie.ecommerce.model.ItemBiblioteca;
 import com.eddie.ecommerce.model.Juego;
-import com.eddie.ecommerce.model.TipoEdicion;
 import com.eddie.ecommerce.model.Usuario;
-import com.eddie.ecommerce.service.EdicionService;
-import com.eddie.ecommerce.service.FormatoService;
 import com.eddie.ecommerce.service.JuegoService;
 import com.eddie.ecommerce.service.UsuarioService;
-import com.eddie.ecommerce.service.impl.EdicionServiceImpl;
-import com.eddie.ecommerce.service.impl.FormatoServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
-import com.eddie.ecommerce.service.impl.TipoEdicionServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
-import com.eddie.web.cache.WebCache;
 import com.eddie.web.config.ConfigurationManager;
 import com.eddie.web.config.ConfigurationParameterNames;
-import com.eddie.web.model.Errors;
 import com.eddie.web.util.SessionAttributeNames;
 import com.eddie.web.util.SessionManager;
 import com.eddie.web.util.WebConstants;
@@ -75,8 +65,7 @@ public class BibliotecaServlet extends HttpServlet {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Action {}: {}", action, ToStringBuilder.reflectionToString(request.getParameterMap()));
 			}
-			
-			Errors errors = new Errors(); 
+			 
 			String target = null;
 			boolean redirect=false;
 			Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
@@ -87,6 +76,11 @@ public class BibliotecaServlet extends HttpServlet {
 						getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
 				
 				Resultados<ItemBiblioteca> results=usuarioService.findByUsuario(user.getEmail(),(page-1)*pageSize+1, pageSize);
+				List<ItemBiblioteca> puntuacion=new ArrayList<ItemBiblioteca>();
+				for(ItemBiblioteca it: results.getResultados()) {
+					puntuacion.add(it);
+				}
+				
 				List<Juego> juegos =null;
 				//Lambda expresion stream collectors
 				List<Integer> juegoIDs = results.getResultados().stream().map(ItemBiblioteca::getIdJuego).collect(Collectors.toList());
@@ -95,6 +89,7 @@ public class BibliotecaServlet extends HttpServlet {
 				}
 				request.setAttribute(AttributeNames.LISTADO_RESULTADOS_BIBLIOTECA, juegos);
 				request.setAttribute(AttributeNames.TOTAL, results.getTotal());
+				request.setAttribute(AttributeNames.PUNTUACION, puntuacion);
 				
 				int totalPages = (int) Math.ceil(results.getTotal()/(double)pageSize);
 				int firstPagedPage = Math.max(1, page-pagingPageCount);
