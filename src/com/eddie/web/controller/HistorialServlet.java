@@ -82,6 +82,7 @@ public class HistorialServlet extends HttpServlet {
 				pedido.setFecha_pedido(new java.sql.Date(d.getTime()));
 				pedido.setTotal(carrito.getTotal());
 				
+				
 				pedidoService.create(pedido);
 				pedido=pedidoService.findByEmail(usuario.getEmail());
 				if(carrito.getLinea().size()<15){	
@@ -94,8 +95,7 @@ public class HistorialServlet extends HttpServlet {
 					}
 				}
 				
-				target = ControllerPaths.HISTORIAL+"?"+ParameterNames.ACTION+"="
-					+Actions.HISTORIALPEDIDO;	
+				target = ViewPaths.REFERER;	
 				
 			}else if(Actions.HISTORIALPEDIDO.equalsIgnoreCase(action)) {
 				
@@ -105,10 +105,11 @@ public class HistorialServlet extends HttpServlet {
 				Resultados<Pedido> resultados= pedidoService.findByEmail(usuario.getEmail(), (page-1)*pageSize+1, pageSize);
 				
 				List<Integer> idPedidos= resultados.getResultados().stream().map(Pedido::getIdPedido).collect(Collectors.toList());
+				List<Pedido> pedidos=null;
 				
-				//Falta el listado de pedidos del usuario
-				List<Pedido> pedidos=  pedidoService.findByIds(idPedidos);
-				
+				if(idPedidos!=null && !idPedidos.isEmpty()) {
+					pedidos=  pedidoService.findByIds(idPedidos);
+				}
 				request.setAttribute(AttributeNames.LISTADO_PEDIDOS, pedidos);
 				request.setAttribute(AttributeNames.TOTAL, resultados.getTotal());
 				

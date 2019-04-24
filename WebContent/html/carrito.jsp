@@ -1,26 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="com.eddie.ecommerce.model.*, com.eddie.web.util.*, com.eddie.web.model.*, com.eddie.web.controller.*, java.util.List "%>
 
-<div id="carrito">
-			<script>
-			function desplegarMenu5() {
-				  document.getElementById("meumenudes5").classList.toggle("show2");
-				}
-			window.onclick = function(event) {
-				  if (!event.target.matches('.dropbtn')) {
-
-				    var menudess = document.getElementsByClassName("menudes-contido2");
-				    var i;
-				    for (i = 0; i < menudess.length; i++) {
-				      var openmenudes = menudess[i];
-				      if (openmenudes.classList.contains('show2')) {
-				        openmenudes.classList.remove('show2');
-				      }
-				    }
-				  }
-				}
-		</script>
-<a onclick="desplegarMenu5()" class="dropbtn"><fmt:message key="car" bundle="${traduccion}"/></a>
+<div onmouseover="ver(5)" onmouseout="ocultar(5)" id="carrito">
+<img src="<%=request.getContextPath()%>/imgs/carrito.png"/>
 <div id="meumenudes5" class="menudes-contido2">
 <%
 	Carrito carrito = (Carrito) SessionManager.get(request, SessionAttributeNames.CARRITO);
@@ -61,7 +43,7 @@
 			<% }else{%>
 				<p><fmt:message key="carritomensage" bundle="${traduccion}"/></p>
 				<a  href="<%=ControllerPaths.USUARIO%>?
-										<%=ParameterNames.ACTION%>=<%=Actions.PREREGISTRO%>"><button><fmt:message key="registrarse" bundle="${traduccion}"/></button></a>
+										<%=ParameterNames.ACTION%>=<%=Actions.LOGIN%>"><button><fmt:message key="entrar" bundle="${traduccion}"/></button></a>
 			</div>
 			<%}
 	}

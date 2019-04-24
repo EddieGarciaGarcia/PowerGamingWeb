@@ -3,7 +3,7 @@ package com.eddie.web.controller;
 public interface ParameterNames {
 
 	public static final String ACTION = "action";
- 	
+	public static final String PUNTUACION = "puntuacion";
 	public static final String EMAIL = "email";
 	public static final String PASSWORD = "password";
 	public static final String CONFIRMPASSWORD = "confirmar_password";
