@@ -18,13 +18,13 @@
 			<c:forEach items="${resultados}" var="resultado">
 				<div class="divjuegobiblioteca">
 					<c:url var="urljuegodetalle" scope="page" value="/juego">
-						<c:param name="action" value="${Actions.JUEGO}"/>
+						<c:param name="action" value="juego"/>
 						<c:param name="id" value="${resultado.idJuego}"/>
 					</c:url>
 				<a href="${urljuegodetalle}"><img src="${pageContext.request.contextPath}/imgs/icojuego/${resultado.idJuego}.jpg"><p class="pjuego">${resultado.nombre}</p></a>
 				</div>
 				
-			<div class="divbiblioteca">
+			<div class="divbuscador">
 				<div class="addCarrito">
 					<form action="/PowerGamingWeb/carrito" method="post">
 						<input type="hidden" name="action" value="anhadir"/>
@@ -71,7 +71,7 @@
 							</c:when>
 							<c:otherwise >
 								<c:url var="urlbiblioteca" scope="page" value="/biblioteca">
-									<c:param name="action" value="${Actions.ADDJUEGO}" />
+									<c:param name="action" value="anhadir_juego" />
 									<c:param name="id" value="${resultado.idJuego}" />
 								</c:url>
 								<a class="a" href="${urlbiblioteca}"><button>

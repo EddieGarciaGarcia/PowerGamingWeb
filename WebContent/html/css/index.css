@@ -243,7 +243,14 @@ input {
 .divbiblioteca{
 	width: 75%;
 display: inline-block;
-top: -30px;
+position: relative;
+margin-left: 100px;
+margin-bottom: 40px;
+}
+.divbuscador{
+		width: 75%;
+display: inline-block;
+top:-60px;
 position: relative;
 margin-left: 100px;
 margin-bottom: 40px;

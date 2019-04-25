@@ -37,8 +37,7 @@
 			<div class="carritofinal">
 				<div>Total: <%=carrito.getTotal()%></div>
 				<%if(u!=null){%>
-				<a  href="<%=ControllerPaths.HISTORIAL%>?
-										<%=ParameterNames.ACTION%>=<%=Actions.ADDHISTORIAL%>"><button><fmt:message key="guardarpedido" bundle="${traduccion}"/></button></a>
+				<a  href=""><button><fmt:message key="guardarpedido" bundle="${traduccion}"/></button></a>
 			
 			<% }else{%>
 				<p><fmt:message key="carritomensage" bundle="${traduccion}"/></p>

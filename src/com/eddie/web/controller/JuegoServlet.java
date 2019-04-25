@@ -193,6 +193,10 @@ public class JuegoServlet extends HttpServlet {
 				Juego juego = juegoService.findById(idJuego, idiomaPagina);
 				Creador creador=creadorService.findbyIdCreador(juego.getIdCreador());
 				
+				//Puntuacion
+				
+				Integer puntuacion= juegoService.puntuacion(idJuego);
+				
 				//Listado de comentarios
 				List<ItemBiblioteca> comentarios=juegoService.findByJuego(juego.getIdJuego());
 				
@@ -211,6 +215,7 @@ public class JuegoServlet extends HttpServlet {
 							comentario.put(u.getNombreUser(), i);
 					}	
 				}	
+				request.setAttribute(AttributeNames.PUNTUACION, puntuacion);
 				request.setAttribute(AttributeNames.COMENTARIOS_JUEGO, comentario);
 				request.setAttribute(AttributeNames.CREADOR_JUEGO, creador);
 				request.setAttribute(AttributeNames.PRODUCTO_RESULTADOS, juego);

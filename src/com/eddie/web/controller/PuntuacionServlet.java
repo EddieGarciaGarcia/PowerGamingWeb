@@ -1,6 +1,7 @@
 package com.eddie.web.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,14 +41,15 @@ public class PuntuacionServlet extends HttpServlet {
 		Integer idJuego= Integer.valueOf(id);
 		String puntuacion=  request.getParameter(ParameterNames.PUNTUACION);
 		Integer puntuacionInteger= Integer.valueOf(puntuacion);
-		ItemBiblioteca puntuacionUsuario=null;
+		ItemBiblioteca puntuacionUsuario=new ItemBiblioteca();
 		
 		try {
 			puntuacionUsuario=usuarioService.findByIdEmail(user.getEmail(), idJuego);
 			puntuacionUsuario.setPuntuacion(puntuacionInteger);
-			usuarioService.update(puntuacionUsuario);
+			usuarioService.borrarJuegoBiblioteca(user.getEmail(), idJuego);
+			usuarioService.create(puntuacionUsuario);
 			
-			response.getOutputStream().write(puntuacionUsuario.getPuntuacion());
+			response.getOutputStream().print(puntuacionUsuario.getPuntuacion());
 			
 		} catch (DataException e) {
 			logger.info(e);

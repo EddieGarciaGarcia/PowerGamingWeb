@@ -18,7 +18,6 @@
 				<div id="meumenudes" class="menudes-contido"> 
 	                <a href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.PRECONFIGURACION%>"><fmt:message key="micuenta" bundle="${traduccion}"></fmt:message></a>
 	               	<a href="<%=ControllerPaths.BIBLIOTECA%>?<%=ParameterNames.ACTION%>=<%=Actions.BIBLIOTECA%>"><fmt:message key="biblioteca" bundle="${traduccion}"></fmt:message></a>
-	                <a href="<%=ControllerPaths.HISTORIAL%>?<%=ParameterNames.ACTION%>=<%=Actions.HISTORIALPEDIDO%>"><fmt:message key="historialpedidos" bundle="${traduccion}"></fmt:message></a>
 
 	             </div>
 

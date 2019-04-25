@@ -10,11 +10,12 @@
 			Map<String, ItemBiblioteca> comentarios= (Map<String, ItemBiblioteca>) request.getAttribute(AttributeNames.COMENTARIOS_JUEGO);
 			Boolean resultadosBiblioteca = (Boolean)request.getAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA);		
 			Creador creador=(Creador)request.getAttribute(AttributeNames.CREADOR_JUEGO);
-			
+			Integer puntuacion= (Integer) request.getAttribute(AttributeNames.PUNTUACION);
 			
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
 		<h1><%=resultados.getNombre()%></h1>
+		<p><fmt:message key="puntuacion" bundle="${traduccion}"/><%=puntuacion.toString()%></p>
 		<p><fmt:message key="fechalanzamiento" bundle="${traduccion}"/> : <%=resultados.getFechaLanzamiento() %><br>
 		<fmt:message key="creador" bundle="${traduccion}"/> : <%=creador.getNombre()%><br>
 		<fmt:message key="categorias" bundle="${traduccion}"/> : <%for(Categoria c: resultados.getCategoria()){%><%=c.getNombre()%> <%}%><br>

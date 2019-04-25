@@ -36,21 +36,15 @@
 											if(te.getIdTipoEdicion().equals(e.getIdTipoEdicion())){
 												%><%=te.getNombre()%>
 											<%}}%> <fmt:message key="precio" bundle="${traduccion}"></fmt:message> <%=e.getPrecio() %></option><br>
-		www
 						<%}%>
 						</select>
 						<input type="submit" value="<fmt:message key="addcarrito" bundle="${traduccion}"></fmt:message>"/>
 						</form>
 					</div>
-					<div class="puntuacion">
-						<p id="puntuacionResultado"><%for(ItemBiblioteca it: puntuacion){
-								if(it.getIdJuego()==resultado.getIdJuego()){%><fmt:message key="Puntuacion" bundle="${traduccion}"></fmt:message><%=it.getPuntuacion()%><%}
-								}%>
-						</p>
-					</div>
+					
 					<div class="puntuacionVotar">
-						<input id="idJuego" type="hidden" name="<%=ParameterNames.ID%>" value="<%=resultado.getIdJuego()%>"/>
-						<select id="puntuacion" name="<%=ParameterNames.PUNTUACION%>">
+						<input class="juego" type="hidden" name="<%=ParameterNames.ID%>" value="<%=resultado.getIdJuego()%>"/>
+						<p><fmt:message key="cambiarpuntuacion" bundle="${traduccion}"></fmt:message></p><select class="puntuacion" name="<%=ParameterNames.PUNTUACION%>">
 							<option value="0">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -63,8 +57,14 @@
 							<option value="9">9</option>
 							<option value="10">10</option>
 						</select>
-						<button value="puntuar" onclick="obtenerPuntuacion($('#idJuego').val(), $('#puntuacion').children('option:selected').val())">puntuar</button>
-		
+					</div>
+					
+					<div>
+						<fmt:message key="tupuntuacion" bundle="${traduccion}"></fmt:message>
+						<p id="puntuacionResultado"><%for(ItemBiblioteca it: puntuacion){
+								if(it.getIdJuego()==resultado.getIdJuego()){%><%=it.getPuntuacion()%><%}
+								}%>
+						</p>
 					</div>
 				</div>
 				<%
