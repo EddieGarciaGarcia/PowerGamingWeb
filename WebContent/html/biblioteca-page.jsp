@@ -43,8 +43,8 @@
 					</div>
 					
 					<div class="puntuacionVotar">
-						<input class="juego" type="hidden" name="<%=ParameterNames.ID%>" value="<%=resultado.getIdJuego()%>"/>
-						<p><fmt:message key="cambiarpuntuacion" bundle="${traduccion}"></fmt:message></p><select class="puntuacion" name="<%=ParameterNames.PUNTUACION%>">
+						<input id="<%=resultado.getIdJuego()%>" type="hidden" name="<%=ParameterNames.ID%>" value="<%=resultado.getIdJuego()%>"/>
+						<p><fmt:message key="cambiarpuntuacion" bundle="${traduccion}"></fmt:message></p><select id="puntuacion<%=resultado.getIdJuego()%>" name="<%=ParameterNames.PUNTUACION%>">
 							<option value="0">0</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
@@ -57,16 +57,37 @@
 							<option value="9">9</option>
 							<option value="10">10</option>
 						</select>
+						<button onclick="obtenerPuntuacion($('#<%=resultado.getIdJuego()%>').val(), $('#puntuacion<%=resultado.getIdJuego()%>').children('option:selected').val())"><fmt:message key="votar" bundle="${traduccion}"/></button>
 					</div>
 					
 					<div>
 						<fmt:message key="tupuntuacion" bundle="${traduccion}"></fmt:message>
-						<p id="puntuacionResultado"><%for(ItemBiblioteca it: puntuacion){
+						<p id="puntuacionResultado<%=resultado.getIdJuego()%>"><%for(ItemBiblioteca it: puntuacion){
 								if(it.getIdJuego()==resultado.getIdJuego()){%><%=it.getPuntuacion()%><%}
 								}%>
 						</p>
 					</div>
 				</div>
+				<script>
+						
+					function obtenerPuntuacion(idJuego, puntuacion) { 
+						var parametros={
+							"id":idJuego,
+							"puntuacion":puntuacion
+						};
+							$.ajax({
+								data: parametros,
+								type: "GET",
+								url: "/PowerGamingWeb/puntuacion",
+								success: function (response) {
+										$('#puntuacionResultado'+idJuego).html(response);
+									}
+							});
+						
+					}
+					
+					
+					</script>
 				<%
 					}
 			%>

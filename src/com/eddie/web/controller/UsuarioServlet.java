@@ -21,12 +21,8 @@ import org.apache.logging.log4j.Logger;
 import com.eddie.ecommerce.exceptions.DataException;
 import com.eddie.ecommerce.model.Usuario;
 import com.eddie.ecommerce.service.MailService;
-import com.eddie.ecommerce.service.PaisService;
-import com.eddie.ecommerce.service.ProvinciaService;
 import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.MailServiceImpl;
-import com.eddie.ecommerce.service.impl.PaisServiceImpl;
-import com.eddie.ecommerce.service.impl.ProvinciaServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
 import com.eddie.web.model.ErrorCodes;
 import com.eddie.web.model.Errors;
@@ -52,17 +48,13 @@ public class UsuarioServlet extends HttpServlet {
 	private static Logger logger = LogManager.getLogger(UsuarioServlet.class);
 	
 	private UsuarioService userv=null;
-	private PaisService paisService=null; 
 	private MailService mservice=null;
-	private ProvinciaService provinciaService=null;
 	
 	
     public UsuarioServlet() {
         super();
         userv=new UsuarioServiceImpl();
-        paisService=new PaisServiceImpl();
         mservice=new MailServiceImpl();
-        provinciaService=new ProvinciaServiceImpl();
    
     }
     
@@ -139,8 +131,8 @@ public class UsuarioServlet extends HttpServlet {
 				Date fechaformat=sdf.parse(fecha);
 				
 				u.setNombre(LimpiezaValidacion.validNombre(nombre));
-				u.setApellido1(LimpiezaValidacion.validApellido1(apellido1));
-				u.setApellido2(LimpiezaValidacion.validApellido2(apellido2));
+				u.setApellido1(LimpiezaValidacion.validApellido(apellido1));
+				u.setApellido2(LimpiezaValidacion.validApellido(apellido2));
 				u.setEmail(LimpiezaValidacion.validEmail(email));
 				u.setTelefono(LimpiezaValidacion.validTelefono(telefono));
 				u.setPassword(LimpiezaValidacion.validPassword(password));
@@ -171,8 +163,8 @@ public class UsuarioServlet extends HttpServlet {
 				Usuario userupdate=new Usuario();
 				
 				userupdate.setNombre(LimpiezaValidacion.validNombre(nombre));
-				userupdate.setApellido1(LimpiezaValidacion.validApellido1(apellido1));
-				userupdate.setApellido2(LimpiezaValidacion.validApellido2(apellido2));
+				userupdate.setApellido1(LimpiezaValidacion.validApellido(apellido1));
+				userupdate.setApellido2(LimpiezaValidacion.validApellido(apellido2));
 				userupdate.setTelefono(LimpiezaValidacion.validTelefono(telefono));
 				userupdate.setPassword(LimpiezaValidacion.validPassword(passwordconfig));
 				userupdate.setNombreUser(LimpiezaValidacion.validNombreUser(nombreUser));

@@ -43,24 +43,8 @@ public class LimpiezaValidacion {
 		}
 	}
 	
-	public static String validApellido1(String apellido1) {
-		pattern = Pattern.compile("^[a-zA-ZñÑáéíóúÁÉÍÓÚ]{3,45}$");
-		if(!StringUtils.isEmptyOrWhitespaceOnly(apellido1)) {
-			apellido1=apellido1.trim();
-			matcher=pattern.matcher(apellido1);
-			if(matcher.matches()) {
-				return apellido1;
-			}else {
-				
-				return null;
-			}
-		}else {
-			
-			return null;
-		}
-	}
 	
-	public static String validApellido2(String apellido2) {
+	public static String validApellido(String apellido2) {
 		pattern = Pattern.compile("^[a-zA-ZñÑáéíóúÁÉÍÓÚ]{3,45}$");
 		if(!StringUtils.isEmptyOrWhitespaceOnly(apellido2)) {
 			apellido2=apellido2.trim();

@@ -30,7 +30,6 @@ import com.eddie.ecommerce.service.UsuarioService;
 import com.eddie.ecommerce.service.impl.CreadorServiceImpl;
 import com.eddie.ecommerce.service.impl.JuegoServiceImpl;
 import com.eddie.ecommerce.service.impl.UsuarioServiceImpl;
-import com.eddie.web.model.Errors;
 import com.eddie.web.util.ArrayUtils;
 import com.eddie.web.util.LimpiezaValidacion;
 import com.eddie.web.util.SessionAttributeNames;
@@ -83,7 +82,6 @@ public class JuegoServlet extends HttpServlet {
 				logger.debug("Action {}: {}", action, ToStringBuilder.reflectionToString(request.getParameterMap()));
 			}
 
-			Errors errors = new Errors(); 
 			String target = null;
 			boolean redirect=false;
 			boolean hasErrors = false;			
@@ -102,15 +100,6 @@ public class JuegoServlet extends HttpServlet {
 				StringBuilder targetString=new StringBuilder();
 				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
 				
-				// Limpiar
-				// ...
-
-				// Validar Arrays e creador
-				//..
-
-				// if hasErrors
-
-				// else
 				if (hasErrors) {
 					
 					target = ViewPaths.BUSCADOR;
@@ -126,7 +115,6 @@ public class JuegoServlet extends HttpServlet {
 							targetString.append("&nombre="+jc.getNombre());
 						}
 						if(categorias!=null) {
-							//jc.setCategoria(ArrayUtils.arrayCategoria(categoria));
 							jc.setCategoriaIDs(ArrayUtils.asInteger(categorias));
 							for(Integer i : jc.getCategoriaIDs()) {
 								targetString.append("&categoria="+i);
@@ -156,7 +144,6 @@ public class JuegoServlet extends HttpServlet {
 							targetString.append("&fecha="+jc.getFechaLanzamiento());
 						}else {
 							jc.setNombre(nombreValid);
-							//targetString.append("&"+jc.getNombre());
 						}
 						
 						
