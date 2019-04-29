@@ -21,7 +21,7 @@
 
 
 	<header class="menu"> 
-                <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaming.png"></img>
+                <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaminglogo.png"></img>
                 <div class="menuimg">
                     <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=en">
                     <img id="img1" src="<%=request.getContextPath()%>/imgs/en-us.png"></img></a>
@@ -30,14 +30,14 @@
                 </div>
                 <nav>
                     <ul class="nav">
-                    	<li><a href="<%=request.getContextPath()%><%=ViewPaths.INICIO%>"><fmt:message key="inicio" bundle="${traduccion}"></fmt:message></a></li>
+                    	<li><a class="alogin" href="<%=request.getContextPath()%><%=ViewPaths.INICIO%>"><fmt:message key="inicio" bundle="${traduccion}"></fmt:message></a></li>
                     </ul>
                 </nav>
                
      </header>
-	<section>
+	<section class="error">
 	<h1>Hemos tenido un problema</h1>
-	<a href="/PowerGamingWeb">Continuar a la Home</a>
+	<a class="alogin" href="/PowerGamingWeb">Continuar a la Home</a>
 	</section>section
 	<footer class="footer">
             <p>©powergaming<br>
@@ -45,7 +45,7 @@
             Email: powergaming2019@gmail.com<br>
             <fmt:message key="telefono" bundle="${traduccion}"></fmt:message> 654634543<br>
             <fmt:message key="mensagefooter" bundle="${traduccion}"></fmt:message>
-            <a href="<%=request.getContextPath()%><%=ViewPaths.CONTACTO%>"><button><fmt:message key="contacto" bundle="${traduccion}"></fmt:message></button></a>
+            <a  href="<%=request.getContextPath()%><%=ViewPaths.CONTACTO%>"><button><fmt:message key="contacto" bundle="${traduccion}"></fmt:message></button></a>
             </p>
     </footer>
 	</body>

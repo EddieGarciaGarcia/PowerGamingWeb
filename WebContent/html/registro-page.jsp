@@ -37,7 +37,7 @@
 		
 		
 		
-		<input type="submit" value="Registrar"/>	
+		<input class="buttoncolor" type="submit" value="Registrar"/>	
 	</form>
 </section>
 

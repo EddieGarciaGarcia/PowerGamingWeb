@@ -1,6 +1,6 @@
 <%@ page import="java.util.List, com.eddie.ecommerce.model.*" %>
 <%@include file="/html/common/header.jsp"%>
-<section>
+<section style="margin: 150px;">
 	<%if(u==null){ %>
 		<form action="<%=ControllerPaths.USUARIO%>" method="post">
 			<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.MENSAGE%>"/>
@@ -19,7 +19,7 @@
 			<p><fmt:message key="contactomensage3" bundle="${traduccion}"/> <%=u.getNombreUser()%><br>
 			<fmt:message key="contactomensage2" bundle="${traduccion}"/></p>
 			<textarea name="<%=ParameterNames.MENSAGE %>" rows="10" cols="50"></textarea><br>
-			<input type="submit" value="<fmt:message key="enviar" bundle="${traduccion}"/>" />
+			<input class="buttoncolor" type="submit" value="<fmt:message key="enviar" bundle="${traduccion}"/>" />
 		</form>
 	<%}%>
 </section>

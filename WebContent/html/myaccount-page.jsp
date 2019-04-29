@@ -41,7 +41,7 @@
 		<input type="text" name="<%=ParameterNames.NOMBREUSER%>" /><br>
 		
 		
-		<input type="submit" value="Actualizar"/>	
+		<input class="buttoncolor" type="submit" value="Actualizar"/>	
 	</form>
 </section>
 

@@ -13,7 +13,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link href="<%=request.getContextPath()%>/html/css/index.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
 	<script type="text/javascript" src="<%=request.getContextPath()%>/html/js/jQuery3.1.1.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/html/js/index.js"></script>   
 </head>
@@ -25,7 +25,7 @@ List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMA
 List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
 %>
 	<header class="menu"> 
-                <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaming.png"></img>
+                <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaminglogo.png"></img>
                 <div class="menuimg">
                     <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=en">
                     <img id="img1" src="<%=request.getContextPath()%>/imgs/en-us.png"></img></a>
@@ -38,7 +38,7 @@ List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(Attribut
                     	<%@include file="/html/common/user-menu.jsp"%>
                     </ul>
                 </nav>
-                <div>
+                <div class="carrito">
                 	<%@include file="/html/carrito.jsp"%>
                 </div>
      </header>

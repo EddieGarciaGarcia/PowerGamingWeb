@@ -48,7 +48,7 @@
 		
 		<div class="addCarrito">
 			<form action="<%=ControllerPaths.CARRITO%>" method="post">
-				<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.ANHADIR%>"/>
+				<input class="buttoncolor" type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.ANHADIR%>"/>
 				<select name="<%=ParameterNames.IDEDICION%>">
 					<%if(resultados.getEdiciones()!=null){for(Edicion e: resultados.getEdiciones()){  %>
 					<option value="<%=e.getId()%>"><fmt:message key="formato" bundle="${traduccion}"></fmt:message><%for(Formato f:formato){
@@ -62,7 +62,7 @@
 									<%}}%> <fmt:message key="precio" bundle="${traduccion}"/>: <%=e.getPrecio() %></option><br>
 						<%}}%>
 				</select>
-				<input type="submit" value="<fmt:message key="addcarrito" bundle="${traduccion}"/>"/>
+				<input class="buttoncolor" type="submit" value="<fmt:message key="addcarrito" bundle="${traduccion}"/>"/>
 			</form>
 		</div>
 		
@@ -75,7 +75,7 @@
 				<input type="hidden" name="<%=ParameterNames.ID%>" value="<%=ParamsUtils.getParameter(request, ParameterNames.ID)%>"/>
 				<p><fmt:message key="juegomensage" bundle="${traduccion}"/> <%=u.getNombreUser()%> :</p>
 				<textarea rows="10" cols="50" name="<%=ParameterNames.COMENTARIO%>"></textarea>
-				<input type="submit" name="Modificar" value="<fmt:message key="modificar" bundle="${traduccion}"/>"/>	
+				<input class="buttoncolor" type="submit" name="Modificar" value="<fmt:message key="modificar" bundle="${traduccion}"/>"/>	
 			</form>		
 			</div>
 			<%

@@ -4,7 +4,7 @@
         margin: 0%;
         background-color:#fff;
         color:black;
-        font-family: 'Roboto', sans-serif;
+       font-family: 'Open Sans', sans-serif;
     }
     a{
     color:white;
@@ -72,7 +72,6 @@
         bottom: 0;
 		display: inline-block;
 		position: relative;
-		left: 0;
     }
     section{
 	    position: relative;
@@ -89,8 +88,12 @@
     background-color: transparent;
   }
 
+.amenu:hover{
+	 background-color: #f00;
+}
+
   .dropbtn:hover, .dropbtn:focus {
-    background-color: #2980B9;
+    background-color: #f00;
   }
 
   
@@ -103,7 +106,7 @@
 .menudes-contido {
     display: none;
     position: absolute;
-    background-color: #f1f1f1;
+    background-color: black;
     min-width: 160px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -112,7 +115,7 @@
 }
 
 .menudes-contido a {
-    color: black;
+    color: white;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -173,7 +176,7 @@ margin-top: 20px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    left:300px;
+   left: 330px;
 }
 .menu-search3{
 	background-color:#000;
@@ -183,7 +186,7 @@ margin-top: 20px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    left:400px;
+    left: 440px;
 }
 .menudes-contido2 {
     display: none;
@@ -275,7 +278,7 @@ height: 100%;
 padding: 10px;
 }
 #login-form{
-	margin: 220px;
+	margin: 150px;
 display: inline-block;
 }
 .registro{
@@ -289,7 +292,7 @@ height: 74%;
 
 display: inline-block;
 
-margin: 190px;
+margin: 150px;
 }
 .recovery{
 	position: relative;
@@ -301,7 +304,7 @@ height: 74%;
 
 display: inline-block;
 
-margin: 270px;
+margin: 150px;
 }
 .micuenta{
 	position: relative;
@@ -312,7 +315,7 @@ height: 74%;
 
 display: inline-block;
 
-margin: 176px;
+margin: 150px;
 }
 .sjuego{
 	position: relative;
@@ -346,4 +349,42 @@ height: 214px;
 	color: white;
 
 background-color: #5c5d5d;
+}
+.paginacion{
+	 color:#f00;
+}
+button{
+	background-color:#f00;
+	color: white;
+	border-radius: 6PX;
+	padding: 6PX 24PX;
+	size: 13PX;
+	
+}
+.buttoncolor{
+	background-color:#f00;
+	color: white;
+	border-radius: 6PX;
+	padding: 6PX 24PX;
+	size: 13PX;
+}
+.alogin{
+	color:black;
+}
+.carrito{
+	width: 30%;
+
+float: left;
+
+height: 100px;
+
+}
+#carrito{
+	margin-top: 20px;
+}
+.imgcarrito{
+	height:50px;
+}
+.error{
+	margin: 20px;
 }

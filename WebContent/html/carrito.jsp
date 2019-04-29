@@ -2,7 +2,7 @@
 <%@page import="com.eddie.ecommerce.model.*, com.eddie.web.util.*, com.eddie.web.model.*, com.eddie.web.controller.*, java.util.List "%>
 
 <div onmouseover="ver(5)" onmouseout="ocultar(5)" id="carrito">
-<img src="<%=request.getContextPath()%>/imgs/carrito.png"/>
+<img class="imgcarrito"src="<%=request.getContextPath()%>/imgs/carrito.png"/>
 <div id="meumenudes5" class="menudes-contido2">
 <%
 	Carrito carrito = (Carrito) SessionManager.get(request, SessionAttributeNames.CARRITO);

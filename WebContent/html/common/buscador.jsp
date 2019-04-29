@@ -67,7 +67,7 @@
 					name="<%=ParameterNames.NOMBRE%>" 
 					value="<%=ParamsUtils.getParameter(request, ParameterNames.NOMBRE)%>" minlength="0" maxlength="45"/>
 					
-			<input type="submit" name="buscar" value="<fmt:message key="buscar" bundle='${traduccion}'/>"/>
+			<input class="buttoncolor" type="submit" name="buscar" value="<fmt:message key="buscar" bundle='${traduccion}'/>"/>
 		</form>
 	</p>
 
