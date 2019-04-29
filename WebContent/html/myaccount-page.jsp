@@ -1,7 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.eddie.ecommerce.model.*, com.eddie.web.controller.*" %>
 <%@include file="/html/common/header.jsp"%>
-<section>
+<section class="micuenta">
 <%@include file="/html/common/action-error.jsp"%>
 	<h2><fmt:message key="myaccountmensage" bundle="${traduccion}"/></h2>
 	<form action="<%=ControllerPaths.USUARIO%>" method="post">

@@ -8,6 +8,7 @@ public interface ParameterNames {
 	public static final String PASSWORD = "password";
 	public static final String CONFIRMPASSWORD = "confirmar_password";
 	
+	public static final String REGISTRO = "registro";
 	public static final String NOMBRE = "nombre";
 	public static final String APELLIDO1 = "apellido1";
 	public static final String APELLIDO2 = "apellido2";

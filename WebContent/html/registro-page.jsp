@@ -2,13 +2,13 @@
 <%@ page import="com.eddie.ecommerce.model.*" %>
 <%@include file="/html/common/header.jsp"%>
 
-<section>
-	<%@include file="/html/common/action-error.jsp"%>
+<section class="registro">
 	<h2><fmt:message key="RegistroUsuario" bundle="${traduccion}"/></h2>
+	<%@include file="/html/common/action-error.jsp"%>
 	<form action="<%=ControllerPaths.USUARIO%>" method="post">
 	<%
 				
-				List<String> parameterErrors = errors.getErrors(ParameterNames.ACTION);
+				List<String> parameterErrors = errors.getErrors(ParameterNames.REGISTRO);
 				for (String error: parameterErrors) {
 					%><li><%=error%></li><%
 				}

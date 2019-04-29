@@ -14,8 +14,11 @@
 			
 		%>
 		<img src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.jpg"></img>
+		<div class="juegotitle">
 		<h1><%=resultados.getNombre()%></h1>
 		<p><fmt:message key="puntuacion" bundle="${traduccion}"/><%=puntuacion.toString()%></p>
+		</div>
+		<div><video src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.mp4" width="640" height="480" controls></video></div>	
 		<p><fmt:message key="fechalanzamiento" bundle="${traduccion}"/> : <%=resultados.getFechaLanzamiento() %><br>
 		<fmt:message key="creador" bundle="${traduccion}"/> : <%=creador.getNombre()%><br>
 		<fmt:message key="categorias" bundle="${traduccion}"/> : <%for(Categoria c: resultados.getCategoria()){%><%=c.getNombre()%> <%}%><br>
@@ -64,7 +67,7 @@
 		</div>
 		
 		
-		<div><video src="<%=request.getContextPath()%>/imgs/icojuego/<%=resultados.getIdJuego()%>.mp4" width="640" height="480" controls></video></div>	
+		
 		<% if(u!=null){%>
 			<div class="comentario">
 			<form action="<%=ControllerPaths.JUEGO%>" method="post">
@@ -83,7 +86,7 @@
 				<%for (Map.Entry<String, ItemBiblioteca> entry : comentarios.entrySet()) {
 				   if(entry.getValue().getComentario()!=null && entry.getValue().getIdJuego()!=null){%>
 				   	<div>
-					    <h3><%=entry.getKey()%></h3><br>
+					    <h3><%=entry.getKey()%></h3>
 					    <p><%=entry.getValue().getFechaComentario()%></p>
 					    <p><%=entry.getValue().getComentario()%></p>
 				    </div>

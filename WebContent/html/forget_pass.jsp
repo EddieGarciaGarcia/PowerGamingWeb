@@ -1,5 +1,5 @@
 <%@include file="/html/common/header.jsp"%>
-<section>
+<section class="recovery">
 	<form action="<%=ControllerPaths.USUARIO%>" method="post">
 	<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.FORGOTPASS%>"/>
 	<label><fmt:message key="forgetpassmensage" bundle="${traduccion}"/></label><br>

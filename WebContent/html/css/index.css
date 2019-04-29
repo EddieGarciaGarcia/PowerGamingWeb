@@ -2,9 +2,9 @@
     body{
         box-sizing: border-box;
         margin: 0%;
-        background-color:#1c05fe;
-        color:white;
-        
+        background-color:#fff;
+        color:black;
+        font-family: 'Roboto', sans-serif;
     }
     a{
     color:white;
@@ -14,7 +14,7 @@
         width:100%;
         display:inline-block;
         height: 100px;
-        background-color: #696969;
+        background-color: black;
         color: azure;
     }
     #img1{
@@ -67,7 +67,7 @@
     .footer{
         height: 150px;
         width: 100%;
-        background-color: #696969;
+        background-color: #000;
         color: azure;
         bottom: 0;
 		display: inline-block;
@@ -125,7 +125,7 @@
 	position: relative;
 	left: 100px;
 	width: 90%;
-
+margin-top: 20px;
 	display: inline-block;
 }
 .a2{
@@ -146,6 +146,7 @@
 	text-align: center;
 	font-size:12px;
 	background-color: #696969;
+	width: 150px;
 }
 .a{
 	width:142px;
@@ -155,7 +156,7 @@
 	margin-bottom: 0px;
 }
 .menu-search{
-	background-color:#1c05fe;
+	background-color:#000;
 	display: none;
     position: absolute;
     min-width: 160px;
@@ -165,7 +166,7 @@
 
 }
 .menu-search2{
-	background-color:#1c05fe;
+	background-color:#000;
 	display: none;
     position: absolute;
     min-width: 160px;
@@ -175,7 +176,7 @@
     left:300px;
 }
 .menu-search3{
-	background-color:#1c05fe;
+	background-color:#000;
 	display: none;
     position: absolute;
     min-width: 160px;
@@ -272,4 +273,77 @@ display: inline-block;
 height: 100%;
 
 padding: 10px;
+}
+#login-form{
+	margin: 220px;
+display: inline-block;
+}
+.registro{
+	position: relative;
+
+left: 100px;
+
+width: 80%;
+
+height: 74%;
+
+display: inline-block;
+
+margin: 190px;
+}
+.recovery{
+	position: relative;
+
+left: 100px;
+width: 70%;
+
+height: 74%;
+
+display: inline-block;
+
+margin: 270px;
+}
+.micuenta{
+	position: relative;
+
+left: 100px;
+width: 80%;
+height: 74%;
+
+display: inline-block;
+
+margin: 176px;
+}
+.sjuego{
+	position: relative;
+
+left: 100px;
+
+width: 90%;
+
+height: 74%;
+
+display: inline-block;
+margin-top:20px;
+}
+.sjuego img{
+	float:left;
+}
+.juegotitle{
+	width: 80%;
+
+float: left;
+
+height: 214px;
+}
+.juegotitle h1{
+	margin: 50px;
+}
+.juegotitle p{
+	margin: 50px;
+}
+#buscador-form{
+	color: white;
+
+background-color: #5c5d5d;
 }

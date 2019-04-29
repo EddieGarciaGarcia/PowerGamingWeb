@@ -138,12 +138,20 @@ public class UsuarioServlet extends HttpServlet {
 				u.setPassword(LimpiezaValidacion.validPassword(password));
 				u.setFechaNacimiento(fechaformat);
 				u.setGenero(LimpiezaValidacion.validGenero(genero));
-				u.setNombreUser(nombre+apellido1.charAt(0)+apellido2.charAt(0));
 				
-				userv.create(u);
-			
-				
-				target = request.getContextPath()+ViewPaths.LOGIN;
+				if(u.getApellido1()!=null || u.getApellido2()!=null) {
+					u.setNombreUser(u.getNombre()+u.getApellido1().charAt(0)+u.getApellido2().charAt(0));
+				}else {
+					u.setNombreUser(u.getNombre());
+				}
+				if(u.getEmail()!=null && u.getNombre()!=null && u.getFechaNacimiento()!=null && u.getPassword()!=null) {
+					userv.create(u);
+					target = request.getContextPath()+ViewPaths.LOGIN;
+				}else {
+					errors.add(ParameterNames.REGISTRO, ErrorCodes.REGISTER_ERROR);
+					request.setAttribute(AttributeNames.ERRORS, errors);
+					target= request.getContextPath()+"usuario?"+ParameterNames.ACTION+"="+Actions.PREREGISTRO;
+				}		
 				redirect=true;
 			}else if(Actions.PRECONFIGURACION.equalsIgnoreCase(action)) {
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);

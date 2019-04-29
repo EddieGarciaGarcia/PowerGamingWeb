@@ -26,9 +26,9 @@
 						%><li><%=error%></li><%
 					}
 				%>	
-			<label><fmt:message key="loginmensage2" bundle="${traduccion}"/>:</label>		
+			<br><label><fmt:message key="loginmensage2" bundle="${traduccion}"/>:</label>		
 			<input type="password" name="<%=ParameterNames.PASSWORD%>" required minlength="8" maxlength="30"/>
-			<input type="submit" value="Entrar" />
+			<br><input type="submit" value="Entrar" />
 		</form>
 		<a href="<%=request.getContextPath()%><%=ViewPaths.FORGETPASS%>"><fmt:message key="forgotpass" bundle="${traduccion}"/></a>
 		<h3><fmt:message key="forgetpassmensage2" bundle="${traduccion}"/></h3>
