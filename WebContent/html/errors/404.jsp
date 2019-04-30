@@ -38,7 +38,7 @@
 	<section class="error">
 	<h1>Página no encontrada</h1>
 	<a class="alogin" href="/PowerGamingWeb">Continuar a la Home</a>
-	</section>section
+	</section>
 	<footer class="footer">
             <p>©powergaming<br>
             <fmt:message key="contacto" bundle="${traduccion}"></fmt:message>:<br>

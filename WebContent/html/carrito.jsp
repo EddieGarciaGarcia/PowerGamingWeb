@@ -41,8 +41,7 @@
 			
 			<% }else{%>
 				<p><fmt:message key="carritomensage" bundle="${traduccion}"/></p>
-				<a  href="<%=ControllerPaths.USUARIO%>?
-										<%=ParameterNames.ACTION%>=<%=Actions.LOGIN%>"><button><fmt:message key="entrar" bundle="${traduccion}"/></button></a>
+				<a  href="<%=request.getContextPath()%><%=ViewPaths.LOGIN%>"><button><fmt:message key="entrar" bundle="${traduccion}"/></button></a>
 			</div>
 			<%}
 	}

@@ -4,7 +4,6 @@
 <%@include file="/html/common/buscador.jsp"%>
 <section class="biblioteca">
 
-<c:set var="urlparams" value="${sessionScope['url']}" scope="request"/>
 <c:set var="resultados" value="${requestScope.juegos_resultados}" />
 
 			<h1>
@@ -89,28 +88,10 @@
 			<p><center>	
 			<c:url var="urlBase" value="/juego" scope="page">
 				<c:param name="action" value="search"/>
-				<c:if test="${not empty nombre}">
-					<c:param name="nombre" value="${nombre}"/>
-				</c:if>
-				<c:if test="${not empty categoria}">
-					<c:param name="categoria" value="${categoria}"/>
-				</c:if>
-				<c:if test="${not empty creador}">
-					<c:param name="creador" value="${creador}"/>
-				</c:if>
-				<c:if test="${not empty plataforma}">
-					<c:param name="plataforma" value="${plataforma}"/>
-				</c:if>
-				<c:if test="${not empty idioma}">
-					<c:param name="idioma" value="${idioma}"/>
-				</c:if>
-				<c:if test="${not empty fecha}">
-					<c:param name="fecha" value="${fecha}"/>
-				</c:if>
 			</c:url>
 
 			<c:if test="${page > 1}">
-				<a class="paginacion" href="${urlBase}${urlparams}&page=${page - 1}">
+				<a class="paginacion" href="${urlBase}${url}&page=${page - 1}">
 					<fmt:message key="anterior" bundle="${traduccion}"/>
 				</a>
 				&nbsp;&nbsp;
@@ -119,13 +100,13 @@
 			<c:if test="${totalPages > 1}">	
 			
 				<c:if test="${firstPagedPage > 2}">
-					<a class="paginacion"href="${urlBase}${urlparams}&page=1"><b>1</b></a><b>&nbsp;.&nbsp;.&nbsp;.&nbsp;</b> 
+					<a class="paginacion"href="${urlBase}${url}&page=1"><b>1</b></a><b>&nbsp;.&nbsp;.&nbsp;.&nbsp;</b> 
 				</c:if>
 			
 				<c:forEach begin="${firstPagedPage}" end="${lastPagedPage}" var="i">
 					<c:choose>
 					  <c:when test="${page != i}">
-							&nbsp;<a class="paginacion" href="${urlBase}${urlparams}&page=${i}"><b>${i}</b></a>&nbsp;
+							&nbsp;<a class="paginacion" href="${urlBase}${url}&page=${i}"><b>${i}</b></a>&nbsp;
 					  </c:when>
 					  <c:otherwise>
 							&nbsp;<b>${i}</b>&nbsp;
@@ -134,13 +115,13 @@
 				</c:forEach>
 
 				<c:if test="${lastPagedPage < totalPages-1}">
-					<b>&nbsp;.&nbsp;.&nbsp;.&nbsp;</b><a class="paginacion" href="${urlBase}${urlparams}&page=${totalPages}"><b>${totalPages}</b></a>
+					<b>&nbsp;.&nbsp;.&nbsp;.&nbsp;</b><a class="paginacion" href="${urlBase}${url}&page=${totalPages}"><b>${totalPages}</b></a>
 				</c:if>	
 			</c:if>
 
 			<c:if test="${page < totalPages}">
 				&nbsp;&nbsp;		
-				<a class="paginacion" href="${urlBase}${urlparams}&page=${page + 1}">
+				<a class="paginacion" href="${urlBase}${url}&page=${page + 1}">
 					<fmt:message key="siguiente" bundle="${traduccion}"/>
 				</a>			
 			</c:if>	

@@ -4,7 +4,7 @@
         margin: 0%;
         background-color:#fff;
         color:black;
-       font-family: 'Open Sans', sans-serif;
+      	font-family: 'Oswald', sans-serif;
     }
     a{
     color:white;
@@ -176,7 +176,7 @@ margin-top: 20px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-   left: 330px;
+  	left: 290px;
 }
 .menu-search3{
 	background-color:#000;
@@ -186,7 +186,7 @@ margin-top: 20px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    left: 440px;
+    left: 390px;
 }
 .menudes-contido2 {
     display: none;

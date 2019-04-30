@@ -13,7 +13,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link href="<%=request.getContextPath()%>/html/css/index.css" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet"> 
 	<script type="text/javascript" src="<%=request.getContextPath()%>/html/js/jQuery3.1.1.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/html/js/index.js"></script>   
 </head>
@@ -24,11 +24,15 @@
 List<Formato> formato= (List<Formato>) request.getAttribute(AttributeNames.FORMATO_RESULTADOS);
 List<TipoEdicion> tipoEdicion= (List<TipoEdicion>) request.getAttribute(AttributeNames.TIPOEDICION_RESULTADOS);
 %>
+	
+
 	<header class="menu"> 
                 <img class="menufig" src="<%=request.getContextPath()%>/imgs/powergaminglogo.png"></img>
                 <div class="menuimg">
+                    
                     <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=en">
                     <img id="img1" src="<%=request.getContextPath()%>/imgs/en-us.png"></img></a>
+                    
                     <a  href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=<%=Actions.CAMBIAR_IDIOMA%>&amp;<%=ParameterNames.LOCALE%>=es">
                     <img id="img2" src="<%=request.getContextPath()%>/imgs/es.png"></img></a>
                 </div>

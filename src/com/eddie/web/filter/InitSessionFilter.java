@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.eddie.web.util.SessionManager;
 
 /**
  * Filtro para inicializacion de la sesion y estado común requerido.

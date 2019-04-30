@@ -10,7 +10,7 @@
 				
 				List<String> parameterErrors = errors.getErrors(ParameterNames.REGISTRO);
 				for (String error: parameterErrors) {
-					%><li><%=error%></li><%
+					%><li><fmt:message key="<%=error%>" bundle="${traduccion}"/></li><% 
 				}
 			%>
 	<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.REGISTRO%>" />
@@ -20,12 +20,6 @@
 		<label>Email: </label><input type="email" name="<%=ParameterNames.EMAIL%>" 
 				placeholder="usuario@ejemplo.com"
 				value="<%=ParamsUtils.getParameter(request, ParameterNames.EMAIL)%>" required minlength="8" maxlength="75"/><br>
-				<%
-					parameterErrors = errors.getErrors(ParameterNames.EMAIL);
-					for (String error: parameterErrors) {
-						%><li><%=error%></li><%
-					}
-				%>
 		<label><fmt:message key="telefono" bundle="${traduccion}"/>: </label><input type="text" name="<%=ParameterNames.TELEFONO%>" minlength="9" maxlength="30"><br>
 		<label><fmt:message key="password" bundle="${traduccion}"/>: </label><input type="password" name="<%=ParameterNames.PASSWORD%>"required minlength="8" maxlength="30"/><br>
 		<label><fmt:message key="fechaNacimiento" bundle="${traduccion}"/>: </label><input type="date" name="<%=ParameterNames.FECHANACIMIENTO%>" required/><br>

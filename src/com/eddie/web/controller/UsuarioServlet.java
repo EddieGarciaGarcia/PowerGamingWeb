@@ -81,12 +81,12 @@ public class UsuarioServlet extends HttpServlet {
 				String passwordValid = LimpiezaValidacion.validPassword(password);
 				
 				if (StringUtils.isEmpty(emailValid)) {
-					errors.add(ParameterNames.EMAIL,ErrorCodes.MANDATORY_PARAMETER);
+					errors.add(ParameterNames.EMAIL,ErrorCodes.INCORRECT_EMAIL);
 				}
 				if (StringUtils.isEmpty(password)) {
-					errors.add(ParameterNames.PASSWORD, ErrorCodes.MANDATORY_PARAMETER);
+					errors.add(ParameterNames.PASSWORD, ErrorCodes.INCORRECT_PASSWORD);
 				}
-				
+					
 				Usuario usuario = null;
 				if (!errors.hasErrors()) {
 					usuario = userv.login(emailValid, passwordValid);
@@ -99,11 +99,10 @@ public class UsuarioServlet extends HttpServlet {
 					if (logger.isDebugEnabled()) {
 						logger.debug("Autenticacion fallida: {}", errors);
 					}		
-					errors.add(ParameterNames.ACTION,ErrorCodes.AUTHENTICATION_ERROR);
 					request.setAttribute(AttributeNames.ERRORS, errors);
 					target = ViewPaths.LOGIN;
 					
-				} else {		
+				} else {	
 					SessionManager.set(request, SessionAttributeNames.USER, usuario);		
 					target = request.getContextPath()+ViewPaths.INICIO;
 					redirect=true;
@@ -113,8 +112,6 @@ public class UsuarioServlet extends HttpServlet {
 				SessionManager.set(request, SessionAttributeNames.USER, null);
 				target = request.getContextPath()+ViewPaths.INICIO;
 				redirect=true;
-			} else if(Actions.PREREGISTRO.equalsIgnoreCase(action)){
-				target = ViewPaths.REGISTRO;
 			}else if(Actions.REGISTRO.equalsIgnoreCase(action)) {
 				String nombre=request.getParameter(ParameterNames.NOMBRE);
 				String apellido1=request.getParameter(ParameterNames.APELLIDO1);
@@ -146,13 +143,13 @@ public class UsuarioServlet extends HttpServlet {
 				}
 				if(u.getEmail()!=null && u.getNombre()!=null && u.getFechaNacimiento()!=null && u.getPassword()!=null) {
 					userv.create(u);
-					target = request.getContextPath()+ViewPaths.LOGIN;
+					target = ViewPaths.LOGIN;
 				}else {
 					errors.add(ParameterNames.REGISTRO, ErrorCodes.REGISTER_ERROR);
 					request.setAttribute(AttributeNames.ERRORS, errors);
-					target= request.getContextPath()+"usuario?"+ParameterNames.ACTION+"="+Actions.PREREGISTRO;
+					target= ViewPaths.REGISTRO;
 				}		
-				redirect=true;
+				
 			}else if(Actions.PRECONFIGURACION.equalsIgnoreCase(action)) {
 				Usuario user=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				request.setAttribute(AttributeNames.USER, user);
@@ -178,14 +175,13 @@ public class UsuarioServlet extends HttpServlet {
 				userupdate.setNombreUser(LimpiezaValidacion.validNombreUser(nombreUser));
 				userupdate.setEmail(user.getEmail());
 				
-				
-				
 				if(userupdate.getNombre()!=null || userupdate.getApellido1()!=null || userupdate.getApellido2()!=null 
 						|| userupdate.getTelefono()!=null || userupdate.getPassword()!=null || userupdate.getNombreUser()!=null) {
 					userv.update(userupdate);
 				}
 				target = ControllerPaths.USUARIO+"?"+ParameterNames.ACTION+"="+Actions.PRECONFIGURACION;
 				redirect=true;
+				
 			}else if(Actions.MENSAGE.equalsIgnoreCase(action)) {
 				Usuario u=(Usuario) SessionManager.get(request, SessionAttributeNames.USER);
 				String mensage= request.getParameter(ParameterNames.MENSAGE);

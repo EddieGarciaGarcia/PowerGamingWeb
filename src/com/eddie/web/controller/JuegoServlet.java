@@ -81,7 +81,7 @@ public class JuegoServlet extends HttpServlet {
 			if (logger.isDebugEnabled()) {
 				logger.debug("Action {}: {}", action, ToStringBuilder.reflectionToString(request.getParameterMap()));
 			}
-
+			
 			String target = null;
 			boolean redirect=false;
 			boolean hasErrors = false;			
@@ -97,14 +97,14 @@ public class JuegoServlet extends HttpServlet {
 				String[] idioma=request.getParameterValues(ParameterNames.IDIOMA); 
 				String fecha=request.getParameter(ParameterNames.FECHA);
 				
-				StringBuilder targetString=new StringBuilder();
+				StringBuilder urlParams=new StringBuilder();
 				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
 				
 				if (hasErrors) {
 					
 					target = ViewPaths.BUSCADOR;
 				} else {
-					int page = WebUtils.
+					Integer page = WebUtils.
 							getPageNumber(request.getParameter(ParameterNames.PAGE), 1);
 					
 					JuegoCriteria jc=new JuegoCriteria();
@@ -112,36 +112,36 @@ public class JuegoServlet extends HttpServlet {
 					
 						if(nombreValid!=null && nombreValid!="") {
 							jc.setNombre(nombreValid);
-							targetString.append("&nombre="+jc.getNombre());
+							urlParams.append("&nombre="+jc.getNombre());
 						}
 						if(categorias!=null) {
 							jc.setCategoriaIDs(ArrayUtils.asInteger(categorias));
 							for(Integer i : jc.getCategoriaIDs()) {
-								targetString.append("&categoria="+i);
+								urlParams.append("&categoria="+i);
 							}
 						}
 						if(idioma!=null) {
 							jc.setIdiomaIDs(idioma);
 							for(String i : jc.getIdiomaIDs()) {
-								targetString.append("&idioma="+i);
+								urlParams.append("&idioma="+i);
 							}
 						}
 						if(plataforma!=null) {
 							jc.setPlataformaIDs(ArrayUtils.asInteger(plataforma));
 							for(Integer i : jc.getPlataformaIDs()) {
-								targetString.append("&plataforma="+i);
+								urlParams.append("&plataforma="+i);
 							}
 						}
 						if(creador!=null) {
 							Integer creadorValid=Integer.valueOf(creador);
 							jc.setIdCreador(creadorValid);
 							
-							targetString.append("&creador="+jc.getIdCreador());
+							urlParams.append("&creador="+jc.getIdCreador());
 								
 						}if(fecha!=null) {
 							Integer fechaformat=Integer.valueOf(fecha);
 							jc.setFechaLanzamiento(fechaformat);
-							targetString.append("&fecha="+jc.getFechaLanzamiento());
+							urlParams.append("&fecha="+jc.getFechaLanzamiento());
 						}else {
 							jc.setNombre(nombreValid);
 						}
@@ -167,7 +167,9 @@ public class JuegoServlet extends HttpServlet {
 					request.setAttribute(AttributeNames.FIRST_PAGED_PAGES, firstPagedPage);
 					request.setAttribute(AttributeNames.LAST_PAGED_PAGES, lastPagedPage);
 					
-					SessionManager.set(request, SessionAttributeNames.URL, targetString.toString());
+					request.setAttribute(ParameterNames.URL, urlParams.toString());
+					
+					//SessionManager.set(request, SessionAttributeNames.URL, targetString.toString());
 					
 					target = ViewPaths.BUSCADOR;
 					

@@ -10,7 +10,6 @@
 	<input class="buttoncolor" type="submit" value="Enviar"/>
 	</form>
 	<h3><fmt:message key="forgetpassmensage2" bundle="${traduccion}"/></h3>
-		<a class="alogin" href="<%=ControllerPaths.USUARIO%>?<%=ParameterNames.ACTION%>=
-				<%=Actions.PREREGISTRO%>"><fmt:message key="registrarse" bundle="${traduccion}"/></a>
+		<a class="alogin" href="<%=request.getContextPath()%><%=ViewPaths.REGISTRO%>"><fmt:message key="registrarse" bundle="${traduccion}"/></a>
 </section>
 <%@include file="/html/common/footer.jsp"%>
