@@ -8,6 +8,7 @@
     }
     a{
     color:white;
+    text-decoration: none;
     }
   
     header{
@@ -166,7 +167,7 @@ margin-top: 20px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-
+padding: 10px;
 }
 .menu-search2{
 	background-color:#000;
@@ -177,6 +178,7 @@ margin-top: 20px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
   	left: 290px;
+  	padding: 10px;
 }
 .menu-search3{
 	background-color:#000;
@@ -187,6 +189,7 @@ margin-top: 20px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     left: 390px;
+    padding: 10px;
 }
 .menudes-contido2 {
     display: none;
@@ -387,4 +390,75 @@ height: 100px;
 }
 .error{
 	margin: 20px;
+}
+/*Form select and input*/
+select{
+	border-radius: 4px;
+}
+input[type=text]:focus {
+  border: 3px solid #f00;
+}
+input[type=password]:focus {
+  border: 3px solid #f00;
+}
+input[type=email]:focus {
+  border: 3px solid #f00;
+}
+input{
+	border-radius: 4px;
+}
+/*Checkbox */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+.container:hover input ~ .checkmark {
+  background-color: #f00;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #f00;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }

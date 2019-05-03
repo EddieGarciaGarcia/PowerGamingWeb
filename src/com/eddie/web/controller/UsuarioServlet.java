@@ -201,7 +201,8 @@ public class UsuarioServlet extends HttpServlet {
 					target=ControllerPaths.USUARIO+"?"+ParameterNames.ACTION+"="+Actions.PREREGISTRO;
 					redirect=true;
 				}else {
-					String enlace="http://localhost:8080/"+request.getContextPath()+ViewPaths.CHANGEPASS+"?"+ParameterNames.EMAIL+"="+emailvalid;
+					StringBuilder enlace=new StringBuilder();
+					enlace=new StringBuilder(request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+"/"+request.getContextPath()+ViewPaths.CHANGEPASS+"?"+ParameterNames.EMAIL+"="+emailvalid);
 				mservice.sendMail(emailvalid,"Restauracion de contraseña", 
 						"<html><h2>Power Gaming</h2><h4>Pulse en enlace o copielo entero para cambiar su contraseña:</h4>"
 						+ "<a href='"+enlace+"'>Restablecer contraseña</a><p>"+enlace+"</p></html>");
@@ -213,13 +214,10 @@ public class UsuarioServlet extends HttpServlet {
 				String email= request.getParameter(ParameterNames.EMAIL);
 				String pass= request.getParameter(ParameterNames.PASSWORD);
 				Usuario u=userv.findById(email);
-				
-				userv.delete(u.getEmail());
-			
+					
 				u.setPassword(pass);
 				
-				
-				userv.create(u);
+				userv.update(u);
 				
 				target=request.getContextPath()+ViewPaths.LOGIN;
 				redirect=true;

@@ -4,8 +4,8 @@
 	<input type="hidden" name="<%=ParameterNames.ACTION%>" value="<%=Actions.CHANGEPASS%>"/>
 	<input type="hidden" name="<%=ParameterNames.EMAIL%>" value="<%=ParamsUtils.getParameter(request, ParameterNames.EMAIL)%>"/>
 	<label><fmt:message key="cambiarpass" bundle="${traduccion}"/></label><br>
-	<input type="text" name="<%=ParameterNames.PASSWORD%>" 
-				value="<%=ParameterNames.PASSWORD%>" required 
+	<input type="password" name="<%=ParameterNames.PASSWORD%>" 
+				placeholder="password" required 
 				minlength="8" maxlength="75"/><br>
 	<input class="buttoncolor" type="submit" value="<fmt:message key="enviar" bundle="${traduccion}"/>"/>
 	</form>

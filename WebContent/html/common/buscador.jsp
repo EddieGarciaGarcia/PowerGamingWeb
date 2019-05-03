@@ -14,7 +14,10 @@
 			<div id="meumenudes1" class="menu-search" > 
 			
 				<%for(Categoria c: categoria){%>
-				<input type="checkbox" name="<%=ParameterNames.CATEGORIA%>" value="<%=c.getIdCategria()%>"/><%=c.getNombre()%><br>
+				<label class="container"><%=c.getNombre()%>
+				<input type="checkbox" name="<%=ParameterNames.CATEGORIA%>" value="<%=c.getIdCategria()%>"/><br>
+				<span class="checkmark"></span>
+				</label>
 				<%}%>
 			</div>
 			</a>
@@ -28,14 +31,20 @@
 			<a onmouseover="ver(2)" onmouseout="ocultar(2)" class="dropbtn"><fmt:message key="plataforma" bundle="${traduccion}"/>:
 			<div id="meumenudes2" class="menu-search2"> 
 				<%for(Plataforma p: plataforma){%>
-				<input type="checkbox" name="<%=ParameterNames.PLATAFORMA%>" value="<%=p.getIdPlatadorma()%>"/><%=p.getNombre()%><br>
+				<label class="container"><%=p.getNombre()%>
+				<input type="checkbox" name="<%=ParameterNames.PLATAFORMA%>" value="<%=p.getIdPlatadorma()%>"/><br>
+				<span class="checkmark"></span>
+				</label>
 				<%} %>
 			</div>
 			</a>
 			<a onmouseover="ver(3)" onmouseout="ocultar(3)" class="dropbtn""><fmt:message key="idioma" bundle="${traduccion}"/>:
 			<div id="meumenudes3" class="menu-search3"> 
 				<%for(Idioma i: idioma){%>
-				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"/><%=i.getNombre()%><br>
+				<label class="container"><%=i.getNombre()%>
+				<input type="checkbox" name="<%=ParameterNames.IDIOMA%>" value="<%=i.getIdIdioma()%>"/><br>
+				<span class="checkmark"></span>
+				</label>
 				<%} %>
 			</div>
 			</a>
@@ -63,7 +72,7 @@
 				<option value="2001">2001</option>
                 <option value="2000">2000</option>
 			</select>
-			<input type="text"
+			<input class="search" type="text"
 					name="<%=ParameterNames.NOMBRE%>" 
 					value="<%=ParamsUtils.getParameter(request, ParameterNames.NOMBRE)%>" minlength="0" maxlength="45"/>
 					
