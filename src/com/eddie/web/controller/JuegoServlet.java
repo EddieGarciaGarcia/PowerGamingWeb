@@ -98,6 +98,7 @@ public class JuegoServlet extends HttpServlet {
 				String fecha=request.getParameter(ParameterNames.FECHA);
 				
 				StringBuilder urlParams=new StringBuilder();
+				
 				String nombreValid= LimpiezaValidacion.validNombreJuego(nombre);
 				
 				if (hasErrors) {
@@ -151,7 +152,7 @@ public class JuegoServlet extends HttpServlet {
 				
 					List<Integer> idsJuegos = resultados.getResultados().stream().map(Juego::getIdJuego).collect(Collectors.toList());
 						// Buscar juegos que tiene incluidos en la biblioteca
-					if(user!=null) {						
+					if(user!=null && idsJuegos!=null && !(idsJuegos.isEmpty())) {						
 						List<Integer> idsJuegosEnBiblioteca = usuarioService.existsInBiblioteca(user.getEmail(), idsJuegos);
 							
 						request.setAttribute(AttributeNames.PRODUCTOS_EN_BIBLIOTECA, idsJuegosEnBiblioteca);
